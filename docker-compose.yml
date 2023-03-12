@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15.2
+    container_name: vtjmk_postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: password
+
+  backend:
+    build: ./backend
+    image: vtjmk_backend_dev:latest
+    container_name: vtjmk_backend_dev
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    environment:
+      PSQL_HOST: postgres
+      # PSQL_PORT:
+      PSQL_USERNAME: postgres
+      PSQL_PASSWORD: password
+
+  frontend:
+    build: ./frontend
+    image: vtjmk_frontend_dev:latest
+    container_name: vtjmk_frontend_dev
+    depends_on:
+      - backend
+    ports:
+      - '5173:5173'

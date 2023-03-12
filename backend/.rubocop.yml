@@ -1,0 +1,52 @@
+# The behavior of RuboCop can be controlled via the .rubocop.yml
+# configuration file. It makes it possible to enable/disable
+# certain cops (checks) and to alter their behavior if they accept
+# any parameters. The file can be placed either in your home
+# directory or in some project directory.
+#
+# RuboCop will start looking for the configuration file in the directory
+# where the inspected file is and continue its way up to the root directory.
+#
+# See https://docs.rubocop.org/rubocop/configuration
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+# frozen_string_literal comment is not necessary
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Class / Module comment
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/*'
+
+Metrics/BlockLength:
+  # Allow RSpec #describe and #content methods to be long
+  AllowedMethods: ['describe', 'context']
+
+RSpec/MultipleExpectations:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+AllCops:
+  NewCops: enable
+
+  Exclude:
+    # Generated files
+    - 'db/schema.rb'
+    - 'bin/bundle'
+
+    # Old migrations, dead code, should be removed anyway
+    - db/migrate/20230221075044_add_registration_dates_to_events.rb
+    - db/migrate/20230305152140_update_attendance_status_type.rb
+    - db/migrate/20230305165221_add_full_name_to_user.rb
