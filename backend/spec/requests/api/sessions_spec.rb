@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::Sessions', type: :request do
+RSpec.describe 'Api::Sessions' do
   describe 'POST /api/signup' do
     subject(:make_request) { post('/api/signup', params:) }
 

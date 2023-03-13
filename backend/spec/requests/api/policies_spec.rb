@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/policies', type: :request do
+RSpec.describe '/api/policies' do
   describe 'POST /api/policies' do
     subject(:make_request) { post('/api/policies', params:, headers:) }
 
@@ -33,7 +33,7 @@ RSpec.describe '/api/policies', type: :request do
       it 'returns policies for current user' do
         make_request
         expect(response).to have_http_status(:success)
-        expect(JSON.parse(response.body)).to eq(
+        expect(response.parsed_body).to eq(
           {
             'policies' => {
               'events' => {
@@ -56,7 +56,7 @@ RSpec.describe '/api/policies', type: :request do
         it 'returns policies for current user' do
           make_request
           expect(response).to have_http_status(:success)
-          expect(JSON.parse(response.body)).to eq(
+          expect(response.parsed_body).to eq(
             {
               'policies' => {
                 'events' => {

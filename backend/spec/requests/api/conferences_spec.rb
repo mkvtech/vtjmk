@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/conferences', type: :request do
+RSpec.describe '/api/conferences' do
   describe 'GET /api/conferences' do
     let!(:conferences) { create_list(:conference, 5) }
 

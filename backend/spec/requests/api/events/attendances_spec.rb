@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/events/:event_id/attendances', type: :request do
+RSpec.describe '/api/events/:event_id/attendances' do
   describe 'GET /' do
     subject(:make_request) { get("/api/events/#{event.id}/attendances", headers:) }
 

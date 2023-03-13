@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/events', type: :request do
+RSpec.describe '/events' do
   describe 'GET /api/events' do
     subject(:make_request) { get('/api/events', params:) }
 

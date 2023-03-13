@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe '/participations', type: :request do
+RSpec.describe '/participations' do
   pending
 end

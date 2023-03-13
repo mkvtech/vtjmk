@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/api/attendances', type: :request do
+RSpec.describe '/api/attendances' do
   describe 'GET /api/attendances' do
     context 'when not authenticated' do
       it 'return :unauthorized' do
