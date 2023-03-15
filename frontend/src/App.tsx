@@ -1,5 +1,7 @@
-import React from 'react'
 import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -38,13 +40,15 @@ function App(): JSX.Element {
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
-        <QueryClientProvider client={queryClient}>
-          <ApiProvider>
-            <Container maxWidth='sm'>
-              <RouterProvider router={router} />
-            </Container>
-          </ApiProvider>
-        </QueryClientProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <QueryClientProvider client={queryClient}>
+            <ApiProvider>
+              <Container maxWidth='sm'>
+                <RouterProvider router={router} />
+              </Container>
+            </ApiProvider>
+          </QueryClientProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </React.StrictMode>
   )
