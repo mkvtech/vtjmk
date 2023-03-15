@@ -1,4 +1,4 @@
-import { ArrowBack } from '@mui/icons-material'
+import { ArrowBack, Edit } from '@mui/icons-material'
 import { Badge, Button, Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
@@ -17,6 +17,7 @@ const EVENT_PAGE_POLICIES_SCHEMA = z.object({
       items: z.record(
         z.object({
           viewAttendances: z.boolean(),
+          update: z.boolean(),
         })
       ),
     }),
@@ -34,7 +35,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
     policies: {
       events: {
         items: {
-          [eventId]: ['viewAttendances'],
+          [eventId]: ['viewAttendances', 'update'],
         },
       },
     },
@@ -68,18 +69,33 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
               </Link>
             </Typography>
 
-            {policiesQuery.isSuccess && policiesQuery.data.policies.events.items[eventId].viewAttendances && (
-              <Box display='flex' sx={{ my: 2 }}>
-                <Badge badgeContent={3} color='secondary'>
-                  <Button component={RouterLink} to={`/events/${eventId}/participants`}>
-                    View Participants
+            {policiesQuery.isSuccess && (
+              <Box display='flex' justifyContent='space-between' sx={{ my: 2 }}>
+                {policiesQuery.data.policies.events.items[eventId].viewAttendances && (
+                  <Box display='flex'>
+                    <Badge badgeContent={3} color='secondary'>
+                      <Button component={RouterLink} to={`/events/${eventId}/participants`}>
+                        View Participants
+                      </Button>
+                    </Badge>
+                    <Badge badgeContent={3} color='secondary'>
+                      <Button component={RouterLink} to={`/events/${eventId}/attendants`}>
+                        View Attendants
+                      </Button>
+                    </Badge>
+                  </Box>
+                )}
+
+                {policiesQuery.data.policies.events.items[eventId].update && (
+                  <Button
+                    variant='contained'
+                    startIcon={<Edit />}
+                    component={RouterLink}
+                    to={`/events/${eventId}/edit`}
+                  >
+                    Edit
                   </Button>
-                </Badge>
-                <Badge badgeContent={3} color='secondary'>
-                  <Button component={RouterLink} to={`/events/${eventId}/attendants`}>
-                    View Attendants
-                  </Button>
-                </Badge>
+                )}
               </Box>
             )}
           </Box>

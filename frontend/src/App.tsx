@@ -16,6 +16,7 @@ import Participants from './pages/Participants'
 import CreateAccount from './pages/CreateAccount'
 import Attendances from './pages/Attendances'
 import { ApiProvider } from './hooks/useApi'
+import EventEdit from './pages/EventEdit'
 
 const theme = createTheme({})
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   { path: '/conferences', element: <ConferencesList /> },
   { path: '/conferences/:conferenceId', element: <Conference /> },
   { path: '/events/:eventId', element: <Event /> },
+  { path: '/events/:eventId/edit', element: <EventEdit /> },
   { path: '/events/:eventId/attend', element: <AttendanceForm /> },
   { path: '/events/:eventId/participate', element: <ParticipationForm /> },
   { path: '/events/:eventId/attendants', element: <Attendances /> },
@@ -43,7 +45,7 @@ function App(): JSX.Element {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <QueryClientProvider client={queryClient}>
             <ApiProvider>
-              <Container maxWidth='sm'>
+              <Container maxWidth='md'>
                 <RouterProvider router={router} />
               </Container>
             </ApiProvider>
