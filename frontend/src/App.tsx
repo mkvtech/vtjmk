@@ -1,17 +1,23 @@
-import { Box, Container, Typography } from '@mui/material'
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
+import React from 'react'
+import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
-import ConferencesList from './pages/ConferencesList/ConferencesList'
+import ConferencesList from './pages/ConferencesList'
 import Conference from './pages/Conference'
 import Event from './pages/Event'
 import ParticipationForm from './pages/ParticipationForm'
 import AttendanceForm from './pages/AttendanceForm'
 import Participants from './pages/Participants'
 import CreateAccount from './pages/CreateAccount'
-import Attendances from './pages/Attendances/Attendances'
+import Attendances from './pages/Attendances'
+import { ApiProvider } from './hooks/useApi'
+
+const theme = createTheme({})
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -28,16 +34,19 @@ const router = createBrowserRouter([
 
 function App(): JSX.Element {
   return (
-    <Container maxWidth='sm'>
-      <Box sx={{ my: 4 }}>
-        <Typography variant='h4' component='h1' gutterBottom>
-          <RocketLaunchIcon />
-          Test App
-        </Typography>
-      </Box>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-      <RouterProvider router={router} />
-    </Container>
+        <QueryClientProvider client={queryClient}>
+          <ApiProvider>
+            <Container maxWidth='sm'>
+              <RouterProvider router={router} />
+            </Container>
+          </ApiProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </React.StrictMode>
   )
 }
 
