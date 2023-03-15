@@ -1,4 +1,4 @@
-import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import React from 'react'
@@ -45,9 +45,7 @@ function App(): JSX.Element {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <QueryClientProvider client={queryClient}>
             <ApiProvider>
-              <Container maxWidth='md'>
-                <RouterProvider router={router} />
-              </Container>
+              <RouterProvider router={router} />
             </ApiProvider>
           </QueryClientProvider>
         </LocalizationProvider>
