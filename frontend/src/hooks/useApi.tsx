@@ -67,9 +67,9 @@ export function useApi(): ApiContextValueT {
 export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element {
   const [jwt, setJwt] = React.useState<string | undefined>()
   const [currentUser, setCurrentUser] = React.useState<User | undefined>()
-  const [loading, setLoading] = React.useState<boolean>(true)
+  const [loading, setLoading] = React.useState<boolean>(false)
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     const readJwt = localStorage.getItem(LOCAL_STORAGE_JWT_KEY)
 
     if (readJwt) {
