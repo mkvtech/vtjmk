@@ -1,5 +1,7 @@
 # :nodoc:
 class EventPolicy < ApplicationPolicy
+  authorize :user, allow_nil: true
+
   # TODO: Rename to attendances_index?
   def view_attendances?
     user && read_or_manage?

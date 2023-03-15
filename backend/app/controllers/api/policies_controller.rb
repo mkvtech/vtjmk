@@ -13,8 +13,6 @@ module Api
       events: %w[view_attendances update]
     }.freeze
 
-    require_authenticated_user only: :index
-
     # TODO: This method will get more features in the future and then be refactored
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
     def index
@@ -45,7 +43,7 @@ module Api
             actions
               .map(&:underscore)
               .intersection(RESOURCE_NAME_TO_TESTABLE_ACTIONS_MAP[resource_name])
-              .index_with { |action| allowed_to?("#{action}?", resource) }
+              .index_with { |action| !!allowed_to?("#{action}?", resource) } # rubocop:disable Style/DoubleNegation
           ]
         end
       end
