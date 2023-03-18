@@ -24,16 +24,18 @@ axiosClient.interceptors.response.use(
   }
 )
 
-interface Session {
+export type CurrentUser = User
+
+export interface Session {
   readonly jwt: string
-  readonly currentUser: Readonly<User>
+  readonly currentUser: Readonly<CurrentUser>
+  readonly logout: () => void
 }
 
 interface ApiContextValueT {
   readonly isAuthenticated: boolean
   readonly session?: Session
   readonly setSession: (newSession: Session) => void
-  readonly logout: () => void
 
   readonly client: AxiosInstance
 }
@@ -65,16 +67,21 @@ export function useApi(): ApiContextValueT {
 
 // Provides authentication and pre-configured axios client
 export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element {
-  const [jwt, setJwt] = React.useState<string | undefined>()
-  const [currentUser, setCurrentUser] = React.useState<User | undefined>()
+  const [session, setSession] = React.useState<Session | undefined>(undefined)
   const [loading, setLoading] = React.useState<boolean>(false)
+
+  const logout = (): void => {
+    setSession(undefined)
+
+    axiosClient.defaults.headers.common['Authorization'] = undefined
+    localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
+  }
 
   React.useMemo(() => {
     const readJwt = localStorage.getItem(LOCAL_STORAGE_JWT_KEY)
 
     if (readJwt) {
       setLoading(true)
-      setJwt(readJwt)
       axiosClient.defaults.headers.common['Authorization'] = `Bearer ${readJwt}`
 
       axiosClient
@@ -82,11 +89,14 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
         .then((response) => {
           // TODO: Validate response with zod
 
-          setCurrentUser(response.data)
+          setSession({
+            jwt: readJwt,
+            currentUser: response.data,
+            logout,
+          })
         })
         .catch((error) => {
           if (isAxiosError(error) && error.response && error.response.status === 401) {
-            setJwt(undefined)
             localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
 
             return
@@ -104,8 +114,6 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
     return <p>Loading current user</p>
   }
 
-  const session = currentUser && jwt ? { jwt, currentUser } : undefined
-
   return (
     <ApiContext.Provider
       value={{
@@ -113,20 +121,10 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
 
         isAuthenticated: !!session,
 
-        setSession: ({ jwt, currentUser }: Session): void => {
-          setJwt(jwt)
-          setCurrentUser(currentUser)
-
-          axiosClient.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
-          localStorage.setItem(LOCAL_STORAGE_JWT_KEY, jwt)
-        },
-
-        logout: (): void => {
-          setJwt(undefined)
-          setCurrentUser(undefined)
-
-          axiosClient.defaults.headers.common['Authorization'] = undefined
-          localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
+        setSession: (session: Session): void => {
+          setSession(session)
+          axiosClient.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`
+          localStorage.setItem(LOCAL_STORAGE_JWT_KEY, session.jwt)
         },
 
         session,

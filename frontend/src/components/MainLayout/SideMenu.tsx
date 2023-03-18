@@ -1,6 +1,7 @@
 import { AccountCircle, AdminPanelSettings, Create, Description, ExitToApp, Key, Monitor } from '@mui/icons-material'
-import { Avatar, Box, Divider, Drawer, List, Typography } from '@mui/material'
-import React from 'react'
+import { Avatar, Box, Button, Drawer, List, Typography } from '@mui/material'
+import { useTheme, styled } from '@mui/material/styles'
+import { Session } from '../../hooks/useApi'
 import { DRAWER_WIDTH } from './share'
 import SideMenuItem from './SideMenuItem'
 
@@ -70,7 +71,16 @@ const sideMenuStructure = [
   },
 ]
 
-export default function SideMenu({ open }: { open: boolean }): JSX.Element {
+const WhiteButton = styled(Button)((_theme) => ({
+  backgroundColor: 'white',
+  ':hover': {
+    backgroundColor: '#eeeeee',
+  },
+}))
+
+export default function SideMenu({ open, session }: { open: boolean; session: Session }): JSX.Element {
+  const theme = useTheme()
+
   return (
     <Drawer
       sx={{
@@ -79,22 +89,27 @@ export default function SideMenu({ open }: { open: boolean }): JSX.Element {
         '& .MuiDrawer-paper': {
           width: DRAWER_WIDTH,
           boxSizing: 'border-box',
-          bgcolor: '#0B4DC7',
+          bgcolor: theme.palette.primary.main,
         },
         color: 'white',
       }}
       open={open}
       variant='persistent'
     >
-      <Box sx={{ py: 4 }}>
+      <Box sx={{ pt: 4, pb: 2, bgcolor: theme.palette.primary.dark }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Avatar sx={{ width: 64, height: 64, mb: 2 }}>M</Avatar>
         </Box>
 
-        <Typography sx={{ textAlign: 'center' }}>M</Typography>
-      </Box>
+        <Typography sx={{ textAlign: 'center', color: 'white' }}>{session.currentUser.fullName}</Typography>
 
-      <Divider />
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+          <WhiteButton>Profile</WhiteButton>
+          <WhiteButton sx={{ ml: 2 }} onClick={(): void => session.logout()}>
+            Logout
+          </WhiteButton>
+        </Box>
+      </Box>
 
       <List disablePadding sx={{ color: 'white' }}>
         {sideMenuStructure.map((item) => (

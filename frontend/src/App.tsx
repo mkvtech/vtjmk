@@ -22,6 +22,8 @@ const theme = createTheme({
     primary: {
       main: '#0B4DC7',
       light: '#269BF0',
+      // light: '#3b70d2', // From MUI colors tool
+      dark: '#07358b',
     },
   },
 })

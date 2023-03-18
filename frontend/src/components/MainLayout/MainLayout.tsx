@@ -1,4 +1,4 @@
-import { AccountCircle, Menu, Translate } from '@mui/icons-material'
+import { AccountCircle, Help, Menu, Translate } from '@mui/icons-material'
 import {
   AppBar,
   Badge,
@@ -88,7 +88,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography>{session.currentUser.fullName}</Typography>
 
-                  <IconButton size='large'>
+                  <IconButton>
                     <Badge badgeContent={9} color='primary'>
                       <AccountCircle />
                     </Badge>
@@ -100,7 +100,11 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                 </Button>
               )}
 
-              <IconButton size='large'>
+              <IconButton>
+                <Help />
+              </IconButton>
+
+              <IconButton>
                 <Translate />
               </IconButton>
             </Stack>
@@ -109,6 +113,9 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
 
         <Container maxWidth='lg'>
           <Box sx={{ display: 'flex' }}>
+            <AppBarTabLink component={RouterLink} to='/home'>
+              Home
+            </AppBarTabLink>
             <AppBarTabLink component={RouterLink} to='/conferences'>
               Conferences
             </AppBarTabLink>
@@ -122,7 +129,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
         </Container>
       </AppBar>
 
-      {sideMenuEnabled && <SideMenu open={sideMenuOpened} />}
+      {sideMenuEnabled && <SideMenu session={session} open={sideMenuOpened} />}
 
       <Box
         sx={{

@@ -1,5 +1,5 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -19,12 +19,12 @@ interface MenuItemData {
 }
 
 export default function SideMenuItem({ item }: { item: MenuItemData }): JSX.Element {
+  const theme = useTheme()
   const [open, setOpen] = useState(true)
 
   return (
     <>
       <ListItemButton
-        sx={{ ':hover': { bgcolor: '#668ACC', fontWeight: 'bold' } }}
         onClick={(): void => setOpen(!open)}
         {...(item.path
           ? {
@@ -40,14 +40,9 @@ export default function SideMenuItem({ item }: { item: MenuItemData }): JSX.Elem
 
       {item.items && (
         <Collapse in={open} timeout='auto' unmountOnExit>
-          <List disablePadding sx={{ bgcolor: '#EEEEEE' }}>
+          <List disablePadding sx={{ bgcolor: theme.palette.primary.dark }}>
             {item.items.map((subMenuItem) => (
-              <ListItemButton
-                sx={{ color: '#666', ':hover': { color: '#3eb8d8' } }}
-                key={subMenuItem.id}
-                component={RouterLink}
-                to={subMenuItem.path}
-              >
+              <ListItemButton key={subMenuItem.id} component={RouterLink} to={subMenuItem.path}>
                 <ListItemIcon>-</ListItemIcon>
                 <ListItemText sx={{ fontSize: '0.8rem' }}>{subMenuItem.displayName}</ListItemText>
               </ListItemButton>
