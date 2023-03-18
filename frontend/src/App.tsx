@@ -32,6 +32,7 @@ const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
+  { path: '/home', element: <Home /> },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <CreateAccount /> },
   { path: '/conferences', element: <ConferencesList /> },
