@@ -1,8 +1,23 @@
-import { AccountCircle } from '@mui/icons-material'
-import { AppBar, Badge, Box, Button, Container, IconButton, Link, styled, Toolbar, Typography } from '@mui/material'
-import { PropsWithChildren } from 'react'
+import { AccountCircle, Menu, Translate } from '@mui/icons-material'
+import {
+  AppBar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  Divider,
+  IconButton,
+  Link,
+  Stack,
+  styled,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+import React, { PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
+import { DRAWER_WIDTH, TOP_BAR_HEIGHT } from './share'
+import SideMenu from './SideMenu'
 
 // Reverse engineered from main website ;-;
 const AppBarTabLink = styled(Link)((_theme) => ({
@@ -37,37 +52,62 @@ const AppBarTabLink = styled(Link)((_theme) => ({
 export default function MainLayout({ children }: PropsWithChildren): JSX.Element {
   const { session } = useApi()
 
+  const [sideMenuOpened, setSideMenuOpened] = React.useState(true)
+
+  const sideMenuEnabled = !!session
+
   return (
-    <>
+    <Box sx={{ display: 'flex' }}>
       <AppBar
-        sx={{ bgcolor: 'white', borderBottom: '1px solid #F3F3F3' }}
-        position='sticky'
+        sx={{
+          bgcolor: 'white',
+          borderBottom: '1px solid #F3F3F3',
+          ...(sideMenuEnabled && sideMenuOpened && { width: `calc(100% - ${DRAWER_WIDTH}px)` }),
+        }}
+        position='fixed'
         color='default'
         elevation={0}
       >
+        {sideMenuEnabled && (
+          <IconButton
+            sx={{ mr: 2, position: 'absolute', top: 4, left: 4 }}
+            size='large'
+            onClick={(): void => setSideMenuOpened(!sideMenuOpened)}
+          >
+            <Menu />
+          </IconButton>
+        )}
         <Container maxWidth='lg'>
           <Toolbar variant='dense'>
             <img src='/VilniusTech.png' />
 
             <Box sx={{ flexGrow: 1 }} />
 
-            {session ? (
-              <>
-                <Typography>{session.currentUser.fullName}</Typography>
+            <Stack direction='row' spacing={2} divider={<Divider orientation='vertical' flexItem />}>
+              {session ? (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography>{session.currentUser.fullName}</Typography>
 
-                <IconButton size='large'>
-                  <Badge badgeContent={9} color='primary'>
-                    <AccountCircle />
-                  </Badge>
-                </IconButton>
-              </>
-            ) : (
-              <Button component={RouterLink} to='/login' variant='text'>
-                Login
-              </Button>
-            )}
+                  <IconButton size='large'>
+                    <Badge badgeContent={9} color='primary'>
+                      <AccountCircle />
+                    </Badge>
+                  </IconButton>
+                </Box>
+              ) : (
+                <Button component={RouterLink} to='/login' variant='text'>
+                  Login
+                </Button>
+              )}
+
+              <IconButton size='large'>
+                <Translate />
+              </IconButton>
+            </Stack>
           </Toolbar>
+        </Container>
 
+        <Container maxWidth='lg'>
           <Box sx={{ display: 'flex' }}>
             <AppBarTabLink component={RouterLink} to='/conferences'>
               Conferences
@@ -82,7 +122,17 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
         </Container>
       </AppBar>
 
-      {children}
-    </>
+      {sideMenuEnabled && <SideMenu open={sideMenuOpened} />}
+
+      <Box
+        sx={{
+          flexGrow: 1,
+          pt: `${TOP_BAR_HEIGHT}px`,
+          ...(sideMenuEnabled && !sideMenuOpened && { ml: `-${DRAWER_WIDTH}px` }),
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   )
 }

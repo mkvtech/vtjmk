@@ -1,7 +1,6 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -18,7 +17,14 @@ import Attendances from './pages/Attendances'
 import { ApiProvider } from './hooks/useApi'
 import EventEdit from './pages/EventEdit'
 
-const theme = createTheme({})
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0B4DC7',
+      light: '#269BF0',
+    },
+  },
+})
 
 const queryClient = new QueryClient()
 
@@ -38,19 +44,17 @@ const router = createBrowserRouter([
 
 function App(): JSX.Element {
   return (
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <QueryClientProvider client={queryClient}>
-            <ApiProvider>
-              <RouterProvider router={router} />
-            </ApiProvider>
-          </QueryClientProvider>
-        </LocalizationProvider>
-      </ThemeProvider>
-    </React.StrictMode>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <QueryClientProvider client={queryClient}>
+          <ApiProvider>
+            <RouterProvider router={router} />
+          </ApiProvider>
+        </QueryClientProvider>
+      </LocalizationProvider>
+    </ThemeProvider>
   )
 }
 
