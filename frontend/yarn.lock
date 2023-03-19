@@ -525,6 +525,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.8.tgz#56347764786079838faf43f0eeda22dd7328437f"
   integrity sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==
 
+"@fontsource/space-grotesk@^4.5.13":
+  version "4.5.13"
+  resolved "https://registry.yarnpkg.com/@fontsource/space-grotesk/-/space-grotesk-4.5.13.tgz#12df2d9a7f9537ef2285c605371230521ed0734a"
+  integrity sha512-HYjs3C/ME3N55+9la5FGH3NebpBqyCP03DJzDLYlQ/fpnYOoQcEEoojtMyqDr8kBlQtrB6FSoa3vy84Wh0ZFqw==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"

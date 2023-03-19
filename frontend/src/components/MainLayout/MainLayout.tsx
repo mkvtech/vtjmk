@@ -17,7 +17,7 @@ import React, { PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
 import Footer from './Footer'
-import { DRAWER_WIDTH, TOP_BAR_HEIGHT } from './share'
+import { DRAWER_WIDTH } from './share'
 import SideMenu from './SideMenu'
 
 // Reverse engineered from main website ;-;
@@ -73,6 +73,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
           sx={{
             bgcolor: 'white',
             borderBottom: '1px solid #F3F3F3',
+            // ...(sideMenuEnabled && sideMenuOpened && { width: `calc(100% - ${DRAWER_WIDTH}px)` }),
           }}
           position='sticky'
           color='default'
@@ -80,8 +81,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
         >
           {sideMenuEnabled && (
             <IconButton
-              sx={{ mr: 2, position: 'absolute', top: 4, left: 4 }}
-              size='large'
+              sx={{ mr: 2, position: 'absolute', top: 8, left: 8 }}
               onClick={(): void => setSideMenuOpened(!sideMenuOpened)}
             >
               <Menu />
