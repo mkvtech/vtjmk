@@ -120,12 +120,12 @@ def sample_user_data(password_digest)
   full_name = Faker::Name.name
   email = "#{full_name.split.map(&:downcase).join('.')}@example.com"
 
-  { full_name:, email:, password_digest: }
+  { full_name:, email:, password_digest:, privilege_level: :default }
 end
 
 User.insert_all!( # rubocop:disable Rails/SkipsModelValidations
   [
-    { full_name: 'John Doe', email: 'admin@example.com', password_digest: },
+    { full_name: 'John Doe', email: 'admin@example.com', password_digest:, privilege_level: :admin },
     *Array.new(60) { sample_user_data(password_digest) }
   ]
 )
