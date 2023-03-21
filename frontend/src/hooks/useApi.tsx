@@ -32,10 +32,15 @@ export interface Session {
   readonly logout: () => void
 }
 
+export interface SessionData {
+  readonly jwt: string
+  readonly currentUser: Readonly<CurrentUser>
+}
+
 interface ApiContextValueT {
   readonly isAuthenticated: boolean
   readonly session?: Session
-  readonly setSession: (newSession: Session) => void
+  readonly setSession: (newSession: SessionData) => void
 
   readonly client: AxiosInstance
 }
@@ -67,7 +72,7 @@ export function useApi(): ApiContextValueT {
 
 // Provides authentication and pre-configured axios client
 export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element {
-  const [session, setSession] = React.useState<Session | undefined>(undefined)
+  const [session, setSession] = React.useState<SessionData | undefined>(undefined)
   const [loading, setLoading] = React.useState<boolean>(false)
 
   const logout = (): void => {
@@ -92,7 +97,6 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
           setSession({
             jwt: readJwt,
             currentUser: response.data,
-            logout,
           })
         })
         .catch((error) => {
@@ -121,13 +125,13 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
 
         isAuthenticated: !!session,
 
-        setSession: (session: Session): void => {
+        setSession: (session: SessionData): void => {
           setSession(session)
           axiosClient.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`
           localStorage.setItem(LOCAL_STORAGE_JWT_KEY, session.jwt)
         },
 
-        session,
+        ...(session ? { session: { ...session, logout } } : undefined),
       }}
     >
       {children}
