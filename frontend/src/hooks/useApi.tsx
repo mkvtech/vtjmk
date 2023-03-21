@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, isAxiosError } from 'axios'
 import React from 'react'
+import { useQueryClient } from 'react-query'
 import { User } from './api/types'
 
 const API_BASE_URL = 'http://localhost:3000/api'
@@ -75,11 +76,15 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
   const [session, setSession] = React.useState<SessionData | undefined>(undefined)
   const [loading, setLoading] = React.useState<boolean>(false)
 
-  const logout = (): void => {
-    setSession(undefined)
+  const queryClient = useQueryClient()
 
-    axiosClient.defaults.headers.common['Authorization'] = undefined
+  const logout = (): void => {
+    delete axiosClient.defaults.headers.common['Authorization']
     localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
+    // Note: using `refetchActive: false` to avoid refetch some queries, as some will fail without 'Authorization'
+    // header. See browser's console.
+    queryClient.invalidateQueries({ refetchActive: false })
+    setSession(undefined)
   }
 
   React.useMemo(() => {
@@ -102,6 +107,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
         .catch((error) => {
           if (isAxiosError(error) && error.response && error.response.status === 401) {
             localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
+            axiosClient.defaults.headers.common['Authorization'] = undefined
 
             return
           }
@@ -129,6 +135,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
           setSession(session)
           axiosClient.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`
           localStorage.setItem(LOCAL_STORAGE_JWT_KEY, session.jwt)
+          queryClient.invalidateQueries({ refetchActive: false })
         },
 
         ...(session ? { session: { ...session, logout } } : undefined),
