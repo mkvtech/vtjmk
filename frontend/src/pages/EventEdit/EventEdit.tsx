@@ -1,8 +1,7 @@
 import { ArrowBack } from '@mui/icons-material'
-import { Divider, Skeleton, Typography } from '@mui/material'
+import { Container, Divider, Skeleton, Typography } from '@mui/material'
 import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import useQueryEvent from '../../hooks/api/useQueryEvent'
 import Form from './Form'
 
@@ -16,9 +15,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const eventQuery = useQueryEvent(eventId)
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       {eventQuery.isError ? (
         <Typography component='h1' variant='h4'>
           Could not load event :(
@@ -54,6 +51,6 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           )}
         </>
       )}
-    </>
+    </Container>
   )
 }

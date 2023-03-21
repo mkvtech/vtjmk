@@ -1,11 +1,10 @@
 import { ArrowBack, Edit } from '@mui/icons-material'
-import { Badge, Button, Divider, Typography } from '@mui/material'
+import { Badge, Button, Container, Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import { useQueryPolicies } from '../../hooks/api/quries'
 import useQueryEvent from '../../hooks/api/useQueryEvent'
 import { useApi } from '../../hooks/useApi'
@@ -46,9 +45,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const eventQuery = useQueryEvent(eventId)
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       {eventQuery.isLoading || eventQuery.isIdle ? (
         <Typography component='p'>We are loading conference...</Typography>
       ) : eventQuery.isError ? (
@@ -121,6 +118,6 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           </Box>
         </>
       )}
-    </>
+    </Container>
   )
 }

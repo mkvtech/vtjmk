@@ -1,16 +1,13 @@
 import { ArrowBack } from '@mui/icons-material'
-import { Box, Button, Divider, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 
 export default function ParticipationForm(): JSX.Element {
   const { eventId } = useParams()
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
         <Typography component='h1' variant='h4'>
           Participation Form
@@ -78,6 +75,6 @@ export default function ParticipationForm(): JSX.Element {
           </Box>
         </Box>
       </Box>
-    </>
+    </Container>
   )
 }

@@ -3,7 +3,6 @@ import { isAxiosError } from 'axios'
 import { SyntheticEvent, useState } from 'react'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
-import Navigation from '../../components/Navigation'
 import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
 
@@ -39,8 +38,6 @@ export default function Login(): JSX.Element {
 
   return (
     <div>
-      <Navigation />
-
       <Typography component='h1' variant='h4'>
         Login page
       </Typography>

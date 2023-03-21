@@ -1,9 +1,8 @@
 import { ArrowBack } from '@mui/icons-material'
-import { Box, Button, Divider, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import { SyntheticEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import { useMutationCreateAttendance } from '../../hooks/api/mutations'
 
 export default function Authenticated({ eventId }: { eventId: string }): JSX.Element {
@@ -29,9 +28,7 @@ export default function Authenticated({ eventId }: { eventId: string }): JSX.Ele
   }
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
         <Typography component='h1' variant='h4'>
           Attendance Form
@@ -80,6 +77,6 @@ export default function Authenticated({ eventId }: { eventId: string }): JSX.Ele
           </Box>
         </Box>
       </form>
-    </>
+    </Container>
   )
 }

@@ -1,7 +1,6 @@
-import { List, ListItem, Typography } from '@mui/material'
+import { Container, List, ListItem, Typography } from '@mui/material'
 import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import useQueryConference from '../../hooks/api/useQueryConference'
 import useQueryEvents from '../../hooks/api/useQueryEvents'
 
@@ -16,9 +15,7 @@ export default function Conference(): JSX.Element {
   const eventsQuery = useQueryEvents(conferenceId)
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       {conferenceQuery.isError ? (
         <Typography component='p'>/!\ There was an error while loading a query</Typography>
       ) : conferenceQuery.isLoading || conferenceQuery.isIdle ? (
@@ -50,6 +47,6 @@ export default function Conference(): JSX.Element {
           )}
         </div>
       )}
-    </>
+    </Container>
   )
 }

@@ -2,6 +2,7 @@ import { ArrowBack, Download, Print } from '@mui/icons-material'
 import {
   Alert,
   Button,
+  Container,
   Divider,
   FormControl,
   InputLabel,
@@ -17,7 +18,6 @@ import { useQuery } from 'react-query'
 import { Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import { attendanceSchema, userSchema } from '../../hooks/api/schemas'
 import { useApi } from '../../hooks/useApi'
 import AttendanceItem from './AttendanceItem'
@@ -65,9 +65,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   )
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
         <Typography component='h1' variant='h4'>
           Attendants
@@ -158,6 +156,6 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           </Box>
         </Box>
       </Box>
-    </>
+    </Container>
   )
 }

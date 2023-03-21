@@ -1,6 +1,7 @@
 import { ArrowBack, Download, Print } from '@mui/icons-material'
 import {
   Button,
+  Container,
   Divider,
   FormControl,
   InputLabel,
@@ -14,15 +15,12 @@ import {
 import { Box } from '@mui/system'
 import { useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 
 export default function Participants(): JSX.Element {
   const { eventId } = useParams()
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
         <Typography component='h1' variant='h4'>
           Participants
@@ -129,6 +127,6 @@ export default function Participants(): JSX.Element {
           </Box>
         </Box>
       </Box>
-    </>
+    </Container>
   )
 }

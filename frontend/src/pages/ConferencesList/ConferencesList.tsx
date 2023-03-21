@@ -1,7 +1,6 @@
-import { Typography, List, ListItem } from '@mui/material'
+import { Typography, List, ListItem, Container } from '@mui/material'
 import { useQuery } from 'react-query'
 import Link from '../../components/Link'
-import Navigation from '../../components/Navigation'
 import { useApi } from '../../hooks/useApi'
 
 interface Conference {
@@ -19,9 +18,7 @@ export default function ConferencesList(): JSX.Element {
   })
 
   return (
-    <>
-      <Navigation />
-
+    <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography component='h1' variant='h4'>
         Conferences
       </Typography>
@@ -41,6 +38,6 @@ export default function ConferencesList(): JSX.Element {
       ) : (
         <Typography component='p'>Unexpected state :(</Typography>
       )}
-    </>
+    </Container>
   )
 }
