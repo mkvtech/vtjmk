@@ -13,4 +13,12 @@ class ApplicationPolicy < ActionPolicy::Base
   #  def owner?
   #    record.user_id == user.id
   #  end
+
+  def require_user
+    deny! unless user
+  end
+
+  def allow_admin
+    allow! if user.admin?
+  end
 end

@@ -2,13 +2,15 @@
 class EventPolicy < ApplicationPolicy
   authorize :user, allow_nil: true
 
+  pre_check :require_user, :allow_admin
+
   # TODO: Rename to attendances_index?
   def view_attendances?
-    user && read_or_manage?
+    read_or_manage?
   end
 
   def update?
-    user && manage?
+    manage?
   end
 
   def manage?
