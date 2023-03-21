@@ -34,6 +34,60 @@ RSpec.describe '/events' do
         expect(json_response.pluck(:id)).to match_array(conference1_events.map(&:id))
       end
     end
+
+    context 'with "from" parameter' do
+      let(:params) { { from: Time.zone.today } }
+
+      let(:conference) { create(:conference) }
+      let!(:events) do
+        [
+          create(:event, conference:, date: 1.month.ago),
+          create(:event, conference:, date: 1.month.from_now),
+          create(:event, conference:, date: 2.years.from_now)
+        ]
+      end
+
+      it 'returns events from specified time range' do
+        make_request
+        expect(json_response.pluck(:id)).to contain_exactly(events[1].id, events[2].id)
+      end
+    end
+
+    context 'with "to" parameter' do
+      let(:params) { { to: 1.year.from_now } }
+
+      let(:conference) { create(:conference) }
+      let!(:events) do
+        [
+          create(:event, conference:, date: 1.month.ago),
+          create(:event, conference:, date: 1.month.from_now),
+          create(:event, conference:, date: 2.years.from_now)
+        ]
+      end
+
+      it 'returns events from specified time range' do
+        make_request
+        expect(json_response.pluck(:id)).to contain_exactly(events[0].id, events[1].id)
+      end
+    end
+
+    context 'with "from" and "to" parameters' do
+      let(:params) { { from: Time.zone.today, to: 1.year.from_now } }
+
+      let(:conference) { create(:conference) }
+      let!(:events) do
+        [
+          create(:event, conference:, date: 1.month.ago),
+          create(:event, conference:, date: 1.month.from_now),
+          create(:event, conference:, date: 2.years.from_now)
+        ]
+      end
+
+      it 'returns events from specified time range' do
+        make_request
+        expect(json_response.pluck(:id)).to contain_exactly(events[1].id)
+      end
+    end
   end
 
   describe 'GET /api/events/:id' do

@@ -3,9 +3,11 @@ module Api
   class EventsController < ApplicationController
     before_action :set_event, only: %i[show update destroy]
 
-    def index
+    def index # rubocop:disable Metrics/AbcSize
       @events = Event.all
       @events = @events.where(conference_id: params[:conference_id]) if params[:conference_id].present?
+      @events = @events.where(date: params[:from]..) if params[:from].present?
+      @events = @events.where(date: ..params[:to]) if params[:to].present?
     end
 
     def show; end
