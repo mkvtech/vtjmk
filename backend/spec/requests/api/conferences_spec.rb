@@ -7,7 +7,7 @@ RSpec.describe '/api/conferences' do
     it 'renders a successful response' do
       get '/api/conferences'
       expect(response).to be_successful
-      expect(json_response.pluck(:id)).to match_array(conferences.map(&:id))
+      expect(json_response.pluck(:id)).to match_array(conferences.map { _1.id.to_s })
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe '/api/conferences' do
       expect(response).to be_successful
       expect(json_response).to include(
         {
-          id: conference.id,
+          id: conference.id.to_s,
           title: conference.title,
           description: conference.description
         }
@@ -87,7 +87,7 @@ RSpec.describe '/api/conferences' do
         expect(response).to have_http_status(:ok)
         expect(json_response).to include(
           {
-            id: conference.id,
+            id: conference.id.to_s,
             title: 'Updated',
             description: conference.description
           }

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query'
 import { z } from 'zod'
 import { useApi } from '../useApi'
-import { Attendance } from './types'
+import { Attendance, Conference, conferenceSchema, Event, eventSchema } from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
 // Check how this function works with `undefined`
@@ -37,4 +37,26 @@ export function useQueryPolicies<ParamsT, SchemaT extends z.ZodTypeAny>({
 
     return parsedData
   })
+}
+
+const conferencesQuerySchema = z.array(conferenceSchema)
+export function useQueryConferences(): UseQueryResult<readonly Readonly<Conference>[]> {
+  const { client } = useApi()
+
+  return useQuery(['/conferences'], () =>
+    client.get('/conferences').then((response) => conferencesQuerySchema.parse(response.data))
+  )
+}
+
+const eventsQuerySchema = z.array(eventSchema)
+export function useQueryEvents(params: {
+  conferenceId?: string
+  from?: string
+  to?: string
+}): UseQueryResult<readonly Readonly<Event>[]> {
+  const { client } = useApi()
+
+  return useQuery<readonly Readonly<Event>[]>(['/events', params], () =>
+    client.get(`/events${addParams(params)}`).then((response) => eventsQuerySchema.parse(response.data))
+  )
 }

@@ -16,6 +16,22 @@ export const attendanceSchema = z.object({
 })
 export type Attendance = z.infer<typeof attendanceSchema>
 
+export const conferenceSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+})
+export type Conference = z.infer<typeof conferenceSchema>
+
+export const eventSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  conferenceId: z.string(),
+  date: z.string().transform(isoToDate),
+})
+export type Event = z.infer<typeof eventSchema>
+
 export const userSchema = z.object({
   id: z.string(),
   email: z.string(),

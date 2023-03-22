@@ -13,7 +13,7 @@ RSpec.describe '/events' do
       it 'renders a successful response' do
         make_request
         expect(response).to be_successful
-        expect(json_response.pluck(:id)).to match_array(events.map(&:id))
+        expect(json_response.pluck(:id)).to match_array(events.map { _1.id.to_s })
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe '/events' do
 
       it 'returns events related to specified conference' do
         make_request
-        expect(json_response.pluck(:id)).to match_array(conference1_events.map(&:id))
+        expect(json_response.pluck(:id)).to match_array(conference1_events.map { _1.id.to_s })
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe '/events' do
 
       it 'returns events from specified time range' do
         make_request
-        expect(json_response.pluck(:id)).to contain_exactly(events[1].id, events[2].id)
+        expect(json_response.pluck(:id)).to contain_exactly(events[1].id.to_s, events[2].id.to_s)
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe '/events' do
 
       it 'returns events from specified time range' do
         make_request
-        expect(json_response.pluck(:id)).to contain_exactly(events[0].id, events[1].id)
+        expect(json_response.pluck(:id)).to contain_exactly(events[0].id.to_s, events[1].id.to_s)
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe '/events' do
 
       it 'returns events from specified time range' do
         make_request
-        expect(json_response.pluck(:id)).to contain_exactly(events[1].id)
+        expect(json_response.pluck(:id)).to contain_exactly(events[1].id.to_s)
       end
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe '/events' do
       )
       expect(json_response).to include(
         {
-          id: event.id,
+          id: event.id.to_s,
           title: event.title,
           description: event.description,
           attendeesLimit: event.attendees_limit,
@@ -125,7 +125,7 @@ RSpec.describe '/events' do
           attendeesLimit: 5,
           participantsLimit: 5,
           date: Time.zone.today,
-          conferenceId: conference.id,
+          conferenceId: conference.id.to_s,
           registrationFrom: 5.days.ago,
           registrationTo: 5.days.from_now
         }
@@ -146,7 +146,7 @@ RSpec.describe '/events' do
             description: 'Description',
             attendeesLimit: 5,
             participantsLimit: 5,
-            conferenceId: conference.id
+            conferenceId: conference.id.to_s
           }
         )
       end
