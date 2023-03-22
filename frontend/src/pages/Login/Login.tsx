@@ -1,4 +1,5 @@
-import { Alert, Box, Button, TextField, Typography } from '@mui/material'
+import { ArrowBack, Language } from '@mui/icons-material'
+import { Alert, Box, Button, Divider, IconButton, Link, Paper, TextField, Typography, useTheme } from '@mui/material'
 import { isAxiosError } from 'axios'
 import { SyntheticEvent, useState } from 'react'
 import { useMutation } from 'react-query'
@@ -7,6 +8,8 @@ import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
 
 export default function Login(): JSX.Element {
+  const theme = useTheme()
+
   const navigate = useNavigate()
   const { client, setSession, isAuthenticated } = useApi()
 
@@ -37,49 +40,82 @@ export default function Login(): JSX.Element {
   }
 
   return (
-    <div>
-      <Typography component='h1' variant='h4'>
-        Login page
-      </Typography>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        bgcolor: theme.palette.primary.main,
+      }}
+    >
+      <Box sx={{ flex: 1, maxWidth: '600px' }}>
+        <Paper>
+          <Box sx={{ px: 4, pt: 4, pb: 2 }}>
+            <Box sx={{ display: 'flex' }}>
+              <Typography component='h1' variant='h4' sx={{ flex: '1' }}>
+                Log in to Your Account
+              </Typography>
 
-      {loginMutation.isError ? (
-        <Alert severity='error'>
-          {isAxiosError(loginMutation.error) && loginMutation.error.code === 'ERR_NETWORK'
-            ? 'Network error'
-            : loginMutation.error instanceof ApiResponseError
-            ? loginMutation.error.errors.map((error) => error.fullMessage).join(' ')
-            : null}
-        </Alert>
-      ) : null}
+              <IconButton>
+                <Language />
+              </IconButton>
+            </Box>
+          </Box>
 
-      <form onSubmit={onSubmit}>
-        <TextField
-          label='email'
-          fullWidth
-          required
-          margin='normal'
-          onChange={(event): void => setEmail(event.currentTarget.value)}
-        />
-        <TextField
-          label='password'
-          type='password'
-          fullWidth
-          required
-          margin='normal'
-          onChange={(event): void => setPassword(event.currentTarget.value)}
-        />
+          <Divider />
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }} margin='normal'>
-          {/* TODO: This button is a link to other similar form */}
+          <Box sx={{ px: 4, pb: 4, pt: 2 }}>
+            {loginMutation.isError ? (
+              <Alert severity='error'>
+                {isAxiosError(loginMutation.error) && loginMutation.error.code === 'ERR_NETWORK'
+                  ? 'Network error'
+                  : loginMutation.error instanceof ApiResponseError
+                  ? loginMutation.error.errors.map((error) => error.fullMessage).join(' ')
+                  : null}
+              </Alert>
+            ) : null}
 
-          <Button component={RouterLink} to='/signup' variant='text'>
-            Create an account
-          </Button>
-          <Button variant='contained' type='submit'>
-            Login
-          </Button>
+            <form onSubmit={onSubmit}>
+              <TextField
+                label='Email'
+                fullWidth
+                required
+                margin='normal'
+                onChange={(event): void => setEmail(event.currentTarget.value)}
+              />
+
+              <TextField
+                label='Password'
+                type='password'
+                fullWidth
+                required
+                margin='normal'
+                onChange={(event): void => setPassword(event.currentTarget.value)}
+              />
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }} margin='normal'>
+                <Button component={RouterLink} to='/signup' variant='text'>
+                  Create an account
+                </Button>
+                <Button variant='contained' type='submit'>
+                  Login
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Paper>
+
+        <Box sx={{ textAlign: 'center', mt: 4 }}>
+          <Link
+            component={RouterLink}
+            to='/'
+            sx={{ color: theme.palette.primary.contrastText, verticalAlign: 'middle' }}
+          >
+            <ArrowBack fontSize='small' sx={{ verticalAlign: 'middle' }} /> Back to the main website
+          </Link>
         </Box>
-      </form>
-    </div>
+      </Box>
+    </Box>
   )
 }

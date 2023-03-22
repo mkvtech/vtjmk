@@ -1,4 +1,5 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { ArrowBack, Language } from '@mui/icons-material'
+import { Box, Button, Divider, IconButton, Link, Paper, TextField, Typography, useTheme } from '@mui/material'
 import { SyntheticEvent, useState } from 'react'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
@@ -6,6 +7,7 @@ import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
 
 export default function CreateAccount(): JSX.Element {
+  const theme = useTheme()
   const navigate = useNavigate()
   const { client, setSession, isAuthenticated } = useApi()
 
@@ -62,54 +64,91 @@ export default function CreateAccount(): JSX.Element {
   }
 
   return (
-    <>
-      <Typography component='h1' variant='h4'>
-        Create an Account
-      </Typography>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        bgcolor: theme.palette.primary.main,
+      }}
+    >
+      <Box sx={{ flex: 1, maxWidth: '600px' }}>
+        <Paper>
+          <Box sx={{ px: 4, pt: 4, pb: 2 }}>
+            <Box sx={{ display: 'flex' }}>
+              <Typography component='h1' variant='h4' sx={{ flex: '1' }}>
+                Create an Account
+              </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label='Full Name'
-          type='text'
-          fullWidth
-          required
-          margin='normal'
-          onChange={(event): void => setFullName(event.currentTarget.value)}
-          error={fullNameError.length > 0}
-          helperText={fullNameError}
-        />
+              <IconButton>
+                <Language />
+              </IconButton>
+            </Box>
+          </Box>
 
-        <TextField
-          label='Email'
-          type='email'
-          fullWidth
-          required
-          margin='normal'
-          onChange={(event): void => setEmail(event.currentTarget.value)}
-          error={emailError.length > 0}
-          helperText={emailError}
-        />
+          <Divider />
 
-        <TextField
-          label='Password'
-          type='password'
-          fullWidth
-          required
-          margin='normal'
-          onChange={(event): void => setPassword(event.currentTarget.value)}
-          error={passwordError.length > 0}
-          helperText={passwordError}
-        />
+          <Box sx={{ px: 4, pb: 4, pt: 2 }}>
+            <form onSubmit={handleSubmit}>
+              <Box>
+                <TextField
+                  label='Full Name'
+                  type='text'
+                  required
+                  fullWidth
+                  margin='normal'
+                  onChange={(event): void => setFullName(event.currentTarget.value)}
+                  error={fullNameError.length > 0}
+                  helperText={fullNameError}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  label='Email'
+                  type='email'
+                  required
+                  fullWidth
+                  margin='normal'
+                  onChange={(event): void => setEmail(event.currentTarget.value)}
+                  error={emailError.length > 0}
+                  helperText={emailError}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  label='Password'
+                  type='password'
+                  required
+                  fullWidth
+                  margin='normal'
+                  onChange={(event): void => setPassword(event.currentTarget.value)}
+                  error={passwordError.length > 0}
+                  helperText={passwordError}
+                />
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }} margin='normal'>
+                <Button component={RouterLink} to='/login' variant='text'>
+                  Login with Existing Account
+                </Button>
+                <Button variant='contained' type='submit'>
+                  Sign Up
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Paper>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }} margin='normal'>
-          <Button component={RouterLink} to='/login' variant='text'>
-            Login to Using an Existing Account
-          </Button>
-          <Button variant='contained' type='submit'>
-            Sign Up
-          </Button>
+        <Box sx={{ textAlign: 'center', mt: 4 }}>
+          <Link
+            component={RouterLink}
+            to='/'
+            sx={{ color: theme.palette.primary.contrastText, verticalAlign: 'middle' }}
+          >
+            <ArrowBack fontSize='small' sx={{ verticalAlign: 'middle' }} /> Back to the main website
+          </Link>
         </Box>
-      </form>
-    </>
+      </Box>
+    </Box>
   )
 }
