@@ -24,9 +24,6 @@ export default function AttendanceMenu({
         </Box>
       ) : (
         <Box>
-          <Button component={RouterLink} to={`/events/${eventId}/attend`}>
-            Attend
-          </Button>
           <Button variant='contained' component={RouterLink} to={`/events/${eventId}/participate`}>
             Participate
           </Button>

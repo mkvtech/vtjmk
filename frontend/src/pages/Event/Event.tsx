@@ -1,14 +1,15 @@
-import { ArrowBack, Edit } from '@mui/icons-material'
+import { Edit } from '@mui/icons-material'
 import { Badge, Button, Container, Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import dayjs from 'dayjs'
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import Link from '../../components/Link'
-import { useQueryPolicies } from '../../hooks/api/quries'
-import useQueryEvent from '../../hooks/api/useQueryEvent'
+import { useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/quries'
 import { useApi } from '../../hooks/useApi'
 import AttendanceMenu from './AttendanceMenu'
+import { useIsAllowed } from '../../hooks/api/share'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -43,6 +44,9 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const { session } = useApi()
   const policiesQuery = useQueryPolicies({ params: policiesQueryInput, schema: EVENT_PAGE_POLICIES_SCHEMA })
   const eventQuery = useQueryEvent(eventId)
+  const conferenceQuery = useQueryConference(eventQuery.data?.conferenceId)
+
+  const isAllowed = useIsAllowed(policiesQuery, 'events', eventId)
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
@@ -52,38 +56,50 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         <Typography component='p'>/!\ There was an error while loading a query</Typography>
       ) : (
         <>
-          <Box sx={{ my: 2 }}>
-            <Box display='flex' justifyContent='space-between'>
-              <Typography component='h1' variant='h4'>
-                {eventQuery.data.title}
-              </Typography>
-            </Box>
-
+          {conferenceQuery.isSuccess && (
             <Typography>
-              <Link href={`/conferences/${eventQuery.data.conferenceId}`}>
-                <ArrowBack fontSize='small' />
-                Back to conference
-              </Link>
+              <Link href={`/conferences/${eventQuery.data.conferenceId}`}>{conferenceQuery.data.title}</Link>
             </Typography>
+          )}
 
-            {policiesQuery.isSuccess && (
+          <Typography component='h1' variant='h2' fontFamily='Space Grotesk'>
+            {eventQuery.data.title}
+          </Typography>
+
+          <Box sx={{ my: 2 }}>
+            <Box display='flex' alignItems='center' justifyContent='space-between'>
+              <Typography>
+                {dayjs(eventQuery.data.date).isBefore(dayjs())
+                  ? `Took place ${dayjs(eventQuery.data.date).format('DD/MM/YYYY')}`
+                  : `Will take place ${dayjs(eventQuery.data.date).format('DD/MM/YYYY')}`}
+              </Typography>
+
+              {!session ? (
+                <Typography component='p'>
+                  You must <Link href='/login'>login</Link> to attend
+                </Typography>
+              ) : (
+                <AttendanceMenu eventId={eventId} currentUserId={session.currentUser.id} />
+              )}
+            </Box>
+          </Box>
+
+          {policiesQuery.isSuccess && (isAllowed('viewAttendances') || isAllowed('update')) && (
+            <>
+              <Divider />
+
               <Box display='flex' justifyContent='space-between' sx={{ my: 2 }}>
-                {policiesQuery.data.policies.events.items[eventId].viewAttendances && (
+                {isAllowed('viewAttendances') && (
                   <Box display='flex'>
-                    <Badge badgeContent={3} color='secondary'>
+                    <Badge badgeContent={3} color='primary'>
                       <Button component={RouterLink} to={`/events/${eventId}/participants`}>
                         View Participants
-                      </Button>
-                    </Badge>
-                    <Badge badgeContent={3} color='secondary'>
-                      <Button component={RouterLink} to={`/events/${eventId}/attendants`}>
-                        View Attendants
                       </Button>
                     </Badge>
                   </Box>
                 )}
 
-                {policiesQuery.data.policies.events.items[eventId].update && (
+                {isAllowed('update') && (
                   <Button
                     variant='contained'
                     startIcon={<Edit />}
@@ -94,27 +110,13 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                   </Button>
                 )}
               </Box>
-            )}
-          </Box>
+            </>
+          )}
 
           <Divider />
 
           <Box sx={{ my: 2 }}>
             <Typography>{eventQuery.data.description}</Typography>
-          </Box>
-
-          <Divider />
-
-          <Box sx={{ my: 2 }}>
-            <Box display='flex' flexDirection='row-reverse'>
-              {!session ? (
-                <Typography component='p'>
-                  You must <Link href='/login'>login</Link> to attend
-                </Typography>
-              ) : (
-                <AttendanceMenu eventId={eventId} currentUserId={session.currentUser.id} />
-              )}
-            </Box>
           </Box>
         </>
       )}

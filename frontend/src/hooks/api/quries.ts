@@ -48,6 +48,18 @@ export function useQueryConferences(): UseQueryResult<readonly Readonly<Conferen
   )
 }
 
+export function useQueryConference(id: string | undefined): UseQueryResult<Readonly<Conference>> {
+  const { client } = useApi()
+  return useQuery<Readonly<Conference>>(
+    ['/conferences', id],
+    () =>
+      typeof id === 'undefined'
+        ? Promise.reject(new Error('Invalid id'))
+        : client.get(`/conferences/${id}`).then((response) => conferenceSchema.parse(response.data)),
+    { enabled: !!id }
+  )
+}
+
 const eventsQuerySchema = z.array(eventSchema)
 export function useQueryEvents(params: {
   conferenceId?: string
@@ -58,5 +70,12 @@ export function useQueryEvents(params: {
 
   return useQuery<readonly Readonly<Event>[]>(['/events', params], () =>
     client.get(`/events${addParams(params)}`).then((response) => eventsQuerySchema.parse(response.data))
+  )
+}
+
+export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
+  const { client } = useApi()
+  return useQuery<Readonly<Event>>(['/events', id], () =>
+    client.get(`/events/${id}`).then((response) => eventSchema.parse(response.data))
   )
 }
