@@ -2,7 +2,7 @@ import { Box, Container, Link, MenuItem, MenuList, Paper, Popper, styled } from 
 import dayjs from 'dayjs'
 import { SyntheticEvent, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { useQueryConferences, useQueryEvents } from '../../hooks/api/quries'
+import { useQueryConferences, useQueryEvents } from '../../hooks/api/queries'
 
 // Reverse engineered from main website ;-;
 const AppBarTabLink = styled(Link)((_theme) => ({

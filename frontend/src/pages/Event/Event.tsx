@@ -6,7 +6,7 @@ import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import Link from '../../components/Link'
-import { useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/quries'
+import { useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
 import AttendanceMenu from './AttendanceMenu'
 import { useIsAllowed } from '../../hooks/api/share'

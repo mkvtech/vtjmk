@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import { useQueryAttendances } from '../../hooks/api/quries'
+import { useQueryAttendances } from '../../hooks/api/queries'
 
 export default function AttendanceMenu({
   currentUserId,
