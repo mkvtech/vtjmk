@@ -1,10 +1,45 @@
 import { ArrowBack } from '@mui/icons-material'
 import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useMutation } from 'react-query'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Link from '../../components/Link'
+import { useApi } from '../../hooks/useApi'
 
 export default function ParticipationForm(): JSX.Element {
   const { eventId } = useParams()
+
+  return eventId === undefined ? <Navigate to='/conferences' replace /> : <Page eventId={eventId} />
+}
+
+interface IFormInput {
+  comment: string
+  title: string
+}
+
+function Page({ eventId }: { eventId: string }): JSX.Element {
+  const navigate = useNavigate()
+  const { client } = useApi()
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      comment: '',
+      title: '',
+    },
+  })
+  const createMutation = useMutation((data: { comment: string }) =>
+    client.post('/participations', { comment: data.comment, eventId })
+  )
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    createMutation.mutate(
+      { comment: data.comment },
+      {
+        onSuccess: (_response) => {
+          navigate(`/events/${eventId}`)
+        },
+      }
+    )
+  }
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
@@ -24,57 +59,61 @@ export default function ParticipationForm(): JSX.Element {
           You are registering to participate in {eventId} with presentation. If you want to attend an event without
           presenting, please fill <Link href={`/events/${eventId}/attend`}>attendance form</Link> instead.
         </Typography>
-
-        <Typography sx={{ my: 1 }}>Some fields were pre-filled with data from your account.</Typography>
       </Box>
 
       <Divider />
 
-      <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          Basic Information
-        </Typography>
-        <TextField label='Full Name' required fullWidth margin='normal' />
-        <TextField label='Email' required fullWidth type='email' margin='normal' />
-      </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={{ my: 2 }}>
+          <Typography component='h2' variant='h5'>
+            Submission
+          </Typography>
 
-      <Divider />
+          <Typography>This event requires a submission.</Typography>
 
-      <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          Submission
-        </Typography>
+          <Controller
+            name='title'
+            control={control}
+            render={({ field }): JSX.Element => (
+              <TextField {...field} label='Title' required fullWidth margin='normal' />
+            )}
+          />
 
-        <Typography>This event requires a submission.</Typography>
+          <Button variant='contained' component='label'>
+            <input hidden accept='image/*' type='file' />
+            Upload
+          </Button>
+        </Box>
 
-        <TextField label='Title' required fullWidth margin='normal' />
+        <Divider />
 
-        <Button variant='contained' component='label'>
-          <input hidden accept='image/*' type='file' />
-          Upload
-        </Button>
-      </Box>
+        <Box sx={{ my: 2 }}>
+          <Typography component='h2' variant='h5'>
+            Other
+          </Typography>
 
-      <Divider />
+          <Controller
+            name='comment'
+            control={control}
+            render={({ field }): JSX.Element => (
+              <TextField {...field} label='Comment' fullWidth margin='normal' multiline />
+            )}
+          />
+        </Box>
 
-      <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          Other
-        </Typography>
+        <Divider />
 
-        <TextField label='Comment' fullWidth margin='normal' multiline />
-      </Box>
-
-      <Divider />
-
-      <Box sx={{ my: 2 }}>
-        <Typography>After you submit this form, it will be reviewed by event management.</Typography>
-        <Box display='flex' flexDirection='row-reverse'>
-          <Box>
-            <Button variant='contained'>Submit</Button>
+        <Box sx={{ my: 2 }}>
+          <Typography>After you submit this form, it will be reviewed by event management.</Typography>
+          <Box display='flex' flexDirection='row-reverse'>
+            <Box>
+              <Button type='submit' variant='contained'>
+                Submit
+              </Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </form>
     </Container>
   )
 }

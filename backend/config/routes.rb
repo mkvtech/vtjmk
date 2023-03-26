@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     resources :conferences
     resources :events
 
+    # Authenticated User
+    namespace 'user' do
+      get '/participations', to: 'participations#index'
+    end
+
     # TODO: Work on these
     resources :participations
     resources :attendances

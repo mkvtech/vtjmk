@@ -8,8 +8,8 @@ import { z } from 'zod'
 import Link from '../../components/Link'
 import { useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
-import AttendanceMenu from './AttendanceMenu'
 import { useIsAllowed } from '../../hooks/api/share'
+import ParticipationMenu from './ParticipationMenu'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -79,7 +79,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                   You must <Link href='/login'>login</Link> to attend
                 </Typography>
               ) : (
-                <AttendanceMenu eventId={eventId} currentUserId={session.currentUser.id} />
+                <ParticipationMenu eventId={eventId} />
               )}
             </Box>
           </Box>

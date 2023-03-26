@@ -1,7 +1,15 @@
 import { useQuery, UseQueryResult } from 'react-query'
 import { z } from 'zod'
 import { useApi } from '../useApi'
-import { Attendance, Conference, conferenceSchema, Event, eventSchema } from './schemas'
+import {
+  Attendance,
+  Conference,
+  conferenceSchema,
+  Event,
+  eventSchema,
+  Participation,
+  participationSchema,
+} from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
 // Check how this function works with `undefined`
@@ -78,4 +86,23 @@ export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
   return useQuery<Readonly<Event>>(['/events', id], () =>
     client.get(`/events/${id}`).then((response) => eventSchema.parse(response.data))
   )
+}
+
+const participationsSchema = z.array(participationSchema)
+export function useQueryUserParticipations(): UseQueryResult<readonly Readonly<Participation>[]> {
+  const { client } = useApi()
+  return useQuery(['/user/participations'], () =>
+    client.get('/user/participations').then((response) => participationsSchema.parse(response.data))
+  )
+}
+
+export function useQueryUserParticipation(params: {
+  eventId: string
+}): UseQueryResult<Readonly<Participation> | undefined> {
+  const { client } = useApi()
+  return useQuery(['/user/participations', params], async () => {
+    const response = await client.get('/user/participations')
+    const parsedResponse = participationsSchema.parse(response.data)
+    return parsedResponse.find((participation) => participation.eventId === params.eventId)
+  })
 }

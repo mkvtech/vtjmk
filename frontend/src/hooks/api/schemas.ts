@@ -38,3 +38,17 @@ export const userSchema = z.object({
   fullName: z.string(),
 })
 export type User = z.infer<typeof userSchema>
+
+export const participationStatusSchema = z.union([z.literal('pending'), z.literal('approved'), z.literal('rejected')])
+export type ParticipationStatus = z.infer<typeof participationStatusSchema>
+
+export const participationSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  eventId: z.string(),
+  status: attendanceStatusSchema,
+  comment: z.string().optional(),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export type Participation = z.infer<typeof participationSchema>
