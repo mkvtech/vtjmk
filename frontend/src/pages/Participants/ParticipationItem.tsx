@@ -14,7 +14,7 @@ export default function ParticipationItem({ participation }: { participation: Pa
       client.patch(`/participations/${participation.id}/update_status`, { status }),
     {
       onSettled: () => {
-        queryClient.invalidateQueries([`/events/${participation.eventId}/participations`])
+        queryClient.invalidateQueries(['events', participation.eventId, 'participations'])
       },
     }
   )
@@ -31,7 +31,7 @@ export default function ParticipationItem({ participation }: { participation: Pa
     <ListItem>
       <ListItemText
         primary={participation.user.fullName}
-        secondary={`Sent at ${dayjs(participation.createdAt).fromNow()}`}
+        secondary={`Sent ${dayjs(participation.createdAt).fromNow()}`}
       />
 
       {updateStatusMutation.isLoading ? (

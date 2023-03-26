@@ -9,6 +9,10 @@ class EventPolicy < ApplicationPolicy
     read_or_manage?
   end
 
+  def participations_index?
+    read_or_manage?
+  end
+
   def update?
     manage?
   end

@@ -6,10 +6,11 @@ import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import Link from '../../components/Link'
-import { useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/queries'
+import { fetchEventsParticipations, useQueryConference, useQueryEvent, useQueryPolicies } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
 import { useIsAllowed } from '../../hooks/api/share'
 import ParticipationMenu from './ParticipationMenu'
+import { useQuery } from 'react-query'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -18,6 +19,7 @@ const EVENT_PAGE_POLICIES_SCHEMA = z.object({
         z.object({
           viewAttendances: z.boolean(),
           update: z.boolean(),
+          participationsIndex: z.boolean(),
         })
       ),
     }),
@@ -35,18 +37,27 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
     policies: {
       events: {
         items: {
-          [eventId]: ['viewAttendances', 'update'],
+          [eventId]: ['viewAttendances', 'update', 'participationsIndex'],
         },
       },
     },
   }
 
-  const { session } = useApi()
+  const { client, session } = useApi()
+
   const policiesQuery = useQueryPolicies({ params: policiesQueryInput, schema: EVENT_PAGE_POLICIES_SCHEMA })
+  const isAllowed = useIsAllowed(policiesQuery, 'events', eventId)
+
   const eventQuery = useQueryEvent(eventId)
   const conferenceQuery = useQueryConference(eventQuery.data?.conferenceId)
-
-  const isAllowed = useIsAllowed(policiesQuery, 'events', eventId)
+  const participationsQuery = useQuery(
+    ['events', eventId, 'participations'],
+    () => fetchEventsParticipations({ client, eventId }),
+    {
+      enabled: isAllowed('participationsIndex'),
+      select: (data) => data.filter((participation) => participation.status === 'pending').length,
+    }
+  )
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
@@ -91,7 +102,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
               <Box display='flex' justifyContent='space-between' sx={{ my: 2 }}>
                 {isAllowed('viewAttendances') && (
                   <Box display='flex'>
-                    <Badge badgeContent={3} color='primary'>
+                    <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='primary'>
                       <Button component={RouterLink} to={`/events/${eventId}/participants`}>
                         View Participants
                       </Button>

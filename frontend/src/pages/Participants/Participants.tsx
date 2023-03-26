@@ -1,4 +1,4 @@
-import { ArrowBack, Download, Print } from '@mui/icons-material'
+import { Download, Print } from '@mui/icons-material'
 import {
   Alert,
   Button,
@@ -9,6 +9,7 @@ import {
   List,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Skeleton,
   Typography,
 } from '@mui/material'
@@ -16,14 +17,51 @@ import { Box } from '@mui/system'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Navigate, useParams } from 'react-router-dom'
-import { z } from 'zod'
 import Link from '../../components/Link'
-import { participationSchema, userSchema } from '../../hooks/api/schemas'
+import { fetchEventsParticipations, useQueryEvent } from '../../hooks/api/queries'
+import { ParticipationStatus } from '../../hooks/api/schemas'
 import { useApi } from '../../hooks/useApi'
 import ParticipationItem from './ParticipationItem'
 import { ParticipationWithUser } from './share'
 
-const participationsQueryResponseSchema = z.array(participationSchema.merge(z.object({ user: userSchema })))
+type SortOrder = 'date' | 'status' | 'fullName'
+const statusToOrder = (status: ParticipationStatus): number =>
+  status === 'pending' ? 0 : status === 'approved' ? 1 : 2
+
+function sortParticipations(
+  participations: ParticipationWithUser[],
+  order: SortOrder
+): readonly ParticipationWithUser[] {
+  return participations.sort(
+    order === 'date'
+      ? (a, b): number =>
+          b.createdAt.getTime() - a.createdAt.getTime() ||
+          a.user.fullName.localeCompare(b.user.fullName) ||
+          a.id.localeCompare(b.id)
+      : order === 'fullName'
+      ? (a, b): number =>
+          a.user.fullName.localeCompare(b.user.fullName) ||
+          b.createdAt.getTime() - a.createdAt.getTime() ||
+          a.id.localeCompare(b.id)
+      : (a, b): number =>
+          statusToOrder(a.status) - statusToOrder(b.status) ||
+          b.createdAt.getTime() - a.createdAt.getTime() ||
+          a.user.fullName.localeCompare(b.user.fullName) ||
+          a.id.localeCompare(b.id)
+  )
+}
+
+type FilterInput = 'all' | 'pending' | 'approved' | 'rejected'
+function filterParticipations(
+  participations: readonly ParticipationWithUser[],
+  filter: FilterInput
+): readonly ParticipationWithUser[] {
+  if (filter === 'all') {
+    return participations
+  }
+
+  return participations.filter((participation) => participation.status === filter)
+}
 
 export default function Participants(): JSX.Element {
   const { eventId } = useParams()
@@ -33,44 +71,66 @@ export default function Participants(): JSX.Element {
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
   const [allParticipations, setAllParticipations] = useState<readonly ParticipationWithUser[]>([])
+  const [renderedParticipations, setRenderedParticipations] = useState<readonly ParticipationWithUser[]>([])
   const [pendingParticipations, setPendingParticipations] = useState<readonly ParticipationWithUser[]>([])
+
+  const updateParticipations = (
+    participations: readonly ParticipationWithUser[],
+    order: SortOrder,
+    filter: FilterInput
+  ): void => {
+    const sorted = sortParticipations(participations.concat(), order)
+    setAllParticipations(sorted)
+    setRenderedParticipations(filterParticipations(sorted, filter))
+  }
+
+  const [order, setOrder] = useState<SortOrder>('date')
+  const [filter, setFilter] = useState<FilterInput>('all')
 
   const { client } = useApi()
   const participationsQuery = useQuery(
-    [`/events/${eventId}/participations`],
-    async () => {
-      const response = await client.get(`/events/${eventId}/participations`)
-
-      const parsedData = participationsQueryResponseSchema.parse(response.data)
-      parsedData.sort(
-        (a, b) =>
-          a.createdAt.getTime() - b.createdAt.getTime() ||
-          a.user.fullName.localeCompare(b.user.fullName) ||
-          a.id.localeCompare(b.id)
-      )
-
-      return parsedData
-    },
+    ['events', eventId, 'participations'],
+    () => fetchEventsParticipations({ client, eventId }),
     {
       onSuccess: (data) => {
         setPendingParticipations(data.filter((participation) => participation.status === 'pending'))
-        setAllParticipations(data)
+        updateParticipations(data, order, filter)
       },
     }
   )
+  const eventQuery = useQueryEvent(eventId)
+
+  const handleOrderSelectChange = (event: SelectChangeEvent): void => {
+    const { value } = event.target
+
+    if (value !== 'date' && value !== 'fullName' && value !== 'status') {
+      return
+    }
+
+    setOrder(value)
+    updateParticipations(allParticipations, value, filter)
+  }
+
+  const handleFilterSelectChange = (event: SelectChangeEvent): void => {
+    const { value } = event.target
+
+    if (value !== 'all' && value !== 'pending' && value !== 'approved' && value !== 'rejected') {
+      return
+    }
+
+    setFilter(value)
+    updateParticipations(allParticipations, order, value)
+  }
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          Participants
+        <Typography>
+          <Link href={`/events/${eventId}`}>{eventQuery.isSuccess ? eventQuery.data.title : 'Back'}</Link>
         </Typography>
 
-        <Typography>
-          <Link href={`/events/${eventId}`}>
-            <ArrowBack fontSize='small' />
-            Back
-          </Link>
+        <Typography component='h1' variant='h4'>
+          Participants
         </Typography>
       </Box>
 
@@ -79,7 +139,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Divider />
 
           <Box sx={{ my: 2 }}>
-            <Typography component='h1' variant='h4'>
+            <Typography component='h2' variant='h5'>
               Pending Requests
             </Typography>
 
@@ -100,15 +160,15 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       <Divider />
 
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
+        <Typography component='h2' variant='h5'>
           All requests
         </Typography>
 
         <FormControl size='small' sx={{ minWidth: 120 }}>
           <InputLabel id='participants-filter-label'>Filter</InputLabel>
-          <Select labelId='participants-filter-label' label='Filter' value=''>
+          <Select labelId='participants-filter-label' label='Filter' value={filter} onChange={handleFilterSelectChange}>
             <MenuItem value='all'>All</MenuItem>
-            <MenuItem value='accepted'>Accepted</MenuItem>
+            <MenuItem value='approved'>Approved</MenuItem>
             <MenuItem value='rejected'>Rejected</MenuItem>
             <MenuItem value='pending'>Pending</MenuItem>
           </Select>
@@ -116,11 +176,10 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
 
         <FormControl size='small' sx={{ minWidth: 150, ml: 2 }}>
           <InputLabel id='participants-sort-label'>Sort</InputLabel>
-          <Select labelId='participants-sort-label' label='Sort' value=''>
-            <MenuItem value='firstName'>First Name</MenuItem>
-            <MenuItem value='lastName'>Last Name</MenuItem>
-            <MenuItem value='email'>Email</MenuItem>
+          <Select labelId='participants-sort-label' label='Sort' value={order} onChange={handleOrderSelectChange}>
             <MenuItem value='date'>Date</MenuItem>
+            <MenuItem value='fullName'>Full Name</MenuItem>
+            <MenuItem value='status'>Status</MenuItem>
           </Select>
         </FormControl>
 
@@ -131,7 +190,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         ) : participationsQuery.isSuccess ? (
           <Box sx={{ my: 2 }}>
             <List sx={{ maxHeight: 300, overflow: 'auto' }}>
-              {allParticipations.map((participation) => (
+              {renderedParticipations.map((participation) => (
                 <ParticipationItem key={participation.id} participation={participation} />
               ))}
             </List>

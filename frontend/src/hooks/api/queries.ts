@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { AxiosInstance } from 'axios'
 import { useQuery, UseQueryResult } from 'react-query'
 import { z } from 'zod'
 import { useApi } from '../useApi'
@@ -9,6 +11,7 @@ import {
   eventSchema,
   Participation,
   participationSchema,
+  userSchema,
 } from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
@@ -86,6 +89,12 @@ export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
   return useQuery<Readonly<Event>>(['/events', id], () =>
     client.get(`/events/${id}`).then((response) => eventSchema.parse(response.data))
   )
+}
+
+const eventsParticipationsResponseSchema = z.array(participationSchema.merge(z.object({ user: userSchema })))
+export async function fetchEventsParticipations({ client, eventId }: { client: AxiosInstance; eventId: string }) {
+  const response = await client.get(`/events/${eventId}/participations`)
+  return eventsParticipationsResponseSchema.parse(response.data)
 }
 
 const participationsSchema = z.array(participationSchema)

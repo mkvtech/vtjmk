@@ -10,7 +10,7 @@ module Api
     }.freeze
 
     RESOURCE_NAME_TO_TESTABLE_ACTIONS_MAP = {
-      events: %w[view_attendances update]
+      events: %w[view_attendances update participations_index]
     }.freeze
 
     # TODO: This method will get more features in the future and then be refactored
