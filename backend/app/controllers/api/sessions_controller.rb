@@ -4,7 +4,7 @@ module Api
     require_authenticated_user only: %i[me]
 
     def signup
-      user = User.new(params.permit(:email, :password, :full_name))
+      user = ::User.new(params.permit(:email, :password, :full_name))
 
       return render json: { errors: serialize_errors(user.errors) }, status: :unprocessable_entity unless user.save
 
@@ -13,7 +13,7 @@ module Api
     end
 
     def login
-      user = User.find_by(email: params[:email])
+      user = ::User.find_by(email: params[:email])
 
       if user.nil? || !user.authenticate(params[:password])
         error = { type: 'invalid_email_or_password', fullMessage: 'Invalid email or password' }
