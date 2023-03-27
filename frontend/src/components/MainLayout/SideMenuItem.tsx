@@ -2,12 +2,14 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { SideMenuPolicies } from './share'
 
 interface SubMenuItemData {
   readonly id: string
   readonly displayName: string
   readonly icon: JSX.Element
   readonly path: string
+  readonly isVisible: boolean | ((policies: SideMenuPolicies) => boolean)
 }
 
 interface MenuItemData {
@@ -18,7 +20,13 @@ interface MenuItemData {
   readonly items?: readonly SubMenuItemData[]
 }
 
-export default function SideMenuItem({ item }: { item: MenuItemData }): JSX.Element {
+export default function SideMenuItem({
+  item,
+  policies,
+}: {
+  item: MenuItemData
+  policies: SideMenuPolicies
+}): JSX.Element {
   const theme = useTheme()
   const [open, setOpen] = useState(true)
 
@@ -41,12 +49,16 @@ export default function SideMenuItem({ item }: { item: MenuItemData }): JSX.Elem
       {item.items && (
         <Collapse in={open} timeout='auto' unmountOnExit>
           <List disablePadding sx={{ bgcolor: theme.palette.primary.dark }}>
-            {item.items.map((subMenuItem) => (
-              <ListItemButton key={subMenuItem.id} component={RouterLink} to={subMenuItem.path}>
-                <ListItemIcon>-</ListItemIcon>
-                <ListItemText sx={{ fontSize: '0.8rem' }}>{subMenuItem.displayName}</ListItemText>
-              </ListItemButton>
-            ))}
+            {item.items
+              .filter(
+                (item) => item.isVisible === true || (typeof item.isVisible === 'function' && item.isVisible(policies))
+              )
+              .map((subMenuItem) => (
+                <ListItemButton key={subMenuItem.id} component={RouterLink} to={subMenuItem.path}>
+                  <ListItemIcon>-</ListItemIcon>
+                  <ListItemText sx={{ fontSize: '0.8rem' }}>{subMenuItem.displayName}</ListItemText>
+                </ListItemButton>
+              ))}
           </List>
         </Collapse>
       )}

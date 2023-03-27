@@ -1,23 +1,10 @@
 import { AccountCircle, AdminPanelSettings, Create, Description, ExitToApp, Key, Monitor } from '@mui/icons-material'
 import { Avatar, Box, Button, Drawer, List, Typography } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
-import { z } from 'zod'
 import { useQueryPolicies } from '../../hooks/api/queries'
 import { Session } from '../../hooks/useApi'
-import { DRAWER_WIDTH } from './share'
+import { DRAWER_WIDTH, SideMenuPolicies, sideMenuPoliciesSchema } from './share'
 import SideMenuItem from './SideMenuItem'
-
-const sideMenuPoliciesSchema = z.object({
-  policies: z.object({
-    user: z.object({
-      general: z.object({
-        admin: z.boolean(),
-        manageEvents: z.boolean(),
-      }),
-    }),
-  }),
-})
-type SideMenuPolicies = z.infer<typeof sideMenuPoliciesSchema>
 
 const sideMenuStructure = [
   {
@@ -37,7 +24,7 @@ const sideMenuStructure = [
         id: 'eventCard',
         displayName: 'Event Card',
         icon: <Create />,
-        isVisible: true,
+        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.manageEvents,
         path: '/',
       },
       {
@@ -162,7 +149,7 @@ export default function SideMenu({ open, session }: { open: boolean; session: Se
                 item.isVisible === true || (typeof item.isVisible === 'function' && item.isVisible(policiesQuery.data))
             )
             .map((item) => (
-              <SideMenuItem key={item.id} item={item} />
+              <SideMenuItem key={item.id} item={item} policies={policiesQuery.data} />
             ))}
         </List>
       ) : (
