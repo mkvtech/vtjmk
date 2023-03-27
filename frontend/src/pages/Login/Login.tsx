@@ -35,6 +35,11 @@ export default function Login(): JSX.Element {
     )
   }
 
+  const handleFillForm = ({ email }: { email: string }): void => {
+    setEmail(email)
+    setPassword('password')
+  }
+
   if (isAuthenticated) {
     return <Navigate to='/' replace />
   }
@@ -82,6 +87,7 @@ export default function Login(): JSX.Element {
                 fullWidth
                 required
                 margin='normal'
+                value={email}
                 onChange={(event): void => setEmail(event.currentTarget.value)}
               />
 
@@ -91,6 +97,7 @@ export default function Login(): JSX.Element {
                 fullWidth
                 required
                 margin='normal'
+                value={password}
                 onChange={(event): void => setPassword(event.currentTarget.value)}
               />
 
@@ -114,6 +121,30 @@ export default function Login(): JSX.Element {
           >
             <ArrowBack fontSize='small' sx={{ verticalAlign: 'middle' }} /> Back to the main website
           </Link>
+        </Box>
+
+        <Box
+          sx={{ bgcolor: 'black', color: '#55ff55', p: 2, mt: 4, border: '4px solid #55ff55', fontFamily: 'monospace' }}
+        >
+          <p>
+            DEV UI
+            <br /> Click to fill form with data
+          </p>
+          <ul>
+            <li>
+              <Link onClick={(): void => handleFillForm({ email: 'admin@example.com' })}>Admin, admin@example.com</Link>
+            </li>
+            <li>
+              <Link onClick={(): void => handleFillForm({ email: 'agne.reynolds@example.com' })}>
+                Event Manager, agne.reynolds@example.com
+              </Link>
+            </li>
+            <li>
+              <Link onClick={(): void => handleFillForm({ email: 'vaidas.mcclure@example.com' })}>
+                Participant, vaidas.mcclure@example.com
+              </Link>
+            </li>
+          </ul>
         </Box>
       </Box>
     </Box>
