@@ -1,7 +1,5 @@
 # :nodoc:
 class EventPolicy < ApplicationPolicy
-  authorize :user, allow_nil: true
-
   pre_check :require_user, :allow_admin
 
   # TODO: Rename to attendances_index?

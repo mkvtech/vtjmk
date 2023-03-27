@@ -10,7 +10,7 @@ RSpec.describe '/api/policies' do
 
       it 'returns unauthorized' do
         make_request
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
 

@@ -9,12 +9,6 @@ RSpec.describe EventPolicy do
   describe '#update?' do
     subject(:update?) { policy.apply(:update?) }
 
-    context 'without user' do
-      let(:user) { nil }
-
-      it { is_expected.to be_falsey }
-    end
-
     context 'with user' do
       it { is_expected.to be_falsey }
     end
