@@ -72,5 +72,37 @@ RSpec.describe '/api/policies' do
         end
       end
     end
+
+    context 'with UserPolicy' do
+      let(:headers) { auth_headers_for(user) }
+      let(:user) { create(:user, privilege_level: :admin) }
+      let(:params) do
+        {
+          'policies' => {
+            'user' => {
+              'general' => %w[manageEvents admin]
+            }
+          }
+        }
+      end
+      let(:event) { create(:event, :with_conference) }
+
+      it 'returns policies for current user' do
+        make_request
+        expect(response).to have_http_status(:success)
+        expect(response.parsed_body).to eq(
+          {
+            'policies' => {
+              'user' => {
+                'general' => {
+                  'manageEvents' => true,
+                  'admin' => true
+                }
+              }
+            }
+          }
+        )
+      end
+    end
   end
 end

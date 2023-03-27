@@ -1,16 +1,16 @@
 module Api
   # :nodoc:
   class PoliciesController < ApplicationController
-    RESOURCE_NAME_TO_POLICY_CLASS_MAP = {
-      events: EventPolicy
-    }.freeze
-
-    RESOURCE_NAME_TO_RESOURCE_CLASS_MAP = {
-      events: Event
-    }.freeze
-
-    RESOURCE_NAME_TO_TESTABLE_ACTIONS_MAP = {
-      events: %w[view_attendances update participations_index]
+    RESOURCE_NAME_TO_INPUT_MAP = {
+      user: {
+        policy_class: UserPolicy,
+        general: %w[admin manage_events]
+      },
+      events: {
+        policy_class: EventPolicy,
+        resource_class: Event,
+        items: %w[update participations_index]
+      }
     }.freeze
 
     # TODO: This method will get more features in the future and then be refactored
@@ -18,33 +18,42 @@ module Api
     def index
       json = params.permit![:policies].to_h.each_with_object({}) do |(resource_name_string, policy_input), output|
         resource_name = resource_name_string.to_sym
+        defined_input = RESOURCE_NAME_TO_INPUT_MAP[resource_name]
 
-        policy_class = RESOURCE_NAME_TO_POLICY_CLASS_MAP[resource_name]
+        policy_class = defined_input[:policy_class]
 
         next if policy_class.nil?
 
         output[resource_name] = {}
 
-        next unless policy_input.key?(:items)
+        if policy_input.key?(:general) && defined_input.key?(:general)
+          output[resource_name][:general] =
+            policy_input[:general]
+            .map(&:underscore)
+            .intersection(defined_input[:general])
+            .index_with { |action| !!allowed_to?("#{action}?", with: policy_class) } # rubocop:disable Style/DoubleNegation
+        end
 
-        resource_class = RESOURCE_NAME_TO_RESOURCE_CLASS_MAP[resource_name]
+        if policy_input.key?(:items) && defined_input.key?(:items)
+          resource_class = defined_input[:resource_class]
 
-        next if resource_class.nil?
+          next if resource_class.nil?
 
-        output[resource_name][:items] = policy_input[:items].to_h do |resource_id, actions_input|
-          actions = actions_input.is_a?(String) ? [actions_input] : actions_input
-          # TODO: Eager-load resources
-          resource = resource_class.find_by(id: resource_id)
+          output[resource_name][:items] = policy_input[:items].to_h do |resource_id, actions_input|
+            actions = actions_input.is_a?(String) ? [actions_input] : actions_input
+            # TODO: Eager-load resources
+            resource = resource_class.find_by(id: resource_id)
 
-          next if resource.nil?
+            next if resource.nil?
 
-          [
-            resource_id,
-            actions
-              .map(&:underscore)
-              .intersection(RESOURCE_NAME_TO_TESTABLE_ACTIONS_MAP[resource_name])
-              .index_with { |action| !!allowed_to?("#{action}?", resource) } # rubocop:disable Style/DoubleNegation
-          ]
+            [
+              resource_id,
+              actions
+                .map(&:underscore)
+                .intersection(defined_input[:items])
+                .index_with { |action| !!allowed_to?("#{action}?", resource) } # rubocop:disable Style/DoubleNegation
+            ]
+          end
         end
       end
 
