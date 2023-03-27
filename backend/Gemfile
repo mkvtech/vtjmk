@@ -65,6 +65,9 @@ gem 'olive_branch'
 # Authorization framework for Ruby/Rails applications
 gem 'action_policy'
 
+# Takes some boilerplate out of Ruby with methods like attr_initialize.
+gem 'attr_extras'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

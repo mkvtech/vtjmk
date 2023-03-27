@@ -71,6 +71,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
+    attr_extras (7.0.0)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -253,6 +254,7 @@ PLATFORMS
 DEPENDENCIES
   action_policy
   activerecord-import
+  attr_extras
   bcrypt
   bootsnap
   debug
