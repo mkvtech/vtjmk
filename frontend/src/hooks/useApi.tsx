@@ -81,9 +81,18 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
   const logout = (): void => {
     delete axiosClient.defaults.headers.common['Authorization']
     localStorage.removeItem(LOCAL_STORAGE_JWT_KEY)
-    // Note: using `refetchActive: false` to avoid refetch some queries, as some will fail without 'Authorization'
-    // header. See browser's console.
-    queryClient.invalidateQueries({ refetchActive: false })
+
+    // Carefuly clearing cache and avoiding refetch some queries, as some will fail without 'Authorization' header.
+    // See browser's console.
+    // More on different methods to invalidate queries: https://tanstack.com/query/v4/docs/react/reference/QueryClient
+
+    // Clears cache, refetches all queries immediately (even if they will be { enabled: false } with next render)
+    // queryClient.invalidateQueries()
+    // Clears cache, does not refetch any queries
+    // queryClient.invalidateQueries({ refetchActive: false })
+    // Clears cache, queries will be refetched when components render
+    queryClient.removeQueries()
+
     setSession(undefined)
   }
 
