@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-# rubocop:disable Layout/HashAlignment
+# rubocop:disable Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength
 
 # Fix random generator
 Faker::Config.random = Random.new(2023)
@@ -69,7 +69,7 @@ Event.import!(
       conference_id:     1,
       title:             'Informatics Conference 2024',
       description:,
-      date:              Date.new(2023, 2, 1),
+      date:              Date.new(2024, 2, 1),
       registration_from: Date.new(2024, 1, 1),
       registration_to:   Date.new(2024, 1, 20)
     },
@@ -116,17 +116,113 @@ Event.import!(
 # Skip validations on User to not generate password digest for each user individually
 password_digest = BCrypt::Password.create('password')
 
-def sample_user_data(password_digest)
-  full_name = Faker::Name.name
-  email = "#{full_name.split.map(&:downcase).join('.')}@example.com"
+# Script used to generate these lines:
+# Faker::Config.locale = 'lt'
+# puts(Array.new(100) do
+#   full_name = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
+#   email = "#{I18n.transliterate(full_name).split.map(&:downcase).join('.')}@example.com"
+#   "{ full_name: #{"'#{full_name}'".rjust(25)}, email: #{"'#{email}'".rjust(35)}, password_digest:, privilege_level: :default }"
+# end.join(",\n"))
 
-  { full_name:, email:, password_digest:, privilege_level: :default }
-end
-
-User.insert_all!( # rubocop:disable Rails/SkipsModelValidations
+User.import!(
   [
-    { full_name: 'John Doe', email: 'admin@example.com', password_digest:, privilege_level: :admin },
-    *Array.new(60) { sample_user_data(password_digest) }
+    { full_name:                'John Doe', email:                 'admin@example.com', password_digest:, privilege_level:   :admin },
+    { full_name:         'Eugenija Pouros', email:       'eugenija.pouros@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Alius Spinka', email:          'alius.spinka@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Agnė Reynolds', email:         'agne.reynolds@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Simonas Dibbert', email:       'simonas.dibbert@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Vida Heaney', email:           'vida.heaney@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Juozas Adams', email:          'juozas.adams@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Valys Wolff', email:           'valys.wolff@example.com', password_digest:, privilege_level: :default },
+    { full_name:              'Vida Kunde', email:            'vida.kunde@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Kristina McKenzie', email:     'kristina.mckenzie@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Roberta Johnston', email:      'roberta.johnston@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Karolis Corkery', email:       'karolis.corkery@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Enrika Mueller', email:        'enrika.mueller@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Renata McClure', email:        'renata.mcclure@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Arnas Considine', email:       'arnas.considine@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Jomantė Jacobson', email:      'jomante.jacobson@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Vitalija Wolff', email:        'vitalija.wolff@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Silvija Keeling', email:       'silvija.keeling@example.com', password_digest:, privilege_level: :default },
+    { full_name:     'Modesta Oberbrunner', email:   'modesta.oberbrunner@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Elžbieta Reichert', email:     'elzbieta.reichert@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Prančiškus Wiegand', email:    'pranciskus.wiegand@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Beatričė Roberts', email:      'beatrice.roberts@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Vidas Gutkowski', email:       'vidas.gutkowski@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Benediktas Rice', email:       'benediktas.rice@example.com', password_digest:, privilege_level: :default },
+    { full_name:              'Arnas Hane', email:            'arnas.hane@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Enrika Breitenberg', email:    'enrika.breitenberg@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Milda Wuckert', email:         'milda.wuckert@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Vida Waelchi', email:          'vida.waelchi@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Algis Walker', email:          'algis.walker@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Cecilija Aufderhar', email:    'cecilija.aufderhar@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Jūratė Mitchell', email:       'jurate.mitchell@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Stasė Yundt', email:           'stase.yundt@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Brigita Skiles', email:        'brigita.skiles@example.com', password_digest:, privilege_level: :default },
+    { full_name:    'Stefanija Macejkovic', email:  'stefanija.macejkovic@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Danielius Price', email:       'danielius.price@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Agnė Ullrich', email:          'agne.ullrich@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Loreta Brekke', email:         'loreta.brekke@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Karolina Windler', email:      'karolina.windler@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Benediktas Trantow', email:    'benediktas.trantow@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Saulė Legros', email:          'saule.legros@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Ernestas Romaguera', email:    'ernestas.romaguera@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Danielius Welch', email:       'danielius.welch@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Prančiškus Goyette', email:    'pranciskus.goyette@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Henrikas Sauer', email:        'henrikas.sauer@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Brigita Marks', email:         'brigita.marks@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Gintė Crist', email:           'ginte.crist@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Juozapas Hahn', email:         'juozapas.hahn@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Benedikta Steuber', email:     'benedikta.steuber@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Audrius Harris', email:        'audrius.harris@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Ernestas Brakus', email:       'ernestas.brakus@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Kazys Boehm', email:           'kazys.boehm@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Stasė Heaney', email:          'stase.heaney@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Enrikas Brekke', email:        'enrikas.brekke@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Simona Miller', email:         'simona.miller@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Benedikta Watsica', email:     'benedikta.watsica@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Renatas Streich', email:       'renatas.streich@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Mečislovas Veum', email:       'mecislovas.veum@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Justas Dickinson', email:      'justas.dickinson@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Karolina Ziemann', email:      'karolina.ziemann@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Mykolas Hilpert', email:       'mykolas.hilpert@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Silvija Fisher', email:        'silvija.fisher@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Barbora Mayer', email:         'barbora.mayer@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Eugenija Padberg', email:      'eugenija.padberg@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Arminas Roberts', email:       'arminas.roberts@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Florijonas Waters', email:     'florijonas.waters@example.com', password_digest:, privilege_level: :default },
+    { full_name:              'Romas Howe', email:            'romas.howe@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Adolfas Koelpin', email:       'adolfas.koelpin@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Aleksandras Rippin', email:    'aleksandras.rippin@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Jomantas Armstrong', email:    'jomantas.armstrong@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Arnas Friesen', email:         'arnas.friesen@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Jomantė Rath', email:          'jomante.rath@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Valdemaras Glover', email:     'valdemaras.glover@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Prančiškus Bauch', email:      'pranciskus.bauch@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Genovaitė Lindgren', email:    'genovaite.lindgren@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Gintarė Bartell', email:       'gintare.bartell@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Vaidas McClure', email:        'vaidas.mcclure@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Dalia Treutel', email:         'dalia.treutel@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Danielius Luettgen', email:    'danielius.luettgen@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Genovaitė Trantow', email:     'genovaite.trantow@example.com', password_digest:, privilege_level: :default },
+    { full_name:      'Austėja Swaniawski', email:    'austeja.swaniawski@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Zenonas Weissnat', email:      'zenonas.weissnat@example.com', password_digest:, privilege_level: :default },
+    { full_name:              'Rožė Kunze', email:            'roze.kunze@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Jogaila Smitham', email:       'jogaila.smitham@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Toma VonRueden', email:        'toma.vonrueden@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Beatričė Howell', email:       'beatrice.howell@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Jūratė Kemmer', email:         'jurate.kemmer@example.com', password_digest:, privilege_level: :default },
+    { full_name:              'Agnė Bruen', email:            'agne.bruen@example.com', password_digest:, privilege_level: :default },
+    { full_name:       'Barbora McDermott', email:     'barbora.mcdermott@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Loreta Dickens', email:        'loreta.dickens@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Andrius Homenick', email:      'andrius.homenick@example.com', password_digest:, privilege_level: :default },
+    { full_name:         'Robertas Bednar', email:       'robertas.bednar@example.com', password_digest:, privilege_level: :default },
+    { full_name:           'Jonė Shanahan', email:         'jone.shanahan@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Benedikta Yost', email:        'benedikta.yost@example.com', password_digest:, privilege_level: :default },
+    { full_name:          'Jomantas Mertz', email:        'jomantas.mertz@example.com', password_digest:, privilege_level: :default },
+    { full_name:        'Laurynas Goyette', email:      'laurynas.goyette@example.com', password_digest:, privilege_level: :default },
+    { full_name:             'Toma Hessel', email:           'toma.hessel@example.com', password_digest:, privilege_level: :default },
+    { full_name:            'Olga Hegmann', email:          'olga.hegmann@example.com', password_digest:, privilege_level: :default }
   ]
 )
 
@@ -142,8 +238,8 @@ Permission.import!(
   ]
 )
 
-# Attendances
-Attendance.import!(
+# Participations
+Participation.import!(
   [
     { status: :pending,  user_id: 8,  event_id: 7 },
     { status: :approved, user_id: 8,  event_id: 2 },
@@ -296,4 +392,4 @@ Attendance.import!(
   ]
 )
 
-# rubocop:enable Layout/HashAlignment
+# rubocop:enable Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength
