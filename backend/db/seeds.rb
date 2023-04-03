@@ -53,7 +53,8 @@ Event.import!(
       description:,
       date:              Date.new(2022, 2, 5),
       registration_from: Date.new(2022, 1, 1),
-      registration_to:   Date.new(2022, 1, 31)
+      registration_to:   Date.new(2022, 1, 31),
+      status: 'open'
     },
     {
       id:                2,
@@ -62,7 +63,8 @@ Event.import!(
       description:,
       date:              Date.new(2023, 5, 5),
       registration_from: Date.new(2023, 2, 1),
-      registration_to:   Date.new(2023, 4, 30)
+      registration_to:   Date.new(2023, 4, 30),
+      status: 'open'
     },
     {
       id:                3,
@@ -71,7 +73,8 @@ Event.import!(
       description:,
       date:              Date.new(2024, 2, 1),
       registration_from: Date.new(2024, 1, 1),
-      registration_to:   Date.new(2024, 1, 20)
+      registration_to:   Date.new(2024, 1, 20),
+      status: 'open'
     },
     {
       id:                4,
@@ -80,7 +83,8 @@ Event.import!(
       description:,
       date:              Date.new(2022, 10, 1),
       registration_from: Date.new(2022, 9, 1),
-      registration_to:   Date.new(2022, 9, 30)
+      registration_to:   Date.new(2022, 9, 30),
+      status: 'open'
     },
     {
       id:                5,
@@ -89,7 +93,8 @@ Event.import!(
       description:,
       date:              Date.new(2023, 10, 1),
       registration_from: Date.new(2023, 9, 1),
-      registration_to:   Date.new(2023, 9, 30)
+      registration_to:   Date.new(2023, 9, 30),
+      status: 'open'
     },
     {
       id:                6,
@@ -98,16 +103,28 @@ Event.import!(
       description:,
       date:              Date.new(2024, 2, 1),
       registration_from: Date.new(2024, 1, 1),
-      registration_to:   Date.new(2024, 1, 31)
+      registration_to:   Date.new(2024, 1, 31),
+      status: 'open'
     },
     {
       id:                7,
       conference_id:     4,
-      title:             'Mechanics & Stuff',
+      title:             'Mechanics & Stuff 2023',
       description:,
       date:              Date.new(2023, 5, 1),
       registration_from: Date.new(2022, 4, 1),
-      registration_to:   Date.new(2022, 4, 20)
+      registration_to:   Date.new(2022, 4, 20),
+      status: 'open'
+    },
+    {
+      id:                8,
+      conference_id:     4,
+      title:             'Mechanics & Stuff 2024',
+      description:,
+      date:              Date.new(2024, 5, 1),
+      registration_from: Date.new(2022, 4, 1),
+      registration_to:   Date.new(2022, 4, 20),
+      status: 'hidden'
     }
   ]
 )

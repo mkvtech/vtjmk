@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     # Resources
     resources :conferences
 
-    resources :events
+    resources :events, only: %i[index show update]
     namespace 'events' do
       scope ':event_id', as: 'events' do
         resources :participations, only: %i[index]

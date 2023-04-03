@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :event do
     title { 'Title' }
     description { 'Description' }
-    date { Time.zone.today }
+    date { 10.days.from_now }
     participants_limit { 10 }
     attendees_limit { 50 }
     conference { nil }

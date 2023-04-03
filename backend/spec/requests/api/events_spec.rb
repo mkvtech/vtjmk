@@ -41,9 +41,15 @@ RSpec.describe '/events' do
       let(:conference) { create(:conference) }
       let!(:events) do
         [
-          create(:event, conference:, date: 1.month.ago),
-          create(:event, conference:, date: 1.month.from_now),
-          create(:event, conference:, date: 2.years.from_now)
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.ago
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.from_now
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 2.years.from_now
+          )
         ]
       end
 
@@ -59,9 +65,15 @@ RSpec.describe '/events' do
       let(:conference) { create(:conference) }
       let!(:events) do
         [
-          create(:event, conference:, date: 1.month.ago),
-          create(:event, conference:, date: 1.month.from_now),
-          create(:event, conference:, date: 2.years.from_now)
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.ago
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.from_now
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 2.years.from_now
+          )
         ]
       end
 
@@ -77,9 +89,15 @@ RSpec.describe '/events' do
       let(:conference) { create(:conference) }
       let!(:events) do
         [
-          create(:event, conference:, date: 1.month.ago),
-          create(:event, conference:, date: 1.month.from_now),
-          create(:event, conference:, date: 2.years.from_now)
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.ago
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 1.month.from_now
+          ),
+          create(
+            :event, conference:, registration_from: 3.months.ago, registration_to: 2.months.ago, date: 2.years.from_now
+          )
         ]
       end
 
@@ -96,82 +114,28 @@ RSpec.describe '/events' do
     let(:conference) { create(:conference) }
     let!(:event) { create(:event, conference:) }
 
-    it 'renders a successful response' do
+    it 'renders all event fields' do
       make_request
       expect(response).to be_successful
       expect(json_response.keys).to match_array(
-        %i[id title description attendeesLimit participantsLimit date conferenceId createdAt updatedAt url]
+        %i[
+          id title description participantsLimit date conferenceId createdAt updatedAt url registrationFrom
+          registrationTo status
+        ]
       )
+    end
+
+    it 'renders a successful response' do
+      make_request
+      expect(response).to be_successful
       expect(json_response).to include(
         {
           id: event.id.to_s,
           title: event.title,
           description: event.description,
-          attendeesLimit: event.attendees_limit,
           participantsLimit: event.participants_limit
         }
       )
-    end
-  end
-
-  describe 'POST /api/events' do
-    subject(:make_request) { post('/api/events', params:) }
-
-    context 'with valid parameters' do
-      let(:params) do
-        {
-          title: 'Test',
-          description: 'Description',
-          attendeesLimit: 5,
-          participantsLimit: 5,
-          date: Time.zone.today,
-          conferenceId: conference.id.to_s,
-          registrationFrom: 5.days.ago,
-          registrationTo: 5.days.from_now
-        }
-      end
-
-      let(:conference) { create(:conference) }
-
-      it 'creates a new Event' do
-        expect { make_request }.to change(Event, :count).by(1)
-      end
-
-      it 'renders a JSON response with the new event' do
-        make_request
-        expect(response).to have_http_status(:created)
-        expect(json_response).to include(
-          {
-            title: 'Test',
-            description: 'Description',
-            attendeesLimit: 5,
-            participantsLimit: 5,
-            conferenceId: conference.id.to_s
-          }
-        )
-      end
-    end
-
-    context 'with invalid parameters' do
-      let(:params) do
-        {
-          title: 'Test',
-          description: 'Description',
-          attendees_limit: 5,
-          participants_limit: 5,
-          date: Time.zone.today
-        }
-      end
-
-      it 'does not create a new Event' do
-        expect { make_request }.not_to change(Event, :count)
-      end
-
-      it 'renders a JSON response with errors for the new event' do
-        make_request
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to eq({ errors: { conference: ['must exist'] } })
-      end
     end
   end
 
@@ -209,16 +173,15 @@ RSpec.describe '/events' do
         expect(json_response).to eq({ errors: { title: ["can't be blank"] } })
       end
     end
-  end
 
-  describe 'DELETE /api/event/:id' do
-    subject(:make_request) { delete("/api/events/#{event.id}") }
+    context 'with invalid registration_from params' do
+      let(:params) { { registration_from: 5.days.from_now, registration_to: 5.days.ago } }
 
-    let(:conference) { create(:conference) }
-    let!(:event) { create(:event, conference:) }
-
-    it 'destroys the requested event' do
-      expect { make_request }.to change(Event, :count).by(-1)
+      it 'renders a JSON response with errors for the event' do
+        make_request
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response[:errors][:base]).to include('invalid registration period')
+      end
     end
   end
 end

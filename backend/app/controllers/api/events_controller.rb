@@ -1,7 +1,7 @@
 module Api
   # Handles requests for Event model
   class EventsController < ApplicationController
-    before_action :set_event, only: %i[show update destroy]
+    before_action :set_event, only: %i[show update]
 
     def index # rubocop:disable Metrics/AbcSize
       @events = Event.order(:date)
@@ -12,17 +12,11 @@ module Api
 
     def show; end
 
-    def create
-      @event = Event.new(event_params)
-
-      if @event.save
-        render :show, status: :created, location: api_event_url(@event)
-      else
-        render json: { errors: @event.errors }, status: :unprocessable_entity
-      end
-    end
-
     def update
+      event_params = params.permit(
+        :title, :description, :date, :participants_limit, :registration_from, :registration_to, :status
+      )
+
       if @event.update(event_params)
         render :show, status: :ok, location: api_event_url(@event)
       else
@@ -30,21 +24,10 @@ module Api
       end
     end
 
-    def destroy
-      @event.destroy
-    end
-
     private
 
     def set_event
       @event = Event.find(params[:id])
-    end
-
-    def event_params
-      params.permit(
-        :title, :description, :date, :participants_limit, :attendees_limit, :conference_id, :registration_from,
-        :registration_to
-      )
     end
   end
 end

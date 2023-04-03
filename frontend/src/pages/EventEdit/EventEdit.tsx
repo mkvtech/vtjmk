@@ -1,8 +1,7 @@
-import { ArrowBack } from '@mui/icons-material'
 import { Container, Divider, Skeleton, Typography } from '@mui/material'
 import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import useQueryEvent from '../../hooks/api/useQueryEvent'
+import { useQueryEvent } from '../../hooks/api/queries'
 import Form from './Form'
 
 export default function EventEdit(): JSX.Element {
@@ -22,20 +21,17 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         </Typography>
       ) : (
         <>
-          <Typography component='h1' variant='h4'>
+          <Typography>
+            <Link href={`/events/${eventId}`}>Back to event page</Link>
+          </Typography>
+
+          <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
             Editing{' '}
             {eventQuery.isLoading || eventQuery.isIdle ? (
               <Skeleton sx={{ display: 'inline-block' }} width='66%' />
             ) : (
               `'${eventQuery.data.title}'`
             )}
-          </Typography>
-
-          <Typography>
-            <Link href={`/conferences/${eventId}`}>
-              <ArrowBack fontSize='small' />
-              Back to event page
-            </Link>
           </Typography>
 
           <Divider />
