@@ -53,5 +53,7 @@ module Vtjmkais
 
     # Slow down responses for debug purpose
     config.middleware.use Middleware::SlowDown, lag_range: 0.5..1 if ENV['ENABLE_LAG']
+
+    config.i18n.available_locales = %i[en lt]
   end
 end

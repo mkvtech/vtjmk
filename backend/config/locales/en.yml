@@ -31,3 +31,9 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    attributes:
+      event:
+        registration_from: 'Registration start date'
+        registration_to: 'Registration end date'

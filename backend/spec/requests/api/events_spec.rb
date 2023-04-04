@@ -140,7 +140,10 @@ RSpec.describe '/events' do
   end
 
   describe 'PATCH /api/events/:id' do
-    subject(:make_request) { patch("/api/events/#{event.id}", params:) }
+    subject(:make_request) { patch("/api/events/#{event.id}", params:, headers:) }
+
+    let(:headers) { auth_headers_for(user) }
+    let(:user) { create(:user) }
 
     let(:conference) { create(:conference) }
     let(:event) { create(:event, title: 'Title', conference:) }
@@ -157,6 +160,7 @@ RSpec.describe '/events' do
         expect(response).to have_http_status(:ok)
         expect(json_response).to include(
           {
+            id: event.id.to_s,
             title: 'Updated',
             description: event.description
           }
@@ -164,23 +168,104 @@ RSpec.describe '/events' do
       end
     end
 
-    context 'with invalid parameters' do
+    # TODO: Is this feature necessary?
+    xcontext 'when removing registration period' do
+      let(:params) { { registration_from: '', registration_to: '' } }
+
+      let(:event) do
+        create(
+          :event,
+          title: 'Title', conference:, registration_from: Date.new(2023, 3, 1), registration_to: Date.new(2023, 4, 1)
+        )
+      end
+
+      it 'updates the event' do
+        expect { make_request }
+          .to change { event.reload.registration_from }.from(Date.new(2023, 3, 1)).to(nil)
+          .and change { event.reload.registration_to }.from(Date.new(2023, 4, 1)).to(nil)
+      end
+
+      it 'renders a JSON response with the event' do
+        make_request
+        p json_response
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include(
+          {
+            id: event.id.to_s,
+            registration_from: '',
+            registration_to: ''
+          }
+        )
+      end
+    end
+
+    context 'with invalid title' do
       let(:params) { { title: '' } }
 
       it 'renders a JSON response with errors for the event' do
         make_request
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to eq({ errors: { title: ["can't be blank"] } })
+        expect(json_response[:errors]).to contain_exactly(
+          {
+            path: 'title',
+            type: 'blank',
+            error: 'blank',
+            message: "can't be blank",
+            fullMessage: "Title can't be blank"
+          }
+        )
+      end
+
+      context 'with lt translation' do
+        let(:headers) { super().merge({ 'Accept-Language': 'lt' }) }
+
+        it 'renders errors with lt translation' do
+          make_request
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response[:errors]).to contain_exactly(
+            {
+              path: 'title',
+              type: 'blank',
+              error: 'blank',
+              message: 'negali būti tuščias',
+              fullMessage: 'Pavadinimas negali būti tuščias'
+            }
+          )
+        end
       end
     end
 
     context 'with invalid registration_from params' do
-      let(:params) { { registration_from: 5.days.from_now, registration_to: 5.days.ago } }
+      let(:params) { { registration_from: Date.new(2023, 4, 1), registration_to: Date.new(2023, 3, 1) } }
 
       it 'renders a JSON response with errors for the event' do
         make_request
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response[:errors][:base]).to include('invalid registration period')
+        expect(json_response[:errors]).to contain_exactly(
+          include(
+            path: 'registrationTo',
+            type: 'greaterThanOrEqualTo',
+            message: 'must be greater than or equal to 2023-04-01',
+            fullMessage: 'Registration end date must be greater than or equal to 2023-04-01'
+          )
+        )
+      end
+
+      context 'with lt translation' do
+        let(:headers) { super().merge({ 'Accept-Language': 'lt' }) }
+
+        it 'renders errors with lt translation' do
+          make_request
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json_response[:errors]).to contain_exactly(
+            include(
+              path: 'registrationTo',
+              type: 'greaterThanOrEqualTo',
+              message: 'turi būti didesnė arba lygi 2023-04-01',
+              fullMessage: 'Registracijos pabaigos data turi būti didesnė arba lygi 2023-04-01'
+            )
+          )
+        end
       end
     end
   end

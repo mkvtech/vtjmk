@@ -2,6 +2,8 @@
 class ApplicationController < ActionController::Base
   skip_forgery_protection
 
+  around_action :switch_locale
+
   rescue_from ActionPolicy::Unauthorized do
     head :forbidden
   end
@@ -30,12 +32,22 @@ class ApplicationController < ActionController::Base
     errors.map do |error|
       {
         path: error.attribute.to_s.camelcase(:lower),
-        type: error.type,
+        type: error.type.to_s.camelcase(:lower),
         message: error.message,
         full_message: error.full_message,
 
         **error.details
       }
     end
+  end
+
+  private
+
+  # https://guides.rubyonrails.org/i18n.html#inferring-locale-from-the-language-header
+  def switch_locale(&)
+    logger.debug "* Accept-Language: #{request.env['HTTP_ACCEPT_LANGUAGE']}"
+    locale = request.env['HTTP_ACCEPT_LANGUAGE']&.scan(/^[a-z]{2}/)&.first || I18n.default_locale
+    logger.debug "* Locale set to '#{locale}'"
+    I18n.with_locale(locale, &)
   end
 end

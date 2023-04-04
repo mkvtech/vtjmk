@@ -1,0 +1,22 @@
+lt:
+  hello: "Labas"
+
+  activerecord:
+    models:
+      event: 'Įvykis'
+
+    attributes:
+      event:
+        title: 'Pavadinimas'
+        date: 'Data'
+        registration_from: 'Registracijos pradžios data'
+        registration_to: 'Registracijos pabaigos data'
+
+    errors:
+      models:
+        event:
+          attributes:
+            registration_to:
+              greater_than_or_equal_to: 'turi būti didesnė arba lygi %{count}'
+            date:
+              greater_than_or_equal_to: 'turi būti didesnė arba lygi %{count}'
