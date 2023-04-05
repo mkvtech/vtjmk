@@ -17,13 +17,14 @@ import React, { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
+import { VtjmkLocale } from '../../share'
 import AppBarTabs from './AppBarTabs'
 import Footer from './Footer'
 import { DRAWER_WIDTH } from './share'
 import SideMenu from './SideMenu'
 
 export default function MainLayout({ children }: PropsWithChildren): JSX.Element {
-  const { session } = useApi()
+  const { session, setLocale } = useApi()
   const { t, i18n } = useTranslation()
 
   const [sideMenuOpened, setSideMenuOpened] = React.useState(true)
@@ -32,8 +33,9 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
   const handleLanguageMenuOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget)
   }
-  const handleLanguageMenuSetLanguage = (locale: 'en' | 'lt'): void => {
+  const handleLanguageMenuSetLocale = (locale: VtjmkLocale): void => {
     i18n.changeLanguage(locale)
+    setLocale(locale)
     setAnchorEl(null)
   }
 
@@ -108,8 +110,8 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                   open={Boolean(anchorEl)}
                   onClose={(): void => setAnchorEl(null)}
                 >
-                  <MenuItem onClick={(): void => handleLanguageMenuSetLanguage('en')}>English</MenuItem>
-                  <MenuItem onClick={(): void => handleLanguageMenuSetLanguage('lt')}>Lithuanian</MenuItem>
+                  <MenuItem onClick={(): void => handleLanguageMenuSetLocale('en')}>English</MenuItem>
+                  <MenuItem onClick={(): void => handleLanguageMenuSetLocale('lt')}>Lithuanian</MenuItem>
                 </Menu>
               </Stack>
             </Toolbar>

@@ -19,7 +19,8 @@ import dayjs, { Dayjs } from 'dayjs'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Event } from '../../hooks/api/schemas'
-import { useApi } from '../../hooks/useApi'
+import { ApiResponseError, useApi } from '../../hooks/useApi'
+import { belongsToArray } from '../../utils'
 
 const eventStatusToSelectedTextMap = {
   open: 'Open',
@@ -44,10 +45,12 @@ interface UpdateEventMutationInput {
   status: string
 }
 
+const fieldNames = ['title', 'participantsLimit', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
+
 export default function Form({ event }: { event: Event }): JSX.Element {
   const { client } = useApi()
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, setError } = useForm({
     defaultValues: {
       title: event.title,
       participantsLimit: event.participantsLimit,
@@ -77,6 +80,14 @@ export default function Form({ event }: { event: Event }): JSX.Element {
           // Show snackbar
         },
         onError: (error) => {
+          if (error instanceof ApiResponseError) {
+            error.errors.forEach((error) => {
+              if (belongsToArray(error.path, fieldNames)) {
+                setError(error.path, { type: `server.${error.type}`, message: error.message })
+              }
+            })
+          }
+          // Else show something was wrong & event was not updated or whatever
           console.log(error)
           // Show alert
         },
@@ -86,7 +97,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container maxWidth='sm'>
+      <Container maxWidth='md'>
         <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
           General
         </Typography>
@@ -172,17 +183,22 @@ export default function Form({ event }: { event: Event }): JSX.Element {
             <Controller
               name='registrationTo'
               control={control}
-              render={({ field }): JSX.Element => (
-                <DatePicker
-                  {...field}
-                  label='To'
-                  slotProps={{
-                    textField: {
-                      size: 'small',
-                      fullWidth: true,
-                    },
-                  }}
-                />
+              render={({ field, fieldState: { error } }): JSX.Element => (
+                <>
+                  {console.log(field)}
+                  <DatePicker
+                    {...field}
+                    label='To'
+                    slotProps={{
+                      textField: {
+                        size: 'small',
+                        fullWidth: true,
+                        error: !!error,
+                        helperText: error?.message || ' ',
+                      },
+                    }}
+                  />
+                </>
               )}
             />
           </Grid>

@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, isAxiosError } from 'axios'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
+import { VtjmkLocale } from '../share'
 import { User } from './api/types'
 
 const API_BASE_URL = 'http://localhost:3000/api'
@@ -43,6 +45,8 @@ interface ApiContextValueT {
   readonly session?: Session
   readonly setSession: (newSession: SessionData) => void
 
+  readonly setLocale: (locale: VtjmkLocale) => void
+
   readonly client: AxiosInstance
 }
 
@@ -77,6 +81,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
   const [loading, setLoading] = React.useState<boolean>(false)
 
   const queryClient = useQueryClient()
+  const { i18n } = useTranslation()
 
   const logout = (): void => {
     delete axiosClient.defaults.headers.common['Authorization']
@@ -97,6 +102,8 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
   }
 
   React.useMemo(() => {
+    axiosClient.defaults.headers.common['Accept-Language'] = i18n.language
+
     const readJwt = localStorage.getItem(LOCAL_STORAGE_JWT_KEY)
 
     if (readJwt) {
@@ -140,6 +147,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
 
         isAuthenticated: !!session,
 
+        ...(session ? { session: { ...session, logout } } : undefined),
         setSession: (session: SessionData): void => {
           setSession(session)
           axiosClient.defaults.headers.common['Authorization'] = `Bearer ${session.jwt}`
@@ -147,7 +155,9 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
           queryClient.invalidateQueries({ refetchActive: false })
         },
 
-        ...(session ? { session: { ...session, logout } } : undefined),
+        setLocale: (locale: VtjmkLocale): void => {
+          axiosClient.defaults.headers.common['Accept-Language'] = locale
+        },
       }}
     >
       {children}
