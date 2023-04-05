@@ -1,11 +1,13 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-import { LocalizationProvider } from '@mui/x-date-pickers'
+import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { I18nextProvider } from 'react-i18next'
 
 import MainLayout from './components/MainLayout'
 import { ApiProvider } from './hooks/useApi'
+import i18n from './i18n'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -64,17 +66,19 @@ const router = createBrowserRouter([
 
 function App(): JSX.Element {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <QueryClientProvider client={queryClient}>
-          <ApiProvider>
-            <RouterProvider router={router} />
-          </ApiProvider>
-        </QueryClientProvider>
-      </LocalizationProvider>
-    </ThemeProvider>
+        <MuiLocalizationProvider dateAdapter={AdapterDayjs}>
+          <QueryClientProvider client={queryClient}>
+            <ApiProvider>
+              <RouterProvider router={router} />
+            </ApiProvider>
+          </QueryClientProvider>
+        </MuiLocalizationProvider>
+      </ThemeProvider>
+    </I18nextProvider>
   )
 }
 

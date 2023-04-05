@@ -1,0 +1,20 @@
+{
+  "hello": "Labas",
+
+  "common": {
+
+  },
+
+  "components": {
+    "mainLayout": {
+      "appBarHomeTabLabel": "Pagrindinis",
+      "appBarConferencesTabLabel": "Konferencijos",
+      "appBarUpcomingConferencesTabLabel": "Artėjančios konferencijos",
+      "appBarAboutTabLabel": "Apie"
+    }
+  },
+
+  "pages": {
+
+  }
+}

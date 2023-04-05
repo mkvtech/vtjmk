@@ -1,6 +1,7 @@
 import { Box, Container, Link, MenuItem, MenuList, Paper, Popper, styled } from '@mui/material'
 import dayjs from 'dayjs'
 import { SyntheticEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { useQueryConferences, useQueryEvents } from '../../hooks/api/queries'
 
@@ -38,16 +39,18 @@ export default function AppBarTabs(): JSX.Element {
   const [anchorElement, setAnchorElement] = useState<Element | null>(null)
   const [tabMenu, setTabMenu] = useState<readonly { path: string; text: string }[]>([])
 
+  const { t } = useTranslation()
+
   const conferencesQuery = useQueryConferences()
   const eventsQuery = useQueryEvents({ from: dayjs().startOf('day').toString() })
 
   const appBarTabsStructure = [
     {
-      text: 'Home',
+      text: t('components.mainLayout.appBarHomeTabLabel'),
       path: '/',
     },
     {
-      text: 'Conferences',
+      text: t('components.mainLayout.appBarConferencesTabLabel'),
       path: '/conferences',
       ...(conferencesQuery.isSuccess && {
         items: conferencesQuery.data.map((conference) => ({
@@ -57,7 +60,7 @@ export default function AppBarTabs(): JSX.Element {
       }),
     },
     {
-      text: 'Upcoming Events',
+      text: t('components.mainLayout.appBarUpcomingConferencesTabLabel'),
       path: '/upcomingEvents',
       ...(eventsQuery.isSuccess && {
         items: eventsQuery.data.map((event) => ({
@@ -67,7 +70,7 @@ export default function AppBarTabs(): JSX.Element {
       }),
     },
     {
-      text: 'About',
+      text: t('components.mainLayout.appBarAboutTabLabel'),
       path: '/about',
     },
   ]

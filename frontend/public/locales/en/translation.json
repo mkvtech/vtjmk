@@ -1,0 +1,20 @@
+{
+  "hello": "Hello",
+
+  "common": {
+
+  },
+
+  "components": {
+    "mainLayout": {
+      "appBarHomeTabLabel": "Home",
+      "appBarConferencesTabLabel": "Conferences",
+      "appBarUpcomingConferencesTabLabel": "UpcomingConferences",
+      "appBarAboutTabLabel": "About"
+    }
+  },
+
+  "pages": {
+
+  }
+}
