@@ -1,7 +1,8 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
+  Alert,
   Box,
-  Button,
   Container,
   Divider,
   FormControl,
@@ -16,8 +17,9 @@ import {
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
+import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { Event } from '../../hooks/api/schemas'
 import { ApiResponseError, useApi } from '../../hooks/useApi'
 import { belongsToArray } from '../../utils'
@@ -48,6 +50,8 @@ interface UpdateEventMutationInput {
 const fieldNames = ['title', 'participantsLimit', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
 
 export default function Form({ event }: { event: Event }): JSX.Element {
+  const [alertErrorMessages, setAlertErrorMessages] = useState<readonly string[]>([])
+
   const { client } = useApi()
 
   const { control, handleSubmit, setError } = useForm({
@@ -61,10 +65,10 @@ export default function Form({ event }: { event: Event }): JSX.Element {
     },
   })
 
+  const queryClient = useQueryClient()
   const updateEventMutation = useMutation((data: UpdateEventMutationInput) => client.patch(`/events/${event.id}`, data))
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data)
     updateEventMutation.mutate(
       {
         title: data.title,
@@ -75,9 +79,8 @@ export default function Form({ event }: { event: Event }): JSX.Element {
         status: data.status,
       },
       {
-        onSuccess: (response) => {
-          console.log(response)
-          // Show snackbar
+        onSuccess: (_response) => {
+          queryClient.invalidateQueries(['/events', event.id])
         },
         onError: (error) => {
           if (error instanceof ApiResponseError) {
@@ -86,10 +89,9 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                 setError(error.path, { type: `server.${error.type}`, message: error.message })
               }
             })
+
+            setAlertErrorMessages(error.errors.map((error) => error.fullMessage))
           }
-          // Else show something was wrong & event was not updated or whatever
-          console.log(error)
-          // Show alert
         },
       }
     )
@@ -98,6 +100,25 @@ export default function Form({ event }: { event: Event }): JSX.Element {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container maxWidth='md'>
+        {updateEventMutation.isError && alertErrorMessages.length > 0 && (
+          <Box sx={{ my: 2 }}>
+            <Alert severity='error'>
+              Event was not updated due to the following errors:
+              <ul>
+                {alertErrorMessages.map((message) => (
+                  <li key={message}>{message}</li>
+                ))}
+              </ul>
+            </Alert>
+          </Box>
+        )}
+
+        {updateEventMutation.isSuccess && (
+          <Box sx={{ my: 2 }}>
+            <Alert severity='success'>Event was successfully updated</Alert>
+          </Box>
+        )}
+
         <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
           General
         </Typography>
@@ -184,21 +205,18 @@ export default function Form({ event }: { event: Event }): JSX.Element {
               name='registrationTo'
               control={control}
               render={({ field, fieldState: { error } }): JSX.Element => (
-                <>
-                  {console.log(field)}
-                  <DatePicker
-                    {...field}
-                    label='To'
-                    slotProps={{
-                      textField: {
-                        size: 'small',
-                        fullWidth: true,
-                        error: !!error,
-                        helperText: error?.message || ' ',
-                      },
-                    }}
-                  />
-                </>
+                <DatePicker
+                  {...field}
+                  label='To'
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      fullWidth: true,
+                      error: !!error,
+                      helperText: error?.message || ' ',
+                    },
+                  }}
+                />
               )}
             />
           </Grid>
@@ -247,10 +265,10 @@ export default function Form({ event }: { event: Event }): JSX.Element {
 
       <Divider />
 
-      <Box sx={{ display: 'flex', flexDirection: 'row-reverse', mt: 4 }}>
-        <Button variant='contained' type='submit'>
+      <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 4 }}>
+        <LoadingButton variant='contained' type='submit' loading={updateEventMutation.isLoading}>
           Update
-        </Button>
+        </LoadingButton>
       </Box>
     </form>
   )
