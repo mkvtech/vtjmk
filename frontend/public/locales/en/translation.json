@@ -2,7 +2,14 @@
   "hello": "Hello",
 
   "common": {
-
+    "about": "About",
+    "contacts": "Contacts",
+    "github": "GitHub",
+    "login": "Login",
+    "logout": "Logout",
+    "pageUnderConstruction": "🚧<1>This page is currently under construction...</1>",
+    "profile": "Profile",
+    "websiteName": "VilniusTECH JMK"
   },
 
   "components": {
@@ -10,11 +17,25 @@
       "appBarHomeTabLabel": "Home",
       "appBarConferencesTabLabel": "Conferences",
       "appBarUpcomingConferencesTabLabel": "UpcomingConferences",
-      "appBarAboutTabLabel": "About"
+      "appBarAboutTabLabel": "About",
+
+      "sideMenuLabelParticipations": "Participations",
+      "sideMenuLabelDocuments": "Documents",
+      "sideMenuLabelEventCard": "Event Card",
+      "sideMenuLabelParticipationCertificate": "Participation Certificate",
+      "sideMenuLabelProfile": "Profile",
+      "sideMenuLabelManagement": "Management",
+      "sideMenuLabelEvents": "Events",
+      "sideMenuLabelAdministration": "Administration",
+      "sideMenuLabelSystemStatus": "System Status",
+      "sideMenuLabelPermissions": "Permissions",
+      "sideMenuLabelCreateConference": "Create Conference"
     }
   },
 
   "pages": {
-
+    "home": {
+      "title": "<0>VilniusTECH</0><br/>Conferences for Junior Researchers"
+    }
   }
 }

@@ -92,7 +92,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                   </Box>
                 ) : (
                   <Button component={RouterLink} to='/login' variant='text'>
-                    Login
+                    {t('common.login')}
                   </Button>
                 )}
 

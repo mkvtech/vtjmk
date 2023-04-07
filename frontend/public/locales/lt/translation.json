@@ -2,7 +2,14 @@
   "hello": "Labas",
 
   "common": {
-
+    "about": "Apie",
+    "contacts": "Kontaktai",
+    "github": "GitHub",
+    "login": "Prisijungti",
+    "logout": "Atsijungti",
+    "pageUnderConstruction": "🚧<1>Šis puslapis dar nėra baigtas...</1>",
+    "profile": "Profilis",
+    "websiteName": "VilniusTECH JMK"
   },
 
   "components": {
@@ -10,11 +17,25 @@
       "appBarHomeTabLabel": "Pagrindinis",
       "appBarConferencesTabLabel": "Konferencijos",
       "appBarUpcomingConferencesTabLabel": "Artėjančios konferencijos",
-      "appBarAboutTabLabel": "Apie"
+      "appBarAboutTabLabel": "Apie",
+
+      "sideMenuLabelParticipations": "Dalyvavimai",
+      "sideMenuLabelDocuments": "Dokumentai",
+      "sideMenuLabelEventCard": "Konferencijos kortelė",
+      "sideMenuLabelParticipationCertificate": "Dalyvavimo sertifikatas",
+      "sideMenuLabelProfile": "Profilis",
+      "sideMenuLabelManagement": "Management",
+      "sideMenuLabelEvents": "Konferencijos",
+      "sideMenuLabelAdministration": "Administravimas",
+      "sideMenuLabelSystemStatus": "Sistemos statusas",
+      "sideMenuLabelPermissions": "Leidimai",
+      "sideMenuLabelCreateConference": "Sukūrti konferenciją"
     }
   },
 
   "pages": {
-
+    "home": {
+      "title": "<0>VilniusTECH</0><br/>Jaunųjų mokslininkų konferencijos"
+    }
   }
 }

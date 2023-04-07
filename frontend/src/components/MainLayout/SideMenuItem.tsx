@@ -1,12 +1,13 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { SideMenuPolicies } from './share'
 
 interface SubMenuItemData {
   readonly id: string
-  readonly displayName: string
+  readonly displayNameTranslationKey: string
   readonly icon: JSX.Element
   readonly path: string
   readonly isVisible: boolean | ((policies: SideMenuPolicies) => boolean)
@@ -14,7 +15,7 @@ interface SubMenuItemData {
 
 interface MenuItemData {
   readonly id: string
-  readonly displayName: string
+  readonly displayNameTranslationKey: string
   readonly icon: JSX.Element
   readonly path?: string
   readonly items?: readonly SubMenuItemData[]
@@ -27,6 +28,7 @@ export default function SideMenuItem({
   item: MenuItemData
   policies: SideMenuPolicies
 }): JSX.Element {
+  const { t } = useTranslation()
   const theme = useTheme()
   const [open, setOpen] = useState(true)
 
@@ -42,7 +44,7 @@ export default function SideMenuItem({
           : {})}
       >
         <ListItemIcon sx={{ color: 'white' }}>{item.icon}</ListItemIcon>
-        <ListItemText primary={item.displayName} primaryTypographyProps={{ fontWeight: 'inherit' }} />
+        <ListItemText primary={t(item.displayNameTranslationKey)} primaryTypographyProps={{ fontWeight: 'inherit' }} />
         {item.items && (open ? <ExpandLess /> : <ExpandMore />)}
       </ListItemButton>
 
@@ -56,7 +58,7 @@ export default function SideMenuItem({
               .map((subMenuItem) => (
                 <ListItemButton key={subMenuItem.id} component={RouterLink} to={subMenuItem.path}>
                   <ListItemIcon>-</ListItemIcon>
-                  <ListItemText sx={{ fontSize: '0.8rem' }}>{subMenuItem.displayName}</ListItemText>
+                  <ListItemText sx={{ fontSize: '0.8rem' }}>{t(subMenuItem.displayNameTranslationKey)}</ListItemText>
                 </ListItemButton>
               ))}
           </List>
