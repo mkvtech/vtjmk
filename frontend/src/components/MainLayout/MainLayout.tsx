@@ -1,43 +1,20 @@
-import { AccountCircle, Help, Menu as MenuIcon, Translate } from '@mui/icons-material'
-import {
-  AppBar,
-  Badge,
-  Box,
-  Button,
-  Container,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Toolbar,
-  Typography,
-} from '@mui/material'
+import { AccountCircle, Help, Menu as MenuIcon } from '@mui/icons-material'
+import { AppBar, Badge, Box, Button, Container, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
-import { VtjmkLocale } from '../../share'
+import LocaleSwitch from '../LocaleSwitch/LocaleSwitch'
 import AppBarTabs from './AppBarTabs'
 import Footer from './Footer'
 import { DRAWER_WIDTH } from './share'
 import SideMenu from './SideMenu'
 
 export default function MainLayout({ children }: PropsWithChildren): JSX.Element {
-  const { session, setLocale } = useApi()
-  const { t, i18n } = useTranslation()
+  const { session } = useApi()
+  const { t } = useTranslation()
 
   const [sideMenuOpened, setSideMenuOpened] = React.useState(true)
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  const handleLanguageMenuOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleLanguageMenuSetLocale = (locale: VtjmkLocale): void => {
-    i18n.changeLanguage(locale)
-    setLocale(locale)
-    setAnchorEl(null)
-  }
 
   const sideMenuEnabled = !!session
 
@@ -100,19 +77,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                   <Help />
                 </IconButton>
 
-                <IconButton onClick={handleLanguageMenuOpen}>
-                  <Translate />
-                </IconButton>
-
-                <Menu
-                  id='languages-menu'
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={(): void => setAnchorEl(null)}
-                >
-                  <MenuItem onClick={(): void => handleLanguageMenuSetLocale('en')}>English</MenuItem>
-                  <MenuItem onClick={(): void => handleLanguageMenuSetLocale('lt')}>Lithuanian</MenuItem>
-                </Menu>
+                <LocaleSwitch />
               </Stack>
             </Toolbar>
           </Container>

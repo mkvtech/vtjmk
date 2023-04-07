@@ -3,12 +3,17 @@
 
   "common": {
     "about": "Apie",
+    "backToTheMainWebsite": "Grįžti į pagrindinį puslapį",
     "contacts": "Kontaktai",
+    "email": "El. paštas",
+    "fullName": "Vardas ir pavardė",
     "github": "GitHub",
     "login": "Prisijungti",
     "logout": "Atsijungti",
     "pageUnderConstruction": "🚧<1>Šis puslapis dar nėra baigtas...</1>",
+    "password": "Slaptažodis",
     "profile": "Profilis",
+    "signUp": "Užsiregistruoti",
     "websiteName": "VilniusTECH JMK"
   },
 
@@ -34,8 +39,16 @@
   },
 
   "pages": {
+    "createAccount": {
+      "buttonLabelLoginWithExistingAccount": "Prisijungti",
+      "title": "Sukurti paskyrą"
+    },
     "home": {
       "title": "<0>VilniusTECH</0><br/>Jaunųjų mokslininkų konferencijos"
+    },
+    "login": {
+      "buttonLabelCreateAccount": "Sukurti paskyrą",
+      "title": "Prisijungti prie sistemos"
     }
   }
 }

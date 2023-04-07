@@ -1,12 +1,15 @@
-import { ArrowBack, Language } from '@mui/icons-material'
-import { Box, Button, Divider, IconButton, Link, Paper, TextField, Typography, useTheme } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { Box, Button, Divider, Link, Paper, TextField, Typography, useTheme } from '@mui/material'
 import { SyntheticEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
+import LocaleSwitch from '../../components/LocaleSwitch/LocaleSwitch'
 import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
 
 export default function CreateAccount(): JSX.Element {
+  const { t } = useTranslation()
   const theme = useTheme()
   const navigate = useNavigate()
   const { client, setSession, isAuthenticated } = useApi()
@@ -78,12 +81,10 @@ export default function CreateAccount(): JSX.Element {
           <Box sx={{ px: 4, pt: 4, pb: 2 }}>
             <Box sx={{ display: 'flex' }}>
               <Typography component='h1' variant='h4' sx={{ flex: '1' }}>
-                Create an Account
+                {t('pages.createAccount.title')}
               </Typography>
 
-              <IconButton>
-                <Language />
-              </IconButton>
+              <LocaleSwitch />
             </Box>
           </Box>
 
@@ -93,7 +94,7 @@ export default function CreateAccount(): JSX.Element {
             <form onSubmit={handleSubmit}>
               <Box>
                 <TextField
-                  label='Full Name'
+                  label={t('common.fullName')}
                   type='text'
                   required
                   fullWidth
@@ -105,7 +106,7 @@ export default function CreateAccount(): JSX.Element {
               </Box>
               <Box>
                 <TextField
-                  label='Email'
+                  label={t('common.email')}
                   type='email'
                   required
                   fullWidth
@@ -117,7 +118,7 @@ export default function CreateAccount(): JSX.Element {
               </Box>
               <Box>
                 <TextField
-                  label='Password'
+                  label={t('common.password')}
                   type='password'
                   required
                   fullWidth
@@ -129,10 +130,10 @@ export default function CreateAccount(): JSX.Element {
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }} margin='normal'>
                 <Button component={RouterLink} to='/login' variant='text'>
-                  Login with Existing Account
+                  {t('pages.createAccount.buttonLabelLoginWithExistingAccount')}
                 </Button>
                 <Button variant='contained' type='submit'>
-                  Sign Up
+                  {t('common.signUp')}
                 </Button>
               </Box>
             </form>
@@ -145,7 +146,7 @@ export default function CreateAccount(): JSX.Element {
             to='/'
             sx={{ color: theme.palette.primary.contrastText, verticalAlign: 'middle' }}
           >
-            <ArrowBack fontSize='small' sx={{ verticalAlign: 'middle' }} /> Back to the main website
+            <ArrowBack fontSize='small' sx={{ verticalAlign: 'middle' }} /> {t('common.backToTheMainWebsite')}
           </Link>
         </Box>
       </Box>

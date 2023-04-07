@@ -3,12 +3,17 @@
 
   "common": {
     "about": "About",
+    "backToTheMainWebsite": "Back to the main website",
     "contacts": "Contacts",
+    "email": "Email",
+    "fullName": "Full Name",
     "github": "GitHub",
     "login": "Login",
     "logout": "Logout",
     "pageUnderConstruction": "🚧<1>This page is currently under construction...</1>",
+    "password": "Password",
     "profile": "Profile",
+    "signUp": "Sign Up",
     "websiteName": "VilniusTECH JMK"
   },
 
@@ -34,8 +39,16 @@
   },
 
   "pages": {
+    "createAccount": {
+      "buttonLabelLoginWithExistingAccount": "Login with Existing Account",
+      "title": "Create an Account"
+    },
     "home": {
       "title": "<0>VilniusTECH</0><br/>Conferences for Junior Researchers"
+    },
+    "login": {
+      "buttonLabelCreateAccount": "Create An Account",
+      "title": "Log in to Your Account"
     }
   }
 }
