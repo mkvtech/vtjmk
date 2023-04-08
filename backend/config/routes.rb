@@ -10,7 +10,11 @@ Rails.application.routes.draw do
     get '/me', to: 'sessions#me'
 
     # Resources
-    resources :conferences
+    resources :conferences do
+      member do
+        resources :document_templates, only: %i[index]
+      end
+    end
 
     resources :document_templates, only: %i[create show update delete]
 
