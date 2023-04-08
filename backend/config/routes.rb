@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     # Resources
     resources :conferences
 
-    resources :document_templates
+    resources :document_templates, only: %i[create show update delete]
 
     resources :events, only: %i[index show update]
     namespace 'events' do

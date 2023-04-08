@@ -1,1 +1,1 @@
-json.partial! 'api/document_templates/document_template', api_document_template: @api_document_template
+json.partial! 'api/document_templates/document_template', document_template: @document_template
