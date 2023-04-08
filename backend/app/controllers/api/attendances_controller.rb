@@ -1,7 +1,7 @@
 module Api
   # AttendancesController
   class AttendancesController < ApplicationController
-    require_authenticated_user only: %i[index create]
+    before_action :require_authenticated_user, only: %i[index create]
     before_action :set_attendance, only: %i[show update destroy]
 
     def index

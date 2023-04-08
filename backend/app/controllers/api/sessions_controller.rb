@@ -1,7 +1,7 @@
 module Api
   # Handles authentication for outside
   class SessionsController < ApplicationController
-    require_authenticated_user only: %i[me]
+    before_action :require_authenticated_user, only: %i[me]
 
     def signup
       user = ::User.new(params.permit(:email, :password, :full_name))

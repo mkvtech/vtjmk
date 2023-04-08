@@ -8,14 +8,6 @@ class ApplicationController < ActionController::Base
     head :forbidden
   end
 
-  def self.require_authenticated_user(only:)
-    before_action only: do
-      next unless current_user.nil?
-
-      render json: { errors: [{ type: 'not_authenticated', fullMessage: 'Not authenticated' }] }, status: :unauthorized
-    end
-  end
-
   def current_user
     return @current_user if defined?(@current_user)
 
@@ -39,6 +31,12 @@ class ApplicationController < ActionController::Base
         **error.details
       }
     end
+  end
+
+  def require_authenticated_user
+    return unless current_user.nil?
+
+    render json: { errors: [{ type: 'not_authenticated', fullMessage: 'Not authenticated' }] }, status: :unauthorized
   end
 
   private
