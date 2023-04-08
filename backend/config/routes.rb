@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     # Resources
     resources :conferences
 
+    resources :document_templates
+
     resources :events, only: %i[index show update]
     namespace 'events' do
       scope ':event_id', as: 'events' do
