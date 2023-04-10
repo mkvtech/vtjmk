@@ -13,7 +13,7 @@ module Api
 
       @document_template =
         DocumentTemplate.new(
-          params.permit(:name, :document_type, :placeholder_prefix, :placeholder_postfix, :conference_id)
+          params.permit(:name, :document_type, :placeholder_prefix, :placeholder_postfix, :conference_id, :docx)
         )
 
       if @document_template.save

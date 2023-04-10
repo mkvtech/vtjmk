@@ -20,6 +20,7 @@ import Participants from './pages/Participants'
 import CreateAccount from './pages/CreateAccount'
 import Attendances from './pages/Attendances'
 import EventEdit from './pages/EventEdit'
+import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
 
 const theme = createTheme({
   palette: {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: '/home', element: <Home /> },
       { path: '/conferences', element: <ConferencesList /> },
       { path: '/conferences/:conferenceId', element: <Conference /> },
+      { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/edit', element: <EventEdit /> },
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
