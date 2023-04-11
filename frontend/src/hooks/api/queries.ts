@@ -11,6 +11,7 @@ import {
   eventSchema,
   Participation,
   participationSchema,
+  userParticipationsSchema,
   userSchema,
 } from './schemas'
 
@@ -97,11 +98,10 @@ export async function fetchEventsParticipations({ client, eventId }: { client: A
   return eventsParticipationsResponseSchema.parse(response.data)
 }
 
-const participationsSchema = z.array(participationSchema)
-export function useQueryUserParticipations(): UseQueryResult<readonly Readonly<Participation>[]> {
+export function useQueryUserParticipations() {
   const { client } = useApi()
   return useQuery(['/user/participations'], () =>
-    client.get('/user/participations').then((response) => participationsSchema.parse(response.data))
+    client.get('/user/participations').then((response) => userParticipationsSchema.parse(response.data))
   )
 }
 
@@ -111,7 +111,7 @@ export function useQueryUserParticipation(params: {
   const { client } = useApi()
   return useQuery(['/user/participations', params], async () => {
     const response = await client.get('/user/participations')
-    const parsedResponse = participationsSchema.parse(response.data)
+    const parsedResponse = userParticipationsSchema.parse(response.data)
     return parsedResponse.find((participation) => participation.eventId === params.eventId)
   })
 }

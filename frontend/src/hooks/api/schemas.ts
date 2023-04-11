@@ -59,3 +59,8 @@ export const participationSchema = z.object({
   updatedAt: z.string().transform(isoToDate),
 })
 export type Participation = z.infer<typeof participationSchema>
+
+export const userParticipationSchema = participationSchema.merge(z.object({ event: eventSchema }))
+export type UserParticipation = z.infer<typeof userParticipationSchema>
+
+export const userParticipationsSchema = z.array(userParticipationSchema)

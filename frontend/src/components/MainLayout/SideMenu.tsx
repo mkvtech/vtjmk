@@ -13,7 +13,7 @@ const sideMenuStructure = [
     displayNameTranslationKey: 'components.mainLayout.sideMenuLabelParticipations',
     icon: <ExitToApp />,
     isVisible: true,
-    path: '/',
+    path: '/user/participations',
   },
   {
     id: 'documents',
