@@ -8,12 +8,13 @@ module Api
       authorize! @document_template
     end
 
-    def create
+    def create # rubocop:disable Metrics/MethodLength
       authorize! Conference.find(params[:conference_id]), to: :document_templates_create?, with: ConferencePolicy
 
       @document_template =
         DocumentTemplate.new(
-          params.permit(:name, :document_type, :placeholder_prefix, :placeholder_postfix, :conference_id, :docx)
+          document_type: params[:document_type].underscore,
+          **params.permit(:name, :placeholder_prefix, :placeholder_postfix, :conference_id, :docx)
         )
 
       if @document_template.save

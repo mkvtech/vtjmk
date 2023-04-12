@@ -80,7 +80,7 @@ RSpec.describe '/api/document_templates' do
       let(:params) do
         {
           name: 'Participation Certificate Template',
-          documentType: 'participation_certificate',
+          documentType: 'participationCertificate',
           placeholderPrefix: '',
           placeholderPostfix: '',
           conferenceId: conference.id.to_s
