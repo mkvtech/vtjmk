@@ -405,7 +405,10 @@ Participation.import!(
     { status: :approved, user_id: 55, event_id: 3 },
     { status: :approved, user_id: 55, event_id: 4 },
     { status: :pending,  user_id: 56, event_id: 1 },
-    { status: :approved, user_id: 57, event_id: 7 }
+    { status: :approved, user_id: 57, event_id: 7 },
+    { status: :approved, user_id: 76, event_id: 2 },
+    { status: :approved, user_id: 76, event_id: 7 },
+    { status: :pending,  user_id: 76, event_id: 5 }
   ]
 )
 
