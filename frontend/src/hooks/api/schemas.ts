@@ -64,3 +64,9 @@ export const userParticipationSchema = participationSchema.merge(z.object({ even
 export type UserParticipation = z.infer<typeof userParticipationSchema>
 
 export const userParticipationsSchema = z.array(userParticipationSchema)
+
+export const userParticipationsDocumentTemplateSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+})
+export const userParticipationsDocumentTemplatesSchema = z.array(userParticipationsDocumentTemplateSchema)

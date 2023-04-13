@@ -33,7 +33,7 @@ const sideMenuStructure = [
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelParticipationCertificate',
         icon: <Create />,
         isVisible: true,
-        path: '/',
+        path: '/user/documents/participationCertificate',
       },
     ],
   },

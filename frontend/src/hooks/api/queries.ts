@@ -11,6 +11,7 @@ import {
   eventSchema,
   Participation,
   participationSchema,
+  userParticipationsDocumentTemplatesSchema,
   userParticipationsSchema,
   userSchema,
 } from './schemas'
@@ -98,11 +99,13 @@ export async function fetchEventsParticipations({ client, eventId }: { client: A
   return eventsParticipationsResponseSchema.parse(response.data)
 }
 
+export function fetchUserParticipations({ client }: { client: AxiosInstance }) {
+  return client.get('/user/participations').then((response) => userParticipationsSchema.parse(response.data))
+}
+
 export function useQueryUserParticipations() {
   const { client } = useApi()
-  return useQuery(['/user/participations'], () =>
-    client.get('/user/participations').then((response) => userParticipationsSchema.parse(response.data))
-  )
+  return useQuery(['/user/participations'], () => fetchUserParticipations({ client }))
 }
 
 export function useQueryUserParticipation(params: {
@@ -114,4 +117,16 @@ export function useQueryUserParticipation(params: {
     const parsedResponse = userParticipationsSchema.parse(response.data)
     return parsedResponse.find((participation) => participation.eventId === params.eventId)
   })
+}
+
+export function fetchUserParticipationsDocumentTemplates({
+  client,
+  participationId,
+}: {
+  client: AxiosInstance
+  participationId: string
+}) {
+  return client
+    .get(`/user/participations/${participationId}/document_templates`)
+    .then((response) => userParticipationsDocumentTemplatesSchema.parse(response.data))
 }

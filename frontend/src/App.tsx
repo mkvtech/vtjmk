@@ -22,6 +22,7 @@ import Attendances from './pages/Attendances'
 import EventEdit from './pages/EventEdit'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
 import UserParticipations from './pages/UserParticipations/UserParticipations'
+import UserParticipationCertificate from './pages/UserParticipationCertificate'
 
 const theme = createTheme({
   palette: {
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       { path: '/events/:eventId/attendants', element: <Attendances /> },
       { path: '/events/:eventId/participants', element: <Participants /> },
       { path: '/user/participations', element: <UserParticipations /> },
+      { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
     ],
   },
 ])

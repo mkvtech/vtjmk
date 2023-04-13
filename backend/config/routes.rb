@@ -33,7 +33,11 @@ Rails.application.routes.draw do
 
     # Authenticated User
     namespace 'user' do
-      get '/participations', to: 'participations#index'
+      resources :participations, only: %i[index] do
+        scope module: :participations do
+          resources :document_templates, only: %i[index]
+        end
+      end
     end
 
     # Other
