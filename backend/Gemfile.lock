@@ -84,6 +84,9 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
+    docx (0.7.0)
+      nokogiri (~> 1.13, >= 1.13.0)
+      rubyzip (~> 2.0)
     erubi (1.12.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -223,6 +226,7 @@ GEM
       rubocop-capybara (~> 2.17)
     ruby-next-core (0.15.3)
     ruby-progressbar (1.13.0)
+    rubyzip (2.3.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -261,6 +265,7 @@ DEPENDENCIES
   bcrypt
   bootsnap
   debug
+  docx
   factory_bot_rails
   faker
   importmap-rails
