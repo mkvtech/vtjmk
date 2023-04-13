@@ -1,3 +1,6 @@
+# rubocop:disable all
+# Disable rubocop for this file, since it was generated automatically
+
 # This migration comes from active_storage (originally 20170806125915)
 class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
   def change
@@ -55,3 +58,5 @@ class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
       [primary_key_type, foreign_key_type]
     end
 end
+
+# rubocop:enable all
