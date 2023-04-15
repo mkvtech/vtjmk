@@ -14,7 +14,7 @@ import {
 } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
 import { useApi } from '../../hooks/useApi'
 
@@ -33,6 +33,8 @@ interface FormValues {
 }
 
 function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
+  const navigate = useNavigate()
+
   const { client } = useApi()
   const { control, handleSubmit, register, watch } = useForm<FormValues>({
     defaultValues: {
@@ -66,7 +68,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     createDocumentTemplateMutation.mutate(data, {
       onSuccess: (_response) => {
-        // TODO: Navigate(to: DocumentTemplate page)
+        navigate(`/conferences/${conferenceId}/documentTemplates`)
       },
     })
   }

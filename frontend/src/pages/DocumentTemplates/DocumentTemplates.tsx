@@ -27,7 +27,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   )
 
   return (
-    <Container maxWidth='lg' sx={{ pt: 8 }}>
+    <Container maxWidth='lg' sx={{ pt: 8, pb: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography>
           <Link href={`/conferences/${conferenceId}`}>Back to conference page</Link>
