@@ -36,7 +36,10 @@ export interface LexicalRichTextEditorHandle {
   getEditorState: () => EditorState
 }
 
-export default forwardRef(function LexicalRichTextEditor(_props, ref): JSX.Element {
+export default forwardRef(function LexicalRichTextEditor(
+  { initialEditorState }: { initialEditorState: string },
+  ref
+): JSX.Element {
   const editorStateRef = useRef<EditorState>()
 
   useImperativeHandle(ref, () => ({
@@ -44,7 +47,7 @@ export default forwardRef(function LexicalRichTextEditor(_props, ref): JSX.Eleme
   }))
 
   return (
-    <LexicalComposer initialConfig={editorConfig}>
+    <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState }}>
       <div className='editor-container'>
         <ToolbarPlugin />
         <div className='editor-inner'>
