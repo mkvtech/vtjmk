@@ -11,6 +11,7 @@ import { useApi } from '../../hooks/useApi'
 import { useIsAllowed } from '../../hooks/api/share'
 import ParticipationMenu from './ParticipationMenu'
 import { useQuery } from 'react-query'
+import LexicalView from '../../components/LexicalView'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -133,7 +134,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Divider />
 
           <Box sx={{ my: 2 }}>
-            <Typography>{eventQuery.data.description}</Typography>
+            <LexicalView initialEditorState={eventQuery.data.description} />
           </Box>
         </>
       )}
