@@ -6,7 +6,7 @@ import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COM
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text'
 import { $wrapNodes } from '@lexical/selection'
 
-import { Box, Checkbox, Divider, FormControl, IconButton, MenuItem, Select, Stack } from '@mui/material'
+import { Box, Checkbox, Divider, FormControl, IconButton, MenuItem, Paper, Select, Stack } from '@mui/material'
 
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter'
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify'
@@ -56,7 +56,7 @@ export default function ToolbarPlugin(): JSX.Element {
   }, [updateToolbar, editor])
 
   return (
-    <div>
+    <Paper sx={{ mb: 4 }}>
       <Stack
         direction='row'
         divider={<Divider orientation='vertical' flexItem />}
@@ -149,8 +149,6 @@ export default function ToolbarPlugin(): JSX.Element {
           </IconButton>
         </Box>
       </Stack>
-
-      <Divider />
-    </div>
+    </Paper>
   )
 }
