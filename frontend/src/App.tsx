@@ -20,6 +20,7 @@ import Participants from './pages/Participants'
 import CreateAccount from './pages/CreateAccount'
 import Attendances from './pages/Attendances'
 import EventEdit from './pages/EventEdit'
+import EventDescriptionEdit from './pages/EventDescriptionEdit'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
 import UserParticipations from './pages/UserParticipations/UserParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/edit', element: <EventEdit /> },
+      { path: '/events/:eventId/descriptionEdit', element: <EventDescriptionEdit /> },
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
       { path: '/events/:eventId/attendants', element: <Attendances /> },

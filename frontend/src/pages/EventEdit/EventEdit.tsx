@@ -30,11 +30,15 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             {eventQuery.isLoading || eventQuery.isIdle ? (
               <Skeleton sx={{ display: 'inline-block' }} width='66%' />
             ) : (
-              `'${eventQuery.data.title}'`
+              `"${eventQuery.data.title}"`
             )}
           </Typography>
 
           <Divider />
+
+          <Container maxWidth='md' sx={{ my: 4 }}>
+            <Link href={`/events/${eventId}/descriptionEdit`}>Edit Description</Link>
+          </Container>
 
           {eventQuery.isLoading || eventQuery.isIdle ? (
             <>
