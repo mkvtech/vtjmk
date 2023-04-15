@@ -1,8 +1,23 @@
 import { Container, List, ListItem, Typography } from '@mui/material'
 import { Navigate, useParams } from 'react-router-dom'
+import { z } from 'zod'
 import Link from '../../components/Link'
+import { useQueryPolicies } from '../../hooks/api/queries'
+import { useIsAllowed } from '../../hooks/api/share'
 import useQueryConference from '../../hooks/api/useQueryConference'
 import useQueryEvents from '../../hooks/api/useQueryEvents'
+
+const policiesSchema = z.object({
+  policies: z.object({
+    conferences: z.object({
+      items: z.record(
+        z.object({
+          documentTemplatesIndex: z.boolean(),
+        })
+      ),
+    }),
+  }),
+})
 
 export default function Conference(): JSX.Element {
   const { conferenceId } = useParams()
@@ -10,6 +25,20 @@ export default function Conference(): JSX.Element {
   if (conferenceId === undefined) {
     return <Navigate to='/conferences' replace />
   }
+
+  const policiesQuery = useQueryPolicies({
+    params: {
+      policies: {
+        conferences: {
+          items: {
+            [conferenceId]: ['documentTemplatesIndex'],
+          },
+        },
+      },
+    },
+    schema: policiesSchema,
+  })
+  const isAllowed = useIsAllowed(policiesQuery, 'conferences', conferenceId)
 
   const conferenceQuery = useQueryConference(conferenceId)
   const eventsQuery = useQueryEvents(conferenceId)
@@ -27,6 +56,10 @@ export default function Conference(): JSX.Element {
           </Typography>
 
           <Typography>{conferenceQuery.data.descrption}</Typography>
+
+          {isAllowed('documentTemplatesIndex') && (
+            <Link href={`/conferences/${conferenceId}/documentTemplates`}>Document Templates</Link>
+          )}
 
           <Typography component='h2' variant='h5'>
             Events

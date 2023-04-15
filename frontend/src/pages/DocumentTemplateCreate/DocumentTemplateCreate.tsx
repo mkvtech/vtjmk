@@ -74,7 +74,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography>
-        <Link href={`/conference/${conferenceId}`}>Back to conference page</Link>
+        <Link href={`/conferences/${conferenceId}`}>Back to conference page</Link>
       </Typography>
 
       <Typography component='h1' variant='h2' sx={{ mb: 2 }}>

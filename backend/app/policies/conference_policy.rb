@@ -2,6 +2,10 @@
 class ConferencePolicy < ApplicationPolicy
   pre_check :require_user, :allow_admin
 
+  def document_templates_index?
+    manage?
+  end
+
   def document_templates_create?
     manage?
   end

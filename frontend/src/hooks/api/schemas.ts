@@ -70,3 +70,12 @@ export const userParticipationsDocumentTemplateSchema = z.object({
   name: z.string(),
 })
 export const userParticipationsDocumentTemplatesSchema = z.array(userParticipationsDocumentTemplateSchema)
+
+export const conferenceDocumentTemplateSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  documentType: z.string(),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export const conferenceDocumentTemplatesSchema = z.array(conferenceDocumentTemplateSchema)

@@ -23,6 +23,7 @@ import EventEdit from './pages/EventEdit'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
 import UserParticipations from './pages/UserParticipations/UserParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
+import DocumentTemplates from './pages/DocumentTemplates/DocumentTemplates'
 
 const theme = createTheme({
   palette: {
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
       { path: '/home', element: <Home /> },
       { path: '/conferences', element: <ConferencesList /> },
       { path: '/conferences/:conferenceId', element: <Conference /> },
+      { path: '/conferences/:conferenceId/documentTemplates', element: <DocumentTemplates /> },
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/edit', element: <EventEdit /> },

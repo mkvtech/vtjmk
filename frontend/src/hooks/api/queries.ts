@@ -6,6 +6,7 @@ import { useApi } from '../useApi'
 import {
   Attendance,
   Conference,
+  conferenceDocumentTemplatesSchema,
   conferenceSchema,
   Event,
   eventSchema,
@@ -41,15 +42,21 @@ export function useQueryPolicies<ParamsT, SchemaT extends z.ZodTypeAny>({
   params: ParamsT
   schema: SchemaT
 }): UseQueryResult<z.infer<SchemaT>> {
-  const { client } = useApi()
+  const { client, isAuthenticated } = useApi()
 
-  return useQuery(['/policies', params], async () => {
-    const response = await client.post('/policies', params)
+  return useQuery(
+    ['/policies', params],
+    async () => {
+      const response = await client.post('/policies', params)
 
-    const parsedData = schema.parse(response.data)
+      const parsedData = schema.parse(response.data)
 
-    return parsedData
-  })
+      return parsedData
+    },
+    {
+      enabled: isAuthenticated,
+    }
+  )
 }
 
 const conferencesQuerySchema = z.array(conferenceSchema)
@@ -129,4 +136,13 @@ export function fetchUserParticipationsDocumentTemplates({
   return client
     .get(`/user/participations/${participationId}/document_templates`)
     .then((response) => userParticipationsDocumentTemplatesSchema.parse(response.data))
+}
+
+export function useQueryConferenceDocumentTemplates(params: { conferenceId: string }) {
+  const { client } = useApi()
+  return useQuery(['conferences', params.conferenceId, 'document_templates'], () =>
+    client
+      .get(`/conferences/${params.conferenceId}/document_templates`)
+      .then((response) => conferenceDocumentTemplatesSchema.parse(response.data))
+  )
 }

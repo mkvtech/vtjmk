@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
     # Resources
     resources :conferences do
-      member do
+      scope module: :conferences do
         resources :document_templates, only: %i[index]
       end
     end
