@@ -1,8 +1,11 @@
+import { LoadingButton } from '@mui/lab'
 import { Box, Container, Divider, Paper, Skeleton, Typography } from '@mui/material'
 import dayjs from 'dayjs'
+import { useMutation } from 'react-query'
 import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
 import { useQueryConferenceDocumentTemplates } from '../../hooks/api/queries'
+import { useApi } from '../../hooks/useApi'
 
 export default function DocumentTemplates(): JSX.Element {
   const { conferenceId } = useParams()
@@ -11,7 +14,17 @@ export default function DocumentTemplates(): JSX.Element {
 }
 
 function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
+  const { client } = useApi()
+
   const templatesQuery = useQueryConferenceDocumentTemplates({ conferenceId })
+  const deleteDocumentTemplateMutation = useMutation(
+    ({ id }: { id: string }) => client.delete(`/document_templates/${id}`),
+    {
+      onSuccess: () => {
+        templatesQuery.refetch()
+      },
+    }
+  )
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
@@ -41,9 +54,20 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
         <>
           {templatesQuery.data.map((documentTemplate) => (
             <Paper key={documentTemplate.id} sx={{ p: 2, mt: 2 }}>
-              <Typography component='h2' variant='h4'>
-                {documentTemplate.name}
-              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography component='h2' variant='h4'>
+                  {documentTemplate.name}
+                </Typography>
+
+                <LoadingButton
+                  color='error'
+                  variant='outlined'
+                  loading={deleteDocumentTemplateMutation.isLoading}
+                  onClick={(): void => deleteDocumentTemplateMutation.mutate({ id: documentTemplate.id })}
+                >
+                  Delete
+                </LoadingButton>
+              </Box>
 
               <Typography>{dayjs(documentTemplate.createdAt).toString()}</Typography>
             </Paper>

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :document_templates, only: %i[create show update delete]
+    resources :document_templates, only: %i[create show update destroy]
     post '/documents/generate_participation_certificate', to: 'documents#generate_participation_certificate'
 
     resources :events, only: %i[index show update]
