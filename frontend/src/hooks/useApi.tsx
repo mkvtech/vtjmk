@@ -158,6 +158,9 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
 
         setLocale: (locale: VtjmkLocale): void => {
           axiosClient.defaults.headers.common['Accept-Language'] = locale
+
+          // Update locale-dependant queries
+          queryClient.removeQueries(['events'])
         },
       }}
     >

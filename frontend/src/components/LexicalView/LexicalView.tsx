@@ -20,12 +20,12 @@ const editorConfig = {
 export default function LexicalView({ initialEditorState }: { initialEditorState: string }): JSX.Element {
   // Note: This is only an initial state. Lexical will not update itself 'reactively', you have to use editorState.update() with React.useRef() instead
   return (
-    <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState }}>
+    <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState || null }}>
       <div className='editor-container'>
         <div className='editor-inner'>
           <RichTextPlugin
             contentEditable={<ContentEditable className='editor-input' />}
-            placeholder={<div className='editor-placeholder'>Enter text...</div>}
+            placeholder={null}
             ErrorBoundary={LexicalErrorBoundary}
           />
         </div>

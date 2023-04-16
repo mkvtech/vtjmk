@@ -45,7 +45,7 @@ export function useQueryPolicies<ParamsT, SchemaT extends z.ZodTypeAny>({
   const { client, isAuthenticated } = useApi()
 
   return useQuery(
-    ['/policies', params],
+    ['policies', params],
     async () => {
       const response = await client.post('/policies', params)
 
@@ -63,7 +63,7 @@ const conferencesQuerySchema = z.array(conferenceSchema)
 export function useQueryConferences(): UseQueryResult<readonly Readonly<Conference>[]> {
   const { client } = useApi()
 
-  return useQuery(['/conferences'], () =>
+  return useQuery(['conferences'], () =>
     client.get('/conferences').then((response) => conferencesQuerySchema.parse(response.data))
   )
 }
@@ -71,7 +71,7 @@ export function useQueryConferences(): UseQueryResult<readonly Readonly<Conferen
 export function useQueryConference(id: string | undefined): UseQueryResult<Readonly<Conference>> {
   const { client } = useApi()
   return useQuery<Readonly<Conference>>(
-    ['/conferences', id],
+    ['conferences', id],
     () =>
       typeof id === 'undefined'
         ? Promise.reject(new Error('Invalid id'))
@@ -88,14 +88,14 @@ export function useQueryEvents(params: {
 }): UseQueryResult<readonly Readonly<Event>[]> {
   const { client } = useApi()
 
-  return useQuery<readonly Readonly<Event>[]>(['/events', params], () =>
+  return useQuery<readonly Readonly<Event>[]>(['events', params], () =>
     client.get(`/events${addParams(params)}`).then((response) => eventsQuerySchema.parse(response.data))
   )
 }
 
 export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
   const { client } = useApi()
-  return useQuery<Readonly<Event>>(['/events', id], () =>
+  return useQuery<Readonly<Event>>(['events', id], () =>
     client.get(`/events/${id}`).then((response) => eventSchema.parse(response.data))
   )
 }
@@ -112,14 +112,14 @@ export function fetchUserParticipations({ client }: { client: AxiosInstance }) {
 
 export function useQueryUserParticipations() {
   const { client } = useApi()
-  return useQuery(['/user/participations'], () => fetchUserParticipations({ client }))
+  return useQuery(['user', 'participations'], () => fetchUserParticipations({ client }))
 }
 
 export function useQueryUserParticipation(params: {
   eventId: string
 }): UseQueryResult<Readonly<Participation> | undefined> {
   const { client } = useApi()
-  return useQuery(['/user/participations', params], async () => {
+  return useQuery(['user', 'participations', params], async () => {
     const response = await client.get('/user/participations')
     const parsedResponse = userParticipationsSchema.parse(response.data)
     return parsedResponse.find((participation) => participation.eventId === params.eventId)
