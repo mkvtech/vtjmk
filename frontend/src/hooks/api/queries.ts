@@ -12,6 +12,7 @@ import {
   eventSchema,
   Participation,
   participationSchema,
+  permissionsSchema,
   userParticipationsDocumentTemplatesSchema,
   userParticipationsSchema,
   userSchema,
@@ -144,5 +145,12 @@ export function useQueryConferenceDocumentTemplates(params: { conferenceId: stri
     client
       .get(`/conferences/${params.conferenceId}/document_templates`)
       .then((response) => conferenceDocumentTemplatesSchema.parse(response.data))
+  )
+}
+
+export function useQueryPermissions() {
+  const { client } = useApi()
+  return useQuery(['permissions'], () =>
+    client.get('/permissions').then((response) => permissionsSchema.parse(response.data))
   )
 }

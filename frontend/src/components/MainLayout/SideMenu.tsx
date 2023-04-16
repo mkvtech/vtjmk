@@ -77,7 +77,7 @@ const sideMenuStructure = [
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelPermissions',
         icon: <Key />,
         isVisible: true,
-        path: '/',
+        path: '/permissions',
       },
       {
         id: 'createConference',

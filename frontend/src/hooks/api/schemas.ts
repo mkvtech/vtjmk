@@ -79,3 +79,18 @@ export const conferenceDocumentTemplateSchema = z.object({
   updatedAt: z.string().transform(isoToDate),
 })
 export const conferenceDocumentTemplatesSchema = z.array(conferenceDocumentTemplateSchema)
+
+export const permissionSchema = z.object({
+  id: z.string(),
+  action: z.string(),
+  target: z.object({
+    id: z.string(),
+    title: z.string(),
+  }),
+  targetId: z.string(),
+  targetType: z.string(),
+  user: userSchema,
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export const permissionsSchema = z.array(permissionSchema)

@@ -41,6 +41,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :permissions, only: %i[index create show destroy]
+
     # Other
     post '/policies', to: 'policies#index'
 
