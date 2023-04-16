@@ -14,6 +14,9 @@ import Link from '../../components/Link/Link'
 import { LoadingButton } from '@mui/lab'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useQueryAdminConferences, useQueryAdminEvents, useQueryAdminUsers } from '../../hooks/api/queries'
+import { useMutation } from 'react-query'
+import { useApi } from '../../hooks/useApi'
+import { useNavigate } from 'react-router-dom'
 
 interface IFormInput {
   userId: string
@@ -23,9 +26,14 @@ interface IFormInput {
 }
 
 export default function PermissionCreate(): JSX.Element {
+  const { client } = useApi()
+  const navigate = useNavigate()
+
   const conferencesQuery = useQueryAdminConferences()
   const eventsQuery = useQueryAdminEvents()
   const usersQuery = useQueryAdminUsers()
+
+  const createPermissionMutation = useMutation((data: IFormInput) => client.post('/permissions', { data }))
 
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -40,7 +48,11 @@ export default function PermissionCreate(): JSX.Element {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data)
-    console.log(watchTargetType)
+    createPermissionMutation.mutate(data, {
+      onSuccess: (_response) => {
+        navigate('/permissions')
+      },
+    })
   }
 
   return (

@@ -16,7 +16,7 @@ module Api
     def create
       authorize! with: PermissionPolicy
 
-      @permission = Permission.new(**params.permit(:user_id, :action, :target_type, :target_id))
+      @permission = Permission.new(**params.require(:data).permit(:user_id, :action, :target_type, :target_id))
 
       if @permission.save
         render :show, status: :created, location: api_permission_url(@permission)
