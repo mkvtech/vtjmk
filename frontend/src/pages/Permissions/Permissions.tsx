@@ -1,15 +1,7 @@
-import { Box, Container, Divider, Paper, Skeleton, Typography, styled } from '@mui/material'
+import { Box, Container, Divider, Skeleton, Typography } from '@mui/material'
 import { useQueryPermissions } from '../../hooks/api/queries'
-import { LoadingButton } from '@mui/lab'
 import Link from '../../components/Link/Link'
-
-const HighlightedText = styled('span')((_theme) => ({
-  fontWeight: 900,
-}))
-
-const SecondaryText = styled('span')((theme) => ({
-  color: theme.theme.palette.grey[600],
-}))
+import PermissionsItem from './PermissionsItem'
 
 export default function Permissions(): JSX.Element {
   const permissionsQuery = useQueryPermissions()
@@ -40,24 +32,7 @@ export default function Permissions(): JSX.Element {
       ) : permissionsQuery.isSuccess ? (
         <Box>
           {permissionsQuery.data.map((permission) => (
-            <Paper key={permission.id} sx={{ p: 2, mt: 2 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography>
-                  <HighlightedText>{permission.user.fullName}</HighlightedText>{' '}
-                  <SecondaryText>{permission.user.email}</SecondaryText>
-                </Typography>
-
-                <LoadingButton color='error' variant='outlined'>
-                  Delete
-                </LoadingButton>
-              </Box>
-
-              <Typography sx={{ mt: 1 }}>
-                <SecondaryText>Action:</SecondaryText> <em>{permission.action}</em>,{' '}
-                <SecondaryText>Target:</SecondaryText> {permission.targetType === 'Conference' ? 'Conference' : 'Event'}
-                , {permission.target.title} ({permission.targetId})
-              </Typography>
-            </Paper>
+            <PermissionsItem key={permission.id} permission={permission} />
           ))}
         </Box>
       ) : (

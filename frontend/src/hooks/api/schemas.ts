@@ -95,4 +95,6 @@ export const permissionSchema = z.object({
   createdAt: z.string().transform(isoToDate),
   updatedAt: z.string().transform(isoToDate),
 })
+export type Permission = z.infer<typeof permissionSchema>
+
 export const permissionsSchema = z.array(permissionSchema)
