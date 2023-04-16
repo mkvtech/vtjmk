@@ -41,6 +41,13 @@ Rails.application.routes.draw do
       end
     end
 
+    # Admin
+    namespace 'admin' do
+      resources :conferences, only: %i[index]
+      resources :events, only: %i[index]
+      resources :users, only: %i[index]
+    end
+
     resources :permissions, only: %i[index create show destroy]
 
     # Other

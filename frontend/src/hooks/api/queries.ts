@@ -154,3 +154,27 @@ export function useQueryPermissions() {
     client.get('/permissions').then((response) => permissionsSchema.parse(response.data))
   )
 }
+
+const apiAdminConferencesSchema = z.array(conferenceSchema)
+export function useQueryAdminConferences() {
+  const { client } = useApi()
+  return useQuery(['admin', 'conferences'], () =>
+    client.get('/admin/conferences').then((response) => apiAdminConferencesSchema.parse(response.data))
+  )
+}
+
+const apiAdminEventsSchema = z.array(eventSchema)
+export function useQueryAdminEvents() {
+  const { client } = useApi()
+  return useQuery(['admin', 'events'], () =>
+    client.get('/admin/events').then((response) => apiAdminEventsSchema.parse(response.data))
+  )
+}
+
+const apiAdminUsersSchema = z.array(userSchema)
+export function useQueryAdminUsers() {
+  const { client } = useApi()
+  return useQuery(['admin', 'users'], () =>
+    client.get('/admin/users').then((response) => apiAdminUsersSchema.parse(response.data))
+  )
+}

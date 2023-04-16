@@ -26,6 +26,7 @@ import UserParticipations from './pages/UserParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
 import DocumentTemplates from './pages/DocumentTemplates'
 import Permissions from './pages/Permissions'
+import PermissionCreate from './pages/PermissionCreate'
 
 const theme = createTheme({
   palette: {
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
       { path: '/events/:eventId/attendants', element: <Attendances /> },
       { path: '/events/:eventId/participants', element: <Participants /> },
       { path: '/permissions', element: <Permissions /> },
+      { path: '/permissions/create', element: <PermissionCreate /> },
       { path: '/user/participations', element: <UserParticipations /> },
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
     ],

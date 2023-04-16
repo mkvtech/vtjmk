@@ -43,6 +43,8 @@ export const userSchema = z.object({
   id: z.string(),
   email: z.string(),
   fullName: z.string(),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
 })
 export type User = z.infer<typeof userSchema>
 

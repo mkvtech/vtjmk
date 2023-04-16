@@ -39,6 +39,12 @@ class ApplicationController < ActionController::Base
     render json: { errors: [{ type: 'not_authenticated', fullMessage: 'Not authenticated' }] }, status: :unauthorized
   end
 
+  def require_admin
+    return if current_user.admin?
+
+    head :forbidden
+  end
+
   private
 
   # https://guides.rubyonrails.org/i18n.html#inferring-locale-from-the-language-header
