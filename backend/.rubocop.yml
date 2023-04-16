@@ -28,6 +28,12 @@ Metrics/BlockLength:
   Exclude:
     - 'config/routes.rb'
 
+# Slow migrations is not an issue while the number of records < 999999. Relevant:
+# https://github.com/rubocop/rubocop-rails/issues/161
+# https://aaronlasseigne.com/2012/06/05/faster-activerecord-migrations-using-change-table-bulk/
+Rails/BulkChangeTable:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Max: 4
 

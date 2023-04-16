@@ -72,7 +72,7 @@ Mobility.configure do
     # Converts blank strings to nil on reads and writes. Comment out to
     # disable.
     #
-    presence
+    # presence
 
     # Default
     #
