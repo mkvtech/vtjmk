@@ -29,7 +29,7 @@ export type EventStatus = z.infer<typeof eventStatusSchema>
 export const eventSchema = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
+  description: z.string().optional().nullable(),
   conferenceId: z.string(),
   date: z.string().transform(isoToDate),
   registrationFrom: z.string().transform(isoToDate),

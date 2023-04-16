@@ -17,7 +17,7 @@ const editorConfig = {
 }
 
 // This component renders saved Lexical JSON state. Internally, it is a read-only editor, however visually it appears as rendered HTML.
-export default function LexicalView({ initialEditorState }: { initialEditorState: string }): JSX.Element {
+export default function LexicalView({ initialEditorState }: { initialEditorState?: string | null }): JSX.Element {
   // Note: This is only an initial state. Lexical will not update itself 'reactively', you have to use editorState.update() with React.useRef() instead
   return (
     <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState || null }}>
