@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
-import LocaleSwitch from '../../components/LocaleSwitch/LocaleSwitch'
+import LocaleSwitch from '../../components/LocaleSwitch'
 import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
 

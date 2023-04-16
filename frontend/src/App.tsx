@@ -22,9 +22,9 @@ import Attendances from './pages/Attendances'
 import EventEdit from './pages/EventEdit'
 import EventDescriptionEdit from './pages/EventDescriptionEdit'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
-import UserParticipations from './pages/UserParticipations/UserParticipations'
+import UserParticipations from './pages/UserParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
-import DocumentTemplates from './pages/DocumentTemplates/DocumentTemplates'
+import DocumentTemplates from './pages/DocumentTemplates'
 
 const theme = createTheme({
   palette: {
