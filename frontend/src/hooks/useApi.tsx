@@ -5,7 +5,8 @@ import { useQueryClient } from 'react-query'
 import { VtjmkLocale } from '../share'
 import { User } from './api/types'
 
-const API_BASE_URL = 'http://localhost:3000/api'
+const SERVER_URL = import.meta.env.VITE_VTJMK_BACKEND_URL || 'http://localhost:3000'
+const API_BASE_URL = `${SERVER_URL}/api`
 const LOCAL_STORAGE_JWT_KEY = 'JWT'
 
 const axiosClient = axios.create({

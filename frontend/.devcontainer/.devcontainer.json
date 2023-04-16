@@ -1,0 +1,7 @@
+{
+  "name": "VTJMK Frontend",
+  "dockerComposeFile": ["../../docker-compose.dev.yml"],
+  "service": "frontend",
+  "shutdownAction": "none",
+  "workspaceFolder": "/workspace/frontend"
+}
