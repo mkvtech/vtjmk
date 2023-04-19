@@ -27,6 +27,7 @@ declare module '@mui/material/Typography' {
 const theme = responsiveFontSizes(
   createTheme({
     palette: {
+      // mode: 'dark',
       primary: {
         main: '#0B4DC7',
         light: '#269BF0',
@@ -37,7 +38,7 @@ const theme = responsiveFontSizes(
 
     typography: {
       h1: {
-        fontFamily: "'Space Grotesk', 'Roboto', 'sans-serif'",
+        fontFamily: '"Space Grotesk", "Roboto", "sans-serif"',
         fontSize: '3rem',
       },
       h2: {
@@ -58,7 +59,7 @@ const theme = responsiveFontSizes(
 
       // To be used in hero-like component
       h1Hero: {
-        fontFamily: "'Space Grotesk', 'Roboto', 'sans-serif'",
+        fontFamily: '"Space Grotesk", "Roboto", "sans-serif"',
         fontSize: '3rem',
         fontWeight: 300,
         lineHeight: 1.15,

@@ -1,4 +1,3 @@
-import './styles.css'
 import { forwardRef, useImperativeHandle, useRef } from 'react'
 import { EditorState } from 'lexical'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
@@ -10,16 +9,13 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { HeadingNode } from '@lexical/rich-text'
 import ToolbarPlugin from './plugins/Toolbar'
+import { lexicalGlobalStyles, lexicalTheme } from './theme'
 
 const editorConfig = {
   namespace: 'Lexical',
   onError: (error: unknown): void => console.log(error),
   nodes: [HeadingNode],
-  theme: {
-    text: {
-      underline: 'editor-text-underline',
-    },
-  },
+  theme: lexicalTheme,
 }
 
 // Note: This component uses useImperativeHandle to expose methods of reading its state. Normally in React useState()
@@ -47,36 +43,39 @@ export default forwardRef(function LexicalEditor(
   }))
 
   return (
-    <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState || null }}>
-      <div className='editor-container'>
-        <ToolbarPlugin />
-        <div className='editor-inner'>
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable
-                className='editor-input'
-                // TODO: Disabling `spellCheck` attribute here. Currently, this element does not permit HTML5 `lang`
-                // attribute, however it should be trivial to add it manually.
-                // See this file:
-                // https://github.com/facebook/lexical/blob/main/packages/lexical-react/src/LexicalContentEditable.tsx
-                // Also:
-                // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang
-                // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck
-                spellCheck='false'
-              />
-            }
-            placeholder={<div className='editor-placeholder'>Enter text...</div>}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <HistoryPlugin />
-          <AutoFocusPlugin />
-          <OnChangePlugin
-            onChange={(editorState): void => {
-              editorStateRef.current = editorState
-            }}
-          />
+    <>
+      {lexicalGlobalStyles}
+      <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState || null }}>
+        <div className='lexical-editor-container'>
+          <ToolbarPlugin />
+          <div className='lexical-editor-inner'>
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  className='lexical-editor-input'
+                  // TODO: Disabling `spellCheck` attribute here. Currently, this element does not permit HTML5 `lang`
+                  // attribute, however it should be trivial to add it manually.
+                  // See this file:
+                  // https://github.com/facebook/lexical/blob/main/packages/lexical-react/src/LexicalContentEditable.tsx
+                  // Also:
+                  // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang
+                  // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck
+                  spellCheck='false'
+                />
+              }
+              placeholder={<div className='lexical-editor-placeholder'>Enter text...</div>}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            <HistoryPlugin />
+            <AutoFocusPlugin />
+            <OnChangePlugin
+              onChange={(editorState): void => {
+                editorStateRef.current = editorState
+              }}
+            />
+          </div>
         </div>
-      </div>
-    </LexicalComposer>
+      </LexicalComposer>
+    </>
   )
 })
