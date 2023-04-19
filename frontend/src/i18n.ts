@@ -8,7 +8,7 @@ i18n
   .init({
     // Comment this line & reload to see missing translations
     fallbackLng: 'en',
-    debug: true,
+    debug: !import.meta.env.PROD,
 
     interpolation: {
       escapeValue: false,

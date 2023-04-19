@@ -1,5 +1,4 @@
 import { Box, Container, Typography, useTheme } from '@mui/material'
-import '@fontsource/space-grotesk'
 import { Trans, useTranslation } from 'react-i18next'
 
 export default function Home(): JSX.Element {
@@ -19,7 +18,7 @@ export default function Home(): JSX.Element {
       />
 
       <Container maxWidth='lg' sx={{ mt: -12 }}>
-        <Typography component='h1' variant='h2' fontFamily='Space Grotesk'>
+        <Typography variant='h1Hero'>
           <Trans i18nKey='pages.home.title'>
             <Box component='span' color={theme.palette.primary.main}>
               VilniusTECH

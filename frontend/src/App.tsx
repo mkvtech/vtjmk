@@ -1,4 +1,4 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
@@ -8,6 +8,7 @@ import { I18nextProvider } from 'react-i18next'
 import MainLayout from './components/MainLayout'
 import { ApiProvider } from './hooks/useApi'
 import i18n from './i18n'
+import theme from './muiTheme'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -28,17 +29,6 @@ import DocumentTemplates from './pages/DocumentTemplates'
 import Permissions from './pages/Permissions'
 import PermissionCreate from './pages/PermissionCreate'
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0B4DC7',
-      light: '#269BF0',
-      // light: '#3b70d2', // From MUI colors tool
-      dark: '#07358b',
-    },
-  },
-})
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,6 +36,25 @@ const queryClient = new QueryClient({
     },
   },
 })
+
+declare global {
+  interface Window {
+    // This variable is for debugging from browser's console, ts is unnecessary here
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vtjmk: any
+  }
+}
+
+if (!import.meta.env.PROD) {
+  window.vtjmk = {}
+
+  console.log('MUI theme', theme)
+  console.log('MUI theme is accessible from this console with `vtjmk.theme`')
+  window.vtjmk.theme = theme
+
+  console.log('React QueryClient is accessible from this console with `vtjmk.queryClient`')
+  window.vtjmk.queryClient = queryClient
+}
 
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
