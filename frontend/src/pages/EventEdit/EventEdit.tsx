@@ -16,16 +16,14 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       {eventQuery.isError ? (
-        <Typography component='h1' variant='h4'>
-          Could not load event :(
-        </Typography>
+        <Typography variant='h1'>Could not load event :(</Typography>
       ) : (
         <>
           <Typography>
             <Link href={`/events/${eventId}`}>Back to event page</Link>
           </Typography>
 
-          <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+          <Typography variant='h1' sx={{ mb: 2 }}>
             Editing{' '}
             {eventQuery.isLoading || eventQuery.isIdle ? (
               <Skeleton sx={{ display: 'inline-block' }} width='66%' />

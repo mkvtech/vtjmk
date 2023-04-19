@@ -20,19 +20,19 @@ export default function createTheme({ colorMode }: { colorMode: ColorMode }): Th
           fontSize: '3rem',
         },
         h2: {
-          fontSize: '2.5rem',
-        },
-        h3: {
           fontSize: '2rem',
         },
-        h4: {
+        h3: {
           fontSize: '1.75rem',
         },
-        h5: {
+        h4: {
           fontSize: '1.5rem',
         },
-        h6: {
+        h5: {
           fontSize: '1.25rem',
+        },
+        h6: {
+          fontSize: '1.1rem',
         },
 
         // To be used in hero-like component

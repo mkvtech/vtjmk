@@ -51,9 +51,7 @@ export default function Conference(): JSX.Element {
         <Typography component='p'>We are loading conference...</Typography>
       ) : (
         <div>
-          <Typography component='h1' variant='h4'>
-            {conferenceQuery.data.title}
-          </Typography>
+          <Typography variant='h1'>{conferenceQuery.data.title}</Typography>
 
           <Typography>{conferenceQuery.data.descrption}</Typography>
 
@@ -61,9 +59,7 @@ export default function Conference(): JSX.Element {
             <Link href={`/conferences/${conferenceId}/documentTemplates`}>Document Templates</Link>
           )}
 
-          <Typography component='h2' variant='h5'>
-            Events
-          </Typography>
+          <Typography variant='h2'>Events</Typography>
 
           {eventsQuery.isError ? (
             <Typography component='p'>Cannot load conference events</Typography>

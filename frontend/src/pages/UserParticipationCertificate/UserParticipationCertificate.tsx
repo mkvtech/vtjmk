@@ -119,7 +119,7 @@ export default function UserParticipationCertificate(): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Generate Participation Certificate
       </Typography>
 

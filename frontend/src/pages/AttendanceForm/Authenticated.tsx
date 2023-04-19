@@ -30,9 +30,7 @@ export default function Authenticated({ eventId }: { eventId: string }): JSX.Ele
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          Attendance Form
-        </Typography>
+        <Typography variant='h1'>Attendance Form</Typography>
 
         <Typography>
           <Link href={`/events/${eventId}`}>

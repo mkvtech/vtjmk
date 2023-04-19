@@ -9,9 +9,7 @@ export default function Unauthenticated(): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          Attendance Form
-        </Typography>
+        <Typography variant='h1'>Attendance Form</Typography>
 
         <Typography>
           <Link href={`/events/${eventId}`}>
@@ -31,9 +29,7 @@ export default function Unauthenticated(): JSX.Element {
       <Divider />
 
       <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          Basic Information
-        </Typography>
+        <Typography variant='h2'>Basic Information</Typography>
         <TextField label='Full Name' required fullWidth margin='normal' />
         <TextField label='Email' required fullWidth type='email' margin='normal' />
       </Box>
@@ -41,9 +37,7 @@ export default function Unauthenticated(): JSX.Element {
       <Divider />
 
       <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          Other
-        </Typography>
+        <Typography variant='h2'>Other</Typography>
 
         <TextField label='Comment' fullWidth margin='normal' multiline />
       </Box>

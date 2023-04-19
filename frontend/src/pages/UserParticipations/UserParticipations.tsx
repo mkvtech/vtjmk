@@ -15,7 +15,7 @@ export default function UserParticipations(): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Participated Conferences
       </Typography>
 
@@ -23,11 +23,9 @@ export default function UserParticipations(): JSX.Element {
         ? 'Loading'
         : userParticipationsQuery.isSuccess
         ? userParticipationsQuery.data.map((participation) => (
-            <Paper key={participation.id}>
+            <Paper key={participation.id} sx={{ mt: 2 }}>
               <Box sx={{ p: 2 }}>
-                <Typography component='h2' variant='h4'>
-                  {participation.event.title}
-                </Typography>
+                <Typography variant='h2'>{participation.event.title}</Typography>
 
                 <Typography>
                   {dayjs(participation.event.date).isBefore(dayjs())

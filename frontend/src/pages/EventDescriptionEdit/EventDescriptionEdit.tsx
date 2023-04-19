@@ -40,7 +40,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         <Link href={`/events/${eventId}/edit`}>Back to event editing</Link>
       </Typography>
 
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Editing &quot;
         {eventQuery.isSuccess ? eventQuery.data.title : <Skeleton sx={{ display: 'inline-block', width: '40%' }} />}
         &quot; description.

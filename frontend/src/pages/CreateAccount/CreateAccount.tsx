@@ -76,11 +76,14 @@ export default function CreateAccount(): JSX.Element {
         bgcolor: theme.palette.primary.main,
       }}
     >
-      <Box sx={{ flex: 1, maxWidth: '600px' }}>
+      <Box sx={{ flex: 1, maxWidth: 'sm' }}>
         <Paper>
           <Box sx={{ px: 4, pt: 4, pb: 2 }}>
-            <Box sx={{ display: 'flex' }}>
-              <Typography component='h1' variant='h4' sx={{ flex: '1' }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+              <Typography
+                variant='h1'
+                sx={{ flex: '1', fontSize: '1.75rem', '@media (min-width:600px)': { fontSize: '2.5rem' } }}
+              >
                 {t('pages.createAccount.title')}
               </Typography>
 

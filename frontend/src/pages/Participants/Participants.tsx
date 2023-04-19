@@ -129,9 +129,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Link href={`/events/${eventId}`}>{eventQuery.isSuccess ? eventQuery.data.title : 'Back'}</Link>
         </Typography>
 
-        <Typography component='h1' variant='h4'>
-          Participants
-        </Typography>
+        <Typography variant='h1'>Participants</Typography>
       </Box>
 
       {pendingParticipations.length > 0 && (
@@ -139,9 +137,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Divider />
 
           <Box sx={{ my: 2 }}>
-            <Typography component='h2' variant='h5'>
-              Pending Requests
-            </Typography>
+            <Typography variant='h2'>Pending Requests</Typography>
 
             <Alert severity='info'>
               These attendants are awaiting answer - please review these requests as soon as possible. Each request must
@@ -160,9 +156,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       <Divider />
 
       <Box sx={{ my: 2 }}>
-        <Typography component='h2' variant='h5'>
-          All requests
-        </Typography>
+        <Typography variant='h2'>All requests</Typography>
 
         <FormControl size='small' sx={{ minWidth: 120 }}>
           <InputLabel id='participants-filter-label'>Filter</InputLabel>

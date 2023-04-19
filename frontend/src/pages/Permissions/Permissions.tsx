@@ -13,7 +13,7 @@ export default function Permissions(): JSX.Element {
           <Link href={'/permissions/create'}>Create new Permission</Link>
         </Typography>
       </Box>
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Permissions
       </Typography>
 

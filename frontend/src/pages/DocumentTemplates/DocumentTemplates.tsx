@@ -38,7 +38,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
         </Typography>
       </Box>
 
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Document Templates
       </Typography>
 
@@ -55,9 +55,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
           {templatesQuery.data.map((documentTemplate) => (
             <Paper key={documentTemplate.id} sx={{ p: 2, mt: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography component='h2' variant='h4'>
-                  {documentTemplate.name}
-                </Typography>
+                <Typography variant='h2'>{documentTemplate.name}</Typography>
 
                 <LoadingButton
                   color='error'

@@ -19,9 +19,7 @@ export default function ConferencesList(): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
-      <Typography component='h1' variant='h4'>
-        Conferences
-      </Typography>
+      <Typography variant='h1'>Conferences</Typography>
 
       {query.isLoading ? (
         <Typography component='p'>We are loading conferences...</Typography>

@@ -44,9 +44,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          Participation Form
-        </Typography>
+        <Typography variant='h1'>Participation Form</Typography>
 
         <Typography>
           <Link href={`/events/${eventId}`}>
@@ -65,9 +63,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ my: 2 }}>
-          <Typography component='h2' variant='h5'>
-            Submission
-          </Typography>
+          <Typography variant='h2'>Submission</Typography>
 
           <Typography>This event requires a submission.</Typography>
 
@@ -88,9 +84,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         <Divider />
 
         <Box sx={{ my: 2 }}>
-          <Typography component='h2' variant='h5'>
-            Other
-          </Typography>
+          <Typography variant='h2'>Other</Typography>
 
           <Controller
             name='comment'

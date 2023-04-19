@@ -67,9 +67,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          Attendants
-        </Typography>
+        <Typography variant='h1'>Attendants</Typography>
 
         <Typography>
           <Link href={`/events/${eventId}`}>
@@ -84,9 +82,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Divider />
 
           <Box sx={{ my: 2 }}>
-            <Typography component='h1' variant='h4'>
-              Pending Requests
-            </Typography>
+            <Typography variant='h1'>Pending Requests</Typography>
 
             <Alert severity='info'>
               These attendants are awaiting answer - please review these requests as soon as possible. Each request must
@@ -105,9 +101,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       <Divider />
 
       <Box sx={{ my: 2 }}>
-        <Typography component='h1' variant='h4'>
-          All requests
-        </Typography>
+        <Typography variant='h1'>All requests</Typography>
 
         <FormControl size='small' sx={{ minWidth: 120 }}>
           <InputLabel id='attendancies-filter-label'>Filter</InputLabel>

@@ -80,9 +80,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             </Typography>
           )}
 
-          <Typography component='h1' variant='h2' fontFamily='Space Grotesk'>
-            {eventQuery.data.title}
-          </Typography>
+          <Typography variant='h1'>{eventQuery.data.title}</Typography>
 
           <Box sx={{ my: 2 }}>
             <Box display='flex' alignItems='center' justifyContent='space-between'>

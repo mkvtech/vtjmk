@@ -76,10 +76,10 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography>
-        <Link href={`/conferences/${conferenceId}`}>Back to conference page</Link>
+        <Link href={`/conferences/${conferenceId}/documentTemplates`}>Back to document templates</Link>
       </Typography>
 
-      <Typography component='h1' variant='h2' sx={{ mb: 2 }}>
+      <Typography variant='h1' sx={{ mb: 2 }}>
         Create new Document Template
       </Typography>
 
@@ -87,7 +87,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container maxWidth='md' sx={{ mb: 4 }}>
-          <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+          <Typography variant='h2' sx={{ mt: 4 }}>
             General
           </Typography>
 
@@ -119,7 +119,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
             </Grid>
           </Grid>
 
-          <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+          <Typography variant='h2' sx={{ mt: 4 }}>
             Placeholder format
           </Typography>
 
@@ -145,7 +145,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
 
           <Grid container spacing={2} sx={{ mt: 4 }}>
             <Grid item xs={6}>
-              <Typography variant='h6'>Example Template</Typography>
+              <Typography variant='h3'>Example Template</Typography>
               <Typography sx={{ mt: 1 }}>
                 Document generated at {watchPlaceholderPrefix}DATE{watchPlaceholderPostfix} for {watchPlaceholderPrefix}
                 USER_FULLNAME{watchPlaceholderPostfix}
@@ -153,12 +153,12 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
             </Grid>
 
             <Grid item xs={6}>
-              <Typography variant='h6'>Example Generated Document</Typography>
+              <Typography variant='h3'>Example Generated Document</Typography>
               <Typography sx={{ mt: 1 }}>Document generated at 2023-04-04 for John Doe</Typography>
             </Grid>
           </Grid>
 
-          <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+          <Typography variant='h2' sx={{ mt: 4 }}>
             File
           </Typography>
 

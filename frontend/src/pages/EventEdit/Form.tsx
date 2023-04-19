@@ -119,7 +119,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
           </Box>
         )}
 
-        <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+        <Typography variant='h2' sx={{ mt: 4 }}>
           General
         </Typography>
 
@@ -176,7 +176,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
           </Grid>
         </Grid>
 
-        <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+        <Typography variant='h2' sx={{ mt: 4 }}>
           Registration
         </Typography>
 
@@ -222,7 +222,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
           </Grid>
         </Grid>
 
-        <Typography component='h2' variant='h6' sx={{ mt: 4 }}>
+        <Typography variant='h2' sx={{ mt: 4 }}>
           Administration
         </Typography>
 
