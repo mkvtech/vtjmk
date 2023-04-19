@@ -11,7 +11,7 @@ import { useApi } from '../../hooks/useApi'
 import { useIsAllowed } from '../../hooks/api/share'
 import ParticipationMenu from './ParticipationMenu'
 import { useQuery } from 'react-query'
-import LexicalView from '../../components/LexicalView'
+import LexicalView from '../../components/Lexical/LexicalView'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({

@@ -32,11 +32,11 @@ const editorConfig = {
 // https://adrianfdez469.medium.com/keep-react-child-state-on-the-child-if-possible-d531f0715408
 // https://github.com/facebook/lexical/discussions/1937
 
-export interface LexicalRichTextEditorHandle {
+export interface LexicalEditorHandle {
   getEditorState: () => EditorState
 }
 
-export default forwardRef(function LexicalRichTextEditor(
+export default forwardRef(function LexicalEditor(
   { initialEditorState }: { initialEditorState?: string | null },
   ref
 ): JSX.Element {
