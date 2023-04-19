@@ -1,0 +1,55 @@
+import { Outlet, createBrowserRouter } from 'react-router-dom'
+
+import MainLayout from './components/MainLayout'
+
+import AttendanceForm from './pages/AttendanceForm'
+import Attendances from './pages/Attendances'
+import Conference from './pages/Conference'
+import ConferencesList from './pages/ConferencesList'
+import CreateAccount from './pages/CreateAccount'
+import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
+import DocumentTemplates from './pages/DocumentTemplates'
+import Event from './pages/Event'
+import EventDescriptionEdit from './pages/EventDescriptionEdit'
+import EventEdit from './pages/EventEdit'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Participants from './pages/Participants'
+import ParticipationForm from './pages/ParticipationForm'
+import PermissionCreate from './pages/PermissionCreate'
+import Permissions from './pages/Permissions'
+import UserParticipationCertificate from './pages/UserParticipationCertificate'
+import UserParticipations from './pages/UserParticipations'
+
+const router = createBrowserRouter([
+  { path: '/login', element: <Login /> },
+  { path: '/signup', element: <CreateAccount /> },
+  {
+    element: (
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
+    ),
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/conferences', element: <ConferencesList /> },
+      { path: '/conferences/:conferenceId', element: <Conference /> },
+      { path: '/conferences/:conferenceId/documentTemplates', element: <DocumentTemplates /> },
+      { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
+      { path: '/events/:eventId', element: <Event /> },
+      { path: '/events/:eventId/attend', element: <AttendanceForm /> },
+      { path: '/events/:eventId/attendants', element: <Attendances /> },
+      { path: '/events/:eventId/descriptionEdit', element: <EventDescriptionEdit /> },
+      { path: '/events/:eventId/edit', element: <EventEdit /> },
+      { path: '/events/:eventId/participants', element: <Participants /> },
+      { path: '/events/:eventId/participate', element: <ParticipationForm /> },
+      { path: '/home', element: <Home /> },
+      { path: '/permissions', element: <Permissions /> },
+      { path: '/permissions/create', element: <PermissionCreate /> },
+      { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
+      { path: '/user/participations', element: <UserParticipations /> },
+    ],
+  },
+])
+
+export default router
