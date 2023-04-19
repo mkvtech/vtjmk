@@ -9,6 +9,7 @@ import AppBarTabs from './AppBarTabs'
 import Footer from './Footer'
 import { DRAWER_WIDTH } from './share'
 import SideMenu from './SideMenu'
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch'
 
 export default function MainLayout({ children }: PropsWithChildren): JSX.Element {
   const { session } = useApi()
@@ -32,7 +33,7 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
       >
         <AppBar
           sx={{
-            bgcolor: 'white',
+            bgcolor: 'background.default',
             borderBottom: '1px solid #F3F3F3',
             // ...(sideMenuEnabled && sideMenuOpened && { width: `calc(100% - ${DRAWER_WIDTH}px)` }),
           }}
@@ -72,6 +73,8 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                     {t('common.login')}
                   </Button>
                 )}
+
+                <ThemeModeSwitch />
 
                 <IconButton>
                   <Help />

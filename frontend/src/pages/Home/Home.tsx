@@ -1,4 +1,4 @@
-import { Box, Container, Typography, useTheme } from '@mui/material'
+import { Box, Container, Typography, alpha, useTheme } from '@mui/material'
 import { Trans, useTranslation } from 'react-i18next'
 
 export default function Home(): JSX.Element {
@@ -9,8 +9,10 @@ export default function Home(): JSX.Element {
     <>
       <Box
         sx={{
-          backgroundImage:
-            'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 100%), url(/homebg.jpg)',
+          backgroundImage: `linear-gradient(180deg, ${alpha(theme.palette.background.default, 0)} 0%, ${alpha(
+            theme.palette.background.default,
+            0
+          )} 40%, ${theme.palette.background.default} 100%), url(/homebg.jpg)`,
           backgroundSize: 'cover',
           backgroundPosition: '0% 30%',
           height: '37vh', // About 500 px on my screen

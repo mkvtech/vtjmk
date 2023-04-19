@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { RouterProvider } from 'react-router-dom'
@@ -7,8 +7,8 @@ import { I18nextProvider } from 'react-i18next'
 
 import { ApiProvider } from './hooks/useApi'
 import i18n from './i18n'
-import theme from './muiTheme'
 import router from './router'
+import AppThemeProvider from './components/AppTheme/AppTheme'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,10 +29,6 @@ declare global {
 if (!import.meta.env.PROD) {
   window.vtjmk = {}
 
-  console.log('MUI theme', theme)
-  console.log('MUI theme is accessible from this console with `vtjmk.theme`')
-  window.vtjmk.theme = theme
-
   console.log('React QueryClient is accessible from this console with `vtjmk.queryClient`')
   window.vtjmk.queryClient = queryClient
 }
@@ -40,7 +36,7 @@ if (!import.meta.env.PROD) {
 function App(): JSX.Element {
   return (
     <I18nextProvider i18n={i18n}>
-      <ThemeProvider theme={theme}>
+      <AppThemeProvider>
         <CssBaseline />
 
         <MuiLocalizationProvider dateAdapter={AdapterDayjs}>
@@ -50,7 +46,7 @@ function App(): JSX.Element {
             </ApiProvider>
           </QueryClientProvider>
         </MuiLocalizationProvider>
-      </ThemeProvider>
+      </AppThemeProvider>
     </I18nextProvider>
   )
 }
