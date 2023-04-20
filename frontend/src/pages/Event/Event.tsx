@@ -4,6 +4,7 @@ import { Box } from '@mui/system'
 import dayjs from 'dayjs'
 import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
+import { Trans, useTranslation } from 'react-i18next'
 
 import Link from '../../components/Link'
 import { fetchEventsParticipations, useQueryConference, useQueryEvent } from '../../hooks/api/queries'
@@ -29,10 +30,12 @@ const EVENT_PAGE_POLICIES_SCHEMA = z.object({
 export default function Event(): JSX.Element {
   const { eventId } = useParams()
 
-  return eventId === undefined ? <Navigate to='/conferences' replace /> : <Page eventId={eventId} />
+  return eventId ? <Page eventId={eventId} /> : <Navigate to='/conferences' replace />
 }
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
+  const { t } = useTranslation()
+
   const policiesQueryInput = {
     policies: {
       events: {
@@ -86,13 +89,15 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             <Box display='flex' alignItems='center' justifyContent='space-between'>
               <Typography>
                 {dayjs(eventQuery.data.date).isBefore(dayjs())
-                  ? `Took place ${dayjs(eventQuery.data.date).format('DD/MM/YYYY')}`
-                  : `Will take place ${dayjs(eventQuery.data.date).format('DD/MM/YYYY')}`}
+                  ? t('common.tookPlace', { date: eventQuery.data.date })
+                  : t('common.willTakePlace', { date: eventQuery.data.date })}
               </Typography>
 
               {!session ? (
                 <Typography component='p'>
-                  You must <Link href='/login'>login</Link> to attend
+                  <Trans i18nKey='common.youMustLoginToAttend'>
+                    You must <Link href='/login'>login</Link> to attend
+                  </Trans>
                 </Typography>
               ) : (
                 <ParticipationMenu eventId={eventId} />
@@ -109,7 +114,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                   <Box display='flex'>
                     <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='primary'>
                       <Button component={RouterLink} to={`/events/${eventId}/participants`}>
-                        View Participants
+                        {t('common.viewParticipants')}
                       </Button>
                     </Badge>
                   </Box>
@@ -122,7 +127,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                     component={RouterLink}
                     to={`/events/${eventId}/edit`}
                   >
-                    Edit
+                    {t('common.edit')}
                   </Button>
                 )}
               </Box>

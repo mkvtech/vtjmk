@@ -1,5 +1,6 @@
 import { Container, List, ListItem, Typography } from '@mui/material'
 import { Navigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import Link from '../../components/Link'
 import { useQueryPolicies } from '../../hooks/api/queries'
@@ -22,9 +23,11 @@ const policiesSchema = z.object({
 export default function Conference(): JSX.Element {
   const { conferenceId } = useParams()
 
-  if (conferenceId === undefined) {
-    return <Navigate to='/conferences' replace />
-  }
+  return conferenceId ? <Page conferenceId={conferenceId} /> : <Navigate to='/conferences' />
+}
+
+function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
+  const { t } = useTranslation()
 
   const policiesQuery = useQueryPolicies({
     params: {
@@ -56,10 +59,10 @@ export default function Conference(): JSX.Element {
           <Typography>{conferenceQuery.data.descrption}</Typography>
 
           {isAllowed('documentTemplatesIndex') && (
-            <Link href={`/conferences/${conferenceId}/documentTemplates`}>Document Templates</Link>
+            <Link href={`/conferences/${conferenceId}/documentTemplates`}>{t('common.documentTemplates')}</Link>
           )}
 
-          <Typography variant='h2'>Events</Typography>
+          <Typography variant='h2'>{t('common.events')}</Typography>
 
           {eventsQuery.isError ? (
             <Typography component='p'>Cannot load conference events</Typography>

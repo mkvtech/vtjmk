@@ -3,18 +3,31 @@
 
   "common": {
     "about": "Apie",
+    "approved": "Patvirtinta",
     "backToTheMainWebsite": "Grįžti į pagrindinį puslapį",
+    "conferences": "Konferencijos",
     "contacts": "Kontaktai",
+    "documentTemplates": "Dokumentų šablonai",
+    "edit": "Redaguoti",
     "email": "El. paštas",
+    "events": "Įvykiai",
     "fullName": "Vardas ir pavardė",
     "github": "GitHub",
     "login": "Prisijungti",
     "logout": "Atsijungti",
     "pageUnderConstruction": "🚧<1>Šis puslapis dar nėra baigtas...</1>",
+    "participate": "Dalyvauti",
     "password": "Slaptažodis",
+    "pending": "Laukiama",
     "profile": "Profilis",
+    "rejected": "Atšaukta",
     "signUp": "Užsiregistruoti",
-    "websiteName": "VilniusTECH JMK"
+    "tookPlace": "Įvyko {{date, datetime}}",
+    "unknown": "Nežinoma",
+    "viewParticipants": "Dalyviai",
+    "websiteName": "VilniusTECH JMK",
+    "willTakePlace": "Vyks {{date, datetime}}",
+    "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 
   "components": {
@@ -49,6 +62,9 @@
     "login": {
       "buttonLabelCreateAccount": "Sukurti paskyrą",
       "title": "Prisijungti prie sistemos"
+    },
+    "event": {
+      "participatingMenuParticipatingLabel": "Dalyvaujama: {{status}}"
     }
   }
 }

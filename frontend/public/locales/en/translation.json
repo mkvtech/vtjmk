@@ -3,25 +3,38 @@
 
   "common": {
     "about": "About",
+    "approved": "Approved",
     "backToTheMainWebsite": "Back to the main website",
+    "conferences": "Conferences",
     "contacts": "Contacts",
+    "documentTemplates": "Document Templates",
+    "edit": "Edit",
     "email": "Email",
+    "events": "Events",
     "fullName": "Full Name",
     "github": "GitHub",
     "login": "Login",
     "logout": "Logout",
     "pageUnderConstruction": "🚧<1>This page is currently under construction...</1>",
+    "participate": "Participate",
     "password": "Password",
+    "pending": "Pending",
     "profile": "Profile",
+    "rejected": "Rejected",
     "signUp": "Sign Up",
-    "websiteName": "VilniusTECH JMK"
+    "tookPlace": "Took place {{date, datetime}}",
+    "unknown": "Unknown",
+    "viewParticipants": "View Participants",
+    "websiteName": "VilniusTECH JMK",
+    "willTakePlace": "Will take place {{date, datetime}}",
+    "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 
   "components": {
     "mainLayout": {
       "appBarHomeTabLabel": "Home",
       "appBarConferencesTabLabel": "Conferences",
-      "appBarUpcomingConferencesTabLabel": "UpcomingConferences",
+      "appBarUpcomingConferencesTabLabel": "Upcoming Conferences",
       "appBarAboutTabLabel": "About",
 
       "sideMenuLabelParticipations": "Participations",
@@ -49,6 +62,9 @@
     "login": {
       "buttonLabelCreateAccount": "Create An Account",
       "title": "Log in to Your Account"
+    },
+    "event": {
+      "participatingMenuParticipatingLabel": "Participating: {{status}}"
     }
   }
 }

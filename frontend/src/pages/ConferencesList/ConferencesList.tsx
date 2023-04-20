@@ -2,6 +2,7 @@ import { Typography, List, ListItem, Container } from '@mui/material'
 import { useQuery } from 'react-query'
 import Link from '../../components/Link'
 import { useApi } from '../../hooks/useApi'
+import { useTranslation } from 'react-i18next'
 
 interface Conference {
   id: string
@@ -10,6 +11,7 @@ interface Conference {
 }
 
 export default function ConferencesList(): JSX.Element {
+  const { t } = useTranslation()
   const { client } = useApi()
   const query = useQuery<readonly Readonly<Conference>[]>('GET /conferences', async () => {
     const { data } = await client.get('/conferences')
@@ -19,7 +21,7 @@ export default function ConferencesList(): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
-      <Typography variant='h1'>Conferences</Typography>
+      <Typography variant='h1'>{t('common.conferences')}</Typography>
 
       {query.isLoading ? (
         <Typography component='p'>We are loading conferences...</Typography>
