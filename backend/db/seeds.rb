@@ -187,7 +187,7 @@ Mobility::Backends::ActiveRecord::KeyValue::StringTranslation.import!(
     { id: 13, translatable_type: 'Event', translatable_id: 7, key: 'title', locale: 'en', value: 'Economics and Management 2023'                                           },
     { id: 14, translatable_type: 'Event', translatable_id: 7, key: 'title', locale: 'lt', value: 'Ekonomika ir vadyba 2023'                                                },
     { id: 15, translatable_type: 'Event', translatable_id: 8, key: 'title', locale: 'en', value: 'Economics and Management 2024'                                           },
-    { id: 16, translatable_type: 'Event', translatable_id: 8, key: 'title', locale: 'lt', value: 'Ekonomika ir vadyba 2024'                                                },
+    { id: 16, translatable_type: 'Event', translatable_id: 8, key: 'title', locale: 'lt', value: 'Ekonomika ir vadyba 2024'                                                }
   ]
 )
 

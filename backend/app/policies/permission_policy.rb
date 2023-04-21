@@ -1,3 +1,4 @@
+# :nodoc:
 class PermissionPolicy < ApplicationPolicy
   pre_check :require_user, :allow_admin
 
