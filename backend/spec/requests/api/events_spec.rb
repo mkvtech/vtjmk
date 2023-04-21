@@ -18,20 +18,20 @@ RSpec.describe '/events' do
     end
 
     context 'with conference_id' do
-      let(:params) { { conference_id: conference1.id } }
-      let(:conference1) { create(:conference) }
-      let(:conference2) { create(:conference) }
-      let(:conference1_events) { create_list(:event, 2, conference: conference1) }
-      let(:conference2_events) { create_list(:event, 2, conference: conference2) }
+      let(:params) { { conference_id: target_conference.id } }
+      let(:target_conference) { create(:conference) }
+      let(:other_conference) { create(:conference) }
+      let(:target_conference_events) { create_list(:event, 2, conference: target_conference) }
+      let(:other_conference_events) { create_list(:event, 2, conference: other_conference) }
 
       before do
-        conference1_events
-        conference2_events
+        target_conference_events
+        other_conference_events
       end
 
       it 'returns events related to specified conference' do
         make_request
-        expect(json_response.pluck(:id)).to match_array(conference1_events.map { _1.id.to_s })
+        expect(json_response.pluck(:id)).to match_array(target_conference_events.map { _1.id.to_s })
       end
     end
 

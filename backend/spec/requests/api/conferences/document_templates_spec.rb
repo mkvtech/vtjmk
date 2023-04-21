@@ -17,16 +17,16 @@ RSpec.describe '/api/conferences/:conference_id/document_templates' do
     end
 
     context 'with multiple document templates from different conferences' do
-      subject(:make_request) { get("/api/conferences/#{conference1.id}/document_templates", headers:) }
+      subject(:make_request) { get("/api/conferences/#{conference.id}/document_templates", headers:) }
 
-      let(:conference1) { create(:conference) }
-      let(:conference2) { create(:conference) }
+      let(:conference) { create(:conference) }
+      let(:other_conference) { create(:conference) }
 
-      let!(:document_template1) { create(:document_template, conference: conference1) }
+      let!(:document_template1) { create(:document_template, conference:) }
 
       before do
-        create(:document_template, conference: conference2)
-        create(:permission, user:, target: conference1, action: :manage)
+        create(:document_template, conference: other_conference)
+        create(:permission, user:, target: conference, action: :manage)
       end
 
       it 'returns document templates only from specified conference' do
