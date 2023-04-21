@@ -20,6 +20,7 @@ import PermissionCreate from './pages/PermissionCreate'
 import Permissions from './pages/Permissions'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
 import UserParticipations from './pages/UserParticipations'
+import Page404 from './pages/Page404/Page404'
 
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
       { path: '/permissions/create', element: <PermissionCreate /> },
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
       { path: '/user/participations', element: <UserParticipations /> },
+      { path: '*', element: <Page404 /> },
     ],
   },
 ])

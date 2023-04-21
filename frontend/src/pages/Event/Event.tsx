@@ -13,6 +13,7 @@ import { useIsAllowed } from '../../hooks/api/share'
 import ParticipationMenu from './ParticipationMenu'
 import { useQuery } from 'react-query'
 import LexicalView from '../../components/Lexical/LexicalView'
+import PageError from '../../components/PageError'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -59,6 +60,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const isAllowed = useIsAllowed(policiesQuery, 'events', eventId)
 
   const eventQuery = useQueryEvent(eventId)
+  // TODO: eventQuery must also return conference data
   const conferenceQuery = useQueryConference(eventQuery.data?.conferenceId)
   const participationsQuery = useQuery(
     ['events', eventId, 'participations'],
@@ -74,7 +76,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       {eventQuery.isLoading || eventQuery.isIdle ? (
         <Typography component='p'>We are loading conference...</Typography>
       ) : eventQuery.isError ? (
-        <Typography component='p'>/!\ There was an error while loading a query</Typography>
+        <PageError withTitle error={eventQuery.error} />
       ) : (
         <>
           {conferenceQuery.isSuccess && (
