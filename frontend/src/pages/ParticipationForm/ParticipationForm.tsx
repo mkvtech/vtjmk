@@ -1,40 +1,65 @@
 import { ArrowBack } from '@mui/icons-material'
 import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Link from '../../components/Link'
 import { useApi } from '../../hooks/useApi'
+import MultipleFilesUpload from '../../components/MultipleFilesUpload'
+import { FileEntry } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
 
 export default function ParticipationForm(): JSX.Element {
   const { eventId } = useParams()
 
-  return eventId === undefined ? <Navigate to='/conferences' replace /> : <Page eventId={eventId} />
+  return eventId ? <Page eventId={eventId} /> : <Navigate to='/conferences' replace />
 }
 
 interface IFormInput {
-  comment: string
-  title: string
+  submissionTitle: string
+  submissionFiles?: readonly FileEntry[]
 }
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
   const navigate = useNavigate()
   const { client } = useApi()
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
-      comment: '',
-      title: '',
+      submissionTitle: '',
     },
   })
-  const createMutation = useMutation((data: { comment: string }) =>
-    client.post('/participations', { comment: data.comment, eventId })
-  )
+  const createMutation = useMutation((data: IFormInput) => {
+    if (!data.submissionFiles) {
+      throw new Error('missing files')
+    }
+
+    const formData = new FormData()
+    formData.append('eventId', eventId)
+    formData.append('submissionTitle', data.submissionTitle)
+
+    data.submissionFiles.forEach((fileEntry) => {
+      if (!fileEntry.persisted) {
+        // Note: This is a correct way of sending an array of items to Rails server.
+        // This key format may be not applicable to other servers.
+        // Read:
+        // https://iambryanhaney.medium.com/structuring-multipart-formdata-with-rails-naming-conventions-ded7113f7593
+        // https://smiz.medium.com/how-does-rails-and-rack-parse-form-variables-4576813d75a6
+        formData.append('submissionFiles[]', fileEntry.file)
+      }
+    })
+
+    return client.post('/participations', formData)
+  })
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(data)
     createMutation.mutate(
-      { comment: data.comment },
+      {
+        submissionTitle: data.submissionTitle,
+        submissionFiles: data.submissionFiles,
+      },
       {
         onSuccess: (_response) => {
+          // TODO: Navigate to created participation record page
           navigate(`/events/${eventId}`)
         },
       }
@@ -68,29 +93,25 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
           <Typography>This event requires a submission.</Typography>
 
           <Controller
-            name='title'
+            name='submissionTitle'
             control={control}
             render={({ field }): JSX.Element => (
               <TextField {...field} label='Title' required fullWidth margin='normal' />
             )}
           />
 
-          <Button variant='contained' component='label'>
-            <input hidden accept='image/*' type='file' />
-            Upload
-          </Button>
-        </Box>
+          <Typography variant='h2'>Files</Typography>
 
-        <Divider />
-
-        <Box sx={{ my: 2 }}>
-          <Typography variant='h2'>Other</Typography>
+          <Typography>
+            You can upload files like paper document (DOCX, PDF), presentation slides (PPTX) or any other relevant
+            document
+          </Typography>
 
           <Controller
-            name='comment'
+            name='submissionFiles'
             control={control}
-            render={({ field }): JSX.Element => (
-              <TextField {...field} label='Comment' fullWidth margin='normal' multiline />
+            render={({ field: { value, onChange } }): JSX.Element => (
+              <MultipleFilesUpload value={value} onChange={onChange} />
             )}
           />
         </Box>

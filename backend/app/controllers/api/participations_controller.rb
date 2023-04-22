@@ -3,7 +3,8 @@ module Api
   class ParticipationsController < ApplicationController
     def create
       @participation = Participation.new(
-        status: 'pending', user: current_user, event_id: params[:event_id], comment: params[:comment]
+        status: 'pending', user: current_user,
+        **params.permit(:event_id, submission_files: []) # TODO: :submissionTitle
       )
 
       if @participation.save
