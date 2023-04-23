@@ -27,6 +27,17 @@ module Api
       authorize! @participation
 
       if @participation.update(params.permit(:submission_title, :submission_description))
+        # Add/Attach files
+        @participation.submission_files.attach(params[:submission_files_new].pluck(:file))
+
+        # Remove/Purge files
+        attachment_ids_to_purge = params[:submission_files_persisted].select { _1[:remove] == 'true' }.pluck(:id)
+
+        @participation
+          .submission_files
+          .where(id: attachment_ids_to_purge)
+          .each(&:destroy)
+
         render :show, status: :ok, location: api_participation_url(@participation)
       else
         render json: @participation.errors, status: :unprocessable_entity

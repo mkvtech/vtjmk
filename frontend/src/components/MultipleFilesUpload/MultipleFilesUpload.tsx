@@ -1,11 +1,26 @@
-import { AttachFile, Download, Remove } from '@mui/icons-material'
+import { Add, AttachFile, Download, Remove } from '@mui/icons-material'
 import { Box, IconButton, Paper, Typography, styled } from '@mui/material'
+import { produce } from 'immer'
 import { useDropzone } from 'react-dropzone'
 
 export interface FileEntry {
   file: File
   name: string
   persisted: boolean
+}
+
+export interface MultipleFilesUploadValue {
+  readonly newFiles: readonly {
+    file: File
+    name: string
+  }[]
+  readonly persistedFiles: readonly {
+    id: string
+    size: number
+    name: string
+    downloadUrl: string
+    removed: boolean
+  }[]
 }
 
 const StyledDropzoneBox = styled(Box, {
@@ -34,27 +49,50 @@ const MultipleFilesUpload = ({
   value,
   onChange,
 }: {
-  value?: readonly FileEntry[]
-  onChange: (value: readonly FileEntry[]) => void
+  value?: MultipleFilesUploadValue
+  onChange: (value: MultipleFilesUploadValue) => void
 }): JSX.Element => {
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     onDrop: (acceptedFiles) => {
-      const newFileEntries = acceptedFiles.map((newFile) => ({ file: newFile, name: newFile.name, persisted: false }))
+      const newFileEntries = acceptedFiles.map((newFile) => ({ file: newFile, name: newFile.name }))
 
-      onChange(value ? [...value, ...newFileEntries] : newFileEntries)
+      onChange(
+        value
+          ? produce(value, (draft) => {
+              draft.newFiles = [...draft.newFiles, ...newFileEntries]
+            })
+          : { newFiles: newFileEntries, persistedFiles: [] }
+      )
     },
   })
 
-  const removeFile = (file: File): void => {
+  const removeNewFile = (file: File): void => {
     if (!value) {
       return
     }
 
-    const newFiles = [...value]
-    const index = newFiles.findIndex((fileEntry) => fileEntry.file === file)
-    newFiles.splice(index, 1)
-    onChange(newFiles)
+    onChange(
+      produce(value, (draft) => {
+        const index = draft.newFiles.findIndex((fileEntry) => fileEntry.file === file)
+        draft.newFiles.splice(index, 1)
+      })
+    )
   }
+
+  const togglePersistedFile = (id: string): void => {
+    if (!value) {
+      return
+    }
+
+    onChange(
+      produce(value, (draft) => {
+        const index = draft.persistedFiles.findIndex((file) => file.id === id)
+        draft.persistedFiles[index].removed = !draft.persistedFiles[index].removed
+      })
+    )
+  }
+
+  const filesCount = value ? value.newFiles.length + value.persistedFiles.length : 0
 
   return (
     <>
@@ -63,31 +101,45 @@ const MultipleFilesUpload = ({
         <Typography>Drop files into this box or click to add files</Typography>
       </StyledDropzoneBox>
 
-      <Typography sx={{ mt: 1 }}>{value ? value.length : 0} file(s) attached</Typography>
+      <Typography sx={{ mt: 1 }}>{filesCount} file(s) attached</Typography>
 
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>
         {value &&
-          value.map((file) => (
+          value.newFiles.map((file) => (
             <Paper
               key={file.name}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                pl: 1,
-                pr: 1,
-                py: 1,
-                backgroundColor: file.persisted ? 'green' : '',
+                p: 1,
+                backgroundColor: 'green',
               }}
             >
               <AttachFile />
               <Typography>
                 {file.name} ({file.file.size} bytes)
               </Typography>
-              <IconButton onClick={(): void => removeFile(file.file)} sx={{ ml: 1 }}>
+              <IconButton onClick={(): void => removeNewFile(file.file)}>
+                <Remove />
+              </IconButton>
+            </Paper>
+          ))}
+
+        {value &&
+          value.persistedFiles.map((file) => (
+            <Paper
+              key={file.id}
+              sx={{ display: 'flex', alignItems: 'center', p: 1, backgroundColor: file.removed ? 'red' : '' }}
+            >
+              <AttachFile />
+              <Typography>
+                {file.name} ({file.size} bytes)
+              </Typography>
+              <IconButton onClick={(): void => console.error('Not implemented')} sx={{ ml: 1 }}>
                 <Download />
               </IconButton>
-              <IconButton onClick={(): void => removeFile(file.file)}>
-                <Remove />
+              <IconButton onClick={(): void => togglePersistedFile(file.id)}>
+                {file.removed ? <Add /> : <Remove />}
               </IconButton>
             </Paper>
           ))}

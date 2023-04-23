@@ -1,7 +1,7 @@
 import { Skeleton, Typography, styled } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { useQueryParticipation } from '../../hooks/api/queries'
 import ReadonlyFilesView from '../../components/MultipleFilesUpload/ReadonlyFilesView'
+import { useQueryParticipation } from '../../hooks/api/queries'
 import GeneralForm from './GeneralForm'
 
 const NoDataTypography = styled(Typography)(({ theme }) => ({
@@ -20,6 +20,7 @@ export default function General({ edit, onEditDone }: { edit: boolean; onEditDon
         initialData={{
           submissionTitle: participationQuery.data.submissionTitle,
           submissionDescription: participationQuery.data.submissionDescription,
+          submissionFiles: participationQuery.data.submissionFiles,
         }}
         onDone={onEditDone}
       />
