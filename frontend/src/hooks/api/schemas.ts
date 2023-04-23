@@ -66,7 +66,8 @@ export const participationSchema = z.object({
     date: z.string().transform(isoToDate),
   }),
   status: participationStatusSchema,
-  submissionTitle: z.string(),
+  submissionTitle: z.string().nullable(),
+  submissionDescription: z.string().nullable(),
   submissionFiles: z.array(
     z.object({
       id: z.string(),

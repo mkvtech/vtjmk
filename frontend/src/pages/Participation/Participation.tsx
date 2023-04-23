@@ -1,11 +1,13 @@
 import { Navigate, useParams } from 'react-router-dom'
 import { useQueryParticipation, useQueryPolicies } from '../../hooks/api/queries'
 import PageError from '../../components/PageError/PageError'
-import { Container, Divider, Grid, Skeleton, Typography } from '@mui/material'
-import ReadonlyFilesView from '../../components/MultipleFilesUpload/ReadonlyFilesView'
+import { Box, Container, Divider, Grid, Skeleton, Typography } from '@mui/material'
 import Status from './Status'
 import { z } from 'zod'
 import { useIsAllowed } from '../../hooks/api/share'
+import General from './General'
+import { useState } from 'react'
+import OptionsButton, { OptionsButtonAction } from './OptionsButton'
 
 export default function Participation(): JSX.Element {
   const { participationId } = useParams()
@@ -29,6 +31,7 @@ const policiesSchema = z.object({
 function Page({ participationId }: { participationId: string }): JSX.Element {
   const participationQuery = useQueryParticipation({ participationId })
 
+  const [editGeneral, setEditGeneral] = useState(false)
   const policiesQuery = useQueryPolicies({
     params: {
       policies: {
@@ -49,20 +52,33 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
     <Container maxWidth='lg' sx={{ my: 8 }}>
       <Typography variant='h1'>Participation</Typography>
 
-      <Typography sx={{ my: 2 }}>
-        This page contains information about{' '}
-        {participationQuery.isSuccess ? (
-          <b>{participationQuery.data.user.fullName}</b>
-        ) : (
-          <Skeleton sx={{ display: 'inline-block', width: '200px' }} />
-        )}{' '}
-        participation in{' '}
-        {participationQuery.isSuccess ? (
-          <b>{participationQuery.data.event.title}</b>
-        ) : (
-          <Skeleton sx={{ display: 'inline-block', width: '300px' }} />
-        )}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+        <Typography sx={{ my: 2, flexGrow: 1 }}>
+          This page contains information about{' '}
+          {participationQuery.isSuccess ? (
+            <b>{participationQuery.data.user.fullName}</b>
+          ) : (
+            <Skeleton sx={{ display: 'inline-block', width: '200px' }} />
+          )}{' '}
+          participation in{' '}
+          {participationQuery.isSuccess ? (
+            <b>{participationQuery.data.event.title}</b>
+          ) : (
+            <Skeleton sx={{ display: 'inline-block', width: '300px' }} />
+          )}
+        </Typography>
+
+        <OptionsButton
+          actions={{ edit: true, delete: true }}
+          onActionClick={(action: OptionsButtonAction): void => {
+            if (action === 'edit') {
+              setEditGeneral(true)
+            } else if (action === 'delete') {
+              throw new Error('Not implemented!')
+            }
+          }}
+        />
+      </Box>
 
       <Divider />
 
@@ -92,26 +108,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
             </Grid>
 
             <Grid item xs={12} md={9} order={{ xs: 2, md: 1 }}>
-              <Typography variant='h2' sx={{ mt: 4 }}>
-                {participationQuery.data.submissionTitle}
-              </Typography>
-
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam fuga odit architecto, corporis sequi
-                distinctio nam temporibus? Debitis nesciunt nisi dolores, odit eos ipsam ducimus. Illum qui nemo
-                pariatur iusto reprehenderit rem consequuntur saepe totam, fuga repudiandae ex nihil accusamus amet,
-                asperiores itaque corrupti hic voluptatum mollitia atque. Quod, doloribus quis ad veniam magni pariatur
-                alias eum similique asperiores sit iure laborum, porro ullam a sint, deleniti nihil voluptas praesentium
-                maxime! Dolorum, impedit delectus. Minima, nihil eveniet deleniti pariatur animi, sequi fugiat adipisci
-                et, esse aliquam consequuntur aperiam molestias odit recusandae molestiae ipsa facere est dignissimos
-                expedita porro alias. Fuga!
-              </Typography>
-
-              <Typography variant='h2' sx={{ my: 4 }}>
-                Attachments
-              </Typography>
-
-              <ReadonlyFilesView files={participationQuery.data.submissionFiles} sx={{ my: 2 }} />
+              <General edit={editGeneral} onEditDone={(): void => setEditGeneral(false)} />
 
               <Divider />
 

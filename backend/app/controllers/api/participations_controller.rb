@@ -1,6 +1,8 @@
 module Api
   # :nodoc:
   class ParticipationsController < ApplicationController
+    before_action :require_authenticated_user
+
     def show
       @participation = Participation.find(params[:id])
       authorize! @participation
@@ -10,11 +12,22 @@ module Api
       authorize!
       @participation = Participation.new(
         status: 'pending', user: current_user,
-        **params.permit(:event_id, submission_files: []) # TODO: :submissionTitle
+        **params.permit(:event_id, :submission_title, :submission_description, submission_files: [])
       )
 
       if @participation.save
         render :show, status: :created, location: api_participation_url(@participation)
+      else
+        render json: @participation.errors, status: :unprocessable_entity
+      end
+    end
+
+    def update
+      @participation = Participation.find(params[:id])
+      authorize! @participation
+
+      if @participation.update(params.permit(:submission_title, :submission_description))
+        render :show, status: :ok, location: api_participation_url(@participation)
       else
         render json: @participation.errors, status: :unprocessable_entity
       end

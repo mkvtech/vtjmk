@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :participations, only: %i[create show] do
+    resources :participations, only: %i[create show update] do
       member do
         patch 'update_status'
       end

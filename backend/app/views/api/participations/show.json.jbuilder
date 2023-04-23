@@ -1,6 +1,5 @@
 json.id @participation.id.to_s
-json.submission_title 'TODO'
-json.extract! @participation, :status, :created_at, :updated_at
+json.extract! @participation, :status, :submission_title, :submission_description, :created_at, :updated_at
 
 json.user_id @participation.user_id.to_s
 json.user do
