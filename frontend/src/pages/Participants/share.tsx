@@ -1,3 +1,3 @@
-import { Participation, User } from '../../hooks/api/schemas'
+import { EventParticipation, User } from '../../hooks/api/schemas'
 
-export type ParticipationWithUser = Readonly<Participation & { user: Readonly<User> }>
+export type ParticipationWithUser = Readonly<EventParticipation & { user: Readonly<User> }>

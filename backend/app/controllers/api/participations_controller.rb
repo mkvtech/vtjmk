@@ -1,7 +1,13 @@
 module Api
   # :nodoc:
   class ParticipationsController < ApplicationController
+    def show
+      @participation = Participation.find(params[:id])
+      authorize! @participation
+    end
+
     def create
+      authorize!
       @participation = Participation.new(
         status: 'pending', user: current_user,
         **params.permit(:event_id, submission_files: []) # TODO: :submissionTitle

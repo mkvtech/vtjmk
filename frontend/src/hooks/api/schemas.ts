@@ -54,15 +54,44 @@ export type ParticipationStatus = z.infer<typeof participationStatusSchema>
 export const participationSchema = z.object({
   id: z.string(),
   userId: z.string(),
+  user: z.object({
+    id: z.string(),
+    email: z.string(),
+    fullName: z.string(),
+  }),
   eventId: z.string(),
-  status: attendanceStatusSchema,
-  comment: z.string().optional(),
+  event: z.object({
+    id: z.string(),
+    title: z.string(),
+    date: z.string().transform(isoToDate),
+  }),
+  status: participationStatusSchema,
+  submissionTitle: z.string(),
+  submissionFiles: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      size: z.number(),
+      downloadUrl: z.string(),
+    })
+  ),
   createdAt: z.string().transform(isoToDate),
   updatedAt: z.string().transform(isoToDate),
 })
 export type Participation = z.infer<typeof participationSchema>
 
-export const userParticipationSchema = participationSchema.merge(z.object({ event: eventSchema }))
+export const eventParticipationSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  eventId: z.string(),
+  status: participationStatusSchema,
+  comment: z.string().optional(),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export type EventParticipation = z.infer<typeof eventParticipationSchema>
+
+export const userParticipationSchema = eventParticipationSchema.merge(z.object({ event: eventSchema }))
 export type UserParticipation = z.infer<typeof userParticipationSchema>
 
 export const userParticipationsSchema = z.array(userParticipationSchema)

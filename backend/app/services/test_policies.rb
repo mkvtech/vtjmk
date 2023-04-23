@@ -16,6 +16,11 @@ class TestPolicies
       policy_class: ConferencePolicy,
       resource_class: Conference,
       items: %w[document_templates_index]
+    },
+    participations: {
+      policy_class: ParticipationPolicy,
+      resource_class: Participation,
+      items: %w[update update_status]
     }
   }.freeze
 

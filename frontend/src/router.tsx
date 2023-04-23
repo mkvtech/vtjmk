@@ -14,13 +14,14 @@ import EventDescriptionEdit from './pages/EventDescriptionEdit'
 import EventEdit from './pages/EventEdit'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Page404 from './pages/Page404/Page404'
 import Participants from './pages/Participants'
+import Participation from './pages/Participation/Participation'
 import ParticipationForm from './pages/ParticipationForm'
 import PermissionCreate from './pages/PermissionCreate'
 import Permissions from './pages/Permissions'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
 import UserParticipations from './pages/UserParticipations'
-import Page404 from './pages/Page404/Page404'
 
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       { path: '/events/:eventId/participants', element: <Participants /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
       { path: '/home', element: <Home /> },
+      { path: '/participations/:participationId', element: <Participation /> },
       { path: '/permissions', element: <Permissions /> },
       { path: '/permissions/create', element: <PermissionCreate /> },
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },

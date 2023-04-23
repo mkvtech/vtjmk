@@ -10,12 +10,13 @@ import {
   conferenceSchema,
   Event,
   eventSchema,
-  Participation,
-  participationSchema,
+  EventParticipation,
+  eventParticipationSchema,
   permissionsSchema,
   userParticipationsDocumentTemplatesSchema,
   userParticipationsSchema,
   userSchema,
+  participationSchema,
 } from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
@@ -101,7 +102,14 @@ export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
   )
 }
 
-const eventsParticipationsResponseSchema = z.array(participationSchema.merge(z.object({ user: userSchema })))
+export function useQueryParticipation({ participationId }: { participationId: string }) {
+  const { client } = useApi()
+  return useQuery(['participations', participationId], () =>
+    client.get(`/participations/${participationId}`).then((response) => participationSchema.parse(response.data))
+  )
+}
+
+const eventsParticipationsResponseSchema = z.array(eventParticipationSchema.merge(z.object({ user: userSchema })))
 export async function fetchEventsParticipations({ client, eventId }: { client: AxiosInstance; eventId: string }) {
   const response = await client.get(`/events/${eventId}/participations`)
   return eventsParticipationsResponseSchema.parse(response.data)
@@ -118,7 +126,7 @@ export function useQueryUserParticipations() {
 
 export function useQueryUserParticipation(params: {
   eventId: string
-}): UseQueryResult<Readonly<Participation> | undefined> {
+}): UseQueryResult<Readonly<EventParticipation> | undefined> {
   const { client } = useApi()
   return useQuery(['user', 'participations', params], async () => {
     const response = await client.get('/user/participations')
