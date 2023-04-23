@@ -1,11 +1,14 @@
-import { Box, Container, Divider, Paper, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, Paper, Typography } from '@mui/material'
 import dayjs from 'dayjs'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link as RouterLink } from 'react-router-dom'
 import Link from '../../components/Link'
 import { useQueryUserParticipations } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
+import { useTranslation } from 'react-i18next'
+import ParticipationStatusChip from '../../components/ParticipationStatusChip'
 
 export default function UserParticipations(): JSX.Element {
+  const { t } = useTranslation()
   const { isAuthenticated } = useApi()
   const userParticipationsQuery = useQueryUserParticipations()
 
@@ -14,7 +17,7 @@ export default function UserParticipations(): JSX.Element {
   }
 
   return (
-    <Container maxWidth='lg' sx={{ pt: 8 }}>
+    <Container maxWidth='lg' sx={{ my: 8 }}>
       <Typography variant='h1' sx={{ mb: 2 }}>
         Participated Conferences
       </Typography>
@@ -40,26 +43,27 @@ export default function UserParticipations(): JSX.Element {
 
               <Divider />
 
-              <Box sx={{ p: 2 }}>
-                <Typography>
-                  {participation.status === 'approved' ? (
-                    <>
-                      Participation request was <strong>approved</strong>
-                    </>
-                  ) : participation.status === 'rejected' ? (
-                    <>
-                      Participation request was <strong>rejected</strong>
-                    </>
-                  ) : (
-                    <>
-                      Participation request is <strong>pending</strong>
-                    </>
-                  )}
-                  . Request was sent at {dayjs(participation.createdAt).format('DD/MM/YYYY')}. You can{' '}
-                  <Link href={`/user/documents/participationCertificate?participationId=${participation.id}`}>
-                    Generate a participation certificate
-                  </Link>
-                </Typography>
+              <Box sx={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
+                <Box>
+                  <Button
+                    component={RouterLink}
+                    to={`/user/documents/participationCertificate?participationId=${participation.id}`}
+                  >
+                    Get Certificate
+                  </Button>
+                  <Button component={RouterLink} to={`/participations/${participation.id}`}>
+                    View
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography>
+                    <Typography component='span' color='textSecondary'>
+                      {t('common.createdAt', { date: participation.createdAt })}
+                      {/* {Intl.DateTimeFormat(i18n.language).format(participation.createdAt)} */}
+                    </Typography>
+                  </Typography>
+                  <ParticipationStatusChip status={participation.status} sx={{ ml: 2 }} />
+                </Box>
               </Box>
             </Paper>
           ))

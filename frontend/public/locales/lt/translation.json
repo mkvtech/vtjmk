@@ -7,6 +7,7 @@
     "backToTheMainWebsite": "Grįžti į pagrindinį puslapį",
     "conferences": "Konferencijos",
     "contacts": "Kontaktai",
+    "createdAt": "Sukurta {{date, datetime}}",
     "documentTemplates": "Dokumentų šablonai",
     "edit": "Redaguoti",
     "email": "El. paštas",

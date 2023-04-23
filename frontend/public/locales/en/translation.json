@@ -7,6 +7,7 @@
     "backToTheMainWebsite": "Back to the main website",
     "conferences": "Conferences",
     "contacts": "Contacts",
+    "createdAt": "Created at {{date, datetime}}",
     "documentTemplates": "Document Templates",
     "edit": "Edit",
     "email": "Email",

@@ -24,6 +24,22 @@ export default function PageError({ withTitle, error }: { withTitle?: boolean; e
             <Link href='/'>Return to home</Link>
           </Alert>
         </>
+      ) : error.response.status === 401 ? (
+        <>
+          {withTitle && <ErrorCodeText>&lt;401&gt;</ErrorCodeText>}
+
+          <Alert severity='error'>
+            <AlertTitle>You must login to view this page</AlertTitle>
+
+            <Typography>
+              <Link href='/login'>Login</Link>
+            </Typography>
+
+            <Typography>
+              <Link href='/'>Return to home</Link>
+            </Typography>
+          </Alert>
+        </>
       ) : error.response.status === 404 ? (
         <>
           {withTitle && <ErrorCodeText>&lt;404&gt;</ErrorCodeText>}
