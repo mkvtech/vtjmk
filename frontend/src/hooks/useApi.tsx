@@ -5,8 +5,8 @@ import { useQueryClient } from 'react-query'
 import { VtjmkLocale } from '../share'
 import { User } from './api/types'
 
-const SERVER_URL = import.meta.env.VITE_VTJMK_BACKEND_URL || 'http://localhost:3000'
-const API_BASE_URL = `${SERVER_URL}/api`
+const API_SERVER_URL = import.meta.env.VITE_VTJMK_BACKEND_URL || 'http://localhost:3000'
+const API_BASE_URL = `${API_SERVER_URL}/api`
 const LOCAL_STORAGE_JWT_KEY = 'JWT'
 
 const axiosClient = axios.create({
@@ -49,6 +49,8 @@ interface ApiContextValueT {
   readonly setLocale: (locale: VtjmkLocale) => void
 
   readonly client: AxiosInstance
+
+  readonly apiServerUrl: string
 }
 
 const ApiContext = React.createContext<ApiContextValueT | null>(null)
@@ -162,6 +164,8 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
           // Update locale-dependant queries
           queryClient.removeQueries(['events'])
         },
+
+        apiServerUrl: API_SERVER_URL,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { Add, AttachFile, Download, Remove } from '@mui/icons-material'
 import { Box, IconButton, Paper, Typography, styled, useTheme } from '@mui/material'
 import { produce } from 'immer'
 import { useDropzone } from 'react-dropzone'
+import { useApi } from '../../hooks/useApi'
 
 export interface FileEntry {
   file: File
@@ -52,6 +53,7 @@ const MultipleFilesUpload = ({
   value?: MultipleFilesUploadValue
   onChange: (value: MultipleFilesUploadValue) => void
 }): JSX.Element => {
+  const { apiServerUrl } = useApi()
   const theme = useTheme()
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -93,6 +95,8 @@ const MultipleFilesUpload = ({
     )
   }
 
+  const newFilesCount = value?.newFiles.length
+  const removedFilesCount = value?.persistedFiles.filter((file) => file.removed).length
   const filesCount = value ? value.newFiles.length + value.persistedFiles.filter((file) => !file.removed).length : 0
 
   return (
@@ -102,7 +106,19 @@ const MultipleFilesUpload = ({
         <Typography>Drop files into this box or click to add files</Typography>
       </StyledDropzoneBox>
 
-      <Typography sx={{ mt: 1 }}>{filesCount} file(s) attached</Typography>
+      <Typography sx={{ mt: 1 }}>
+        {filesCount} file(s) attached
+        {newFilesCount ? (
+          <Typography color='textSecondary' component='span'>
+            , {newFilesCount} new files will be attached
+          </Typography>
+        ) : null}
+        {removedFilesCount ? (
+          <Typography color='textSecondary' component='span'>
+            , {removedFilesCount} files will be removed
+          </Typography>
+        ) : null}
+      </Typography>
 
       <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>
         {value &&
@@ -142,7 +158,7 @@ const MultipleFilesUpload = ({
               <Typography>
                 {file.name} ({file.size} bytes)
               </Typography>
-              <IconButton onClick={(): void => console.error('Not implemented')} sx={{ ml: 1 }}>
+              <IconButton href={`${apiServerUrl}${file.downloadUrl}`} sx={{ ml: 1 }}>
                 <Download />
               </IconButton>
               <IconButton onClick={(): void => togglePersistedFile(file.id)}>

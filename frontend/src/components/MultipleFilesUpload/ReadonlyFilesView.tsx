@@ -1,5 +1,6 @@
 import { AttachFile, Download } from '@mui/icons-material'
 import { Box, IconButton, Paper, SxProps, Theme, Typography } from '@mui/material'
+import { useApi } from '../../hooks/useApi'
 
 export interface FileEntry {
   id: string
@@ -15,6 +16,8 @@ export default function ReadonlyFilesView({
   files: readonly FileEntry[]
   sx?: SxProps<Theme>
 }): JSX.Element {
+  const { apiServerUrl } = useApi()
+
   return (
     <Box sx={[{ display: 'flex', gap: 1, flexWrap: 'wrap' }, ...(Array.isArray(sx) ? sx : [sx])]}>
       {files.map((fileEntry) => (
@@ -25,7 +28,7 @@ export default function ReadonlyFilesView({
             <Typography component='span' color='textSecondary'>
               ({fileEntry.size} bytes)
             </Typography>
-            <IconButton sx={{ ml: 1 }}>
+            <IconButton sx={{ ml: 1 }} href={`${apiServerUrl}${fileEntry.downloadUrl}`}>
               <Download />
             </IconButton>
           </Typography>
