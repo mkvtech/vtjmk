@@ -13,6 +13,14 @@ json.event do
   json.extract! @participation.event, *%i[title date]
 end
 
+if @participation.reviewer.present?
+  json.reviewer_id @participation.reviewer.id.to_s
+  json.reviewer do
+    json.id @participation.reviewer.id.to_s
+    json.extract! @participation.reviewer, *%i[email full_name]
+  end
+end
+
 json.submission_files do
   json.array! @participation.submission_files_attachments do |attachment|
     json.id attachment.id.to_s

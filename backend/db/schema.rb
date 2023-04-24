@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_172650) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_24_121141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,8 +119,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_172650) do
     t.string "comment"
     t.string "submission_title"
     t.text "submission_description"
+    t.bigint "reviewer_id"
     t.index ["event_id", "user_id"], name: "index_participations_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_participations_on_event_id"
+    t.index ["reviewer_id"], name: "index_participations_on_reviewer_id"
     t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
@@ -153,5 +155,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_172650) do
   add_foreign_key "events", "conferences"
   add_foreign_key "participations", "events"
   add_foreign_key "participations", "users"
+  add_foreign_key "participations", "users", column: "reviewer_id"
   add_foreign_key "permissions", "users"
 end
