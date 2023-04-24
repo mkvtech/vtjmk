@@ -1,14 +1,9 @@
-import { Skeleton, Typography, styled } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import ReadonlyFilesView from '../../components/MultipleFilesUpload/ReadonlyFilesView'
 import { useQueryParticipation } from '../../hooks/api/queries'
 import GeneralForm from './GeneralForm'
-
-const NoDataTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontStyle: 'italic',
-  textAlign: 'center',
-}))
+import NoDataText from '../../components/Typography/NoDataText'
 
 export default function General({ edit, onEditDone }: { edit: boolean; onEditDone: () => void }): JSX.Element {
   const { participationId } = useParams() as { participationId: string }
@@ -36,7 +31,7 @@ export default function General({ edit, onEditDone }: { edit: boolean; onEditDon
               {participationQuery.data.submissionTitle}
             </Typography>
           ) : (
-            <NoDataTypography sx={{ my: 2 }}>This submission has no title</NoDataTypography>
+            <NoDataText sx={{ my: 2 }}>This submission has no title</NoDataText>
           )}
         </>
       ) : (
@@ -50,7 +45,7 @@ export default function General({ edit, onEditDone }: { edit: boolean; onEditDon
           {participationQuery.data.submissionDescription ? (
             <Typography>{participationQuery.data.submissionDescription}</Typography>
           ) : (
-            <NoDataTypography>This submission has no description</NoDataTypography>
+            <NoDataText>This submission has no description</NoDataText>
           )}
         </>
       ) : (
@@ -68,7 +63,7 @@ export default function General({ edit, onEditDone }: { edit: boolean; onEditDon
       {participationQuery.isSuccess ? (
         <>
           {participationQuery.data.submissionFiles.length === 0 ? (
-            <NoDataTypography sx={{ my: 2 }}>No files attached</NoDataTypography>
+            <NoDataText sx={{ my: 2 }}>No files attached</NoDataText>
           ) : (
             <ReadonlyFilesView files={participationQuery.data.submissionFiles} sx={{ my: 2 }} />
           )}
