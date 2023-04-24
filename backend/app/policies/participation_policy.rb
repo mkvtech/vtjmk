@@ -10,6 +10,10 @@ class ParticipationPolicy < ApplicationPolicy
     participant? || manage_conference?
   end
 
+  def comment?
+    participant? || manage_conference?
+  end
+
   def update?
     participant? || manage_conference?
   end

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       end
 
       scope module: :participations do
+        resources :comments, only: %i[create index]
+
         get '/available_reviewers', to: 'users#available_reviewers_index'
       end
     end
