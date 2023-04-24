@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # TODO: Root route
+  root 'application#home'
 
   namespace :api, defaults: { format: :json } do
     # Authentication

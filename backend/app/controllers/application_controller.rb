@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
     head :forbidden
   end
 
+  def home
+    # TODO: Send client app
+    head :ok
+  end
+
   def current_user
     return @current_user if defined?(@current_user)
 
