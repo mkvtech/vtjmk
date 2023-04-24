@@ -42,7 +42,11 @@
     "reviewer": "Reviewer",
     "noReviewerAssigned": "No reviewer assigned",
     "delete": "Delete",
-    "options": "Options"
+    "options": "Options",
+    "comment": "Comment",
+    "send": "Send",
+    "commentsWithCount_one": "{{count}} comment",
+    "commentsWithCount_other": "{{count}} comments"
   },
 
   "components": {
@@ -86,7 +90,8 @@
       "pageSubtitle": "This page contains information about {{userFullName}} participation in \"{{eventTitle}}\"",
       "submissionHasNoTitle": "No title",
       "submissionHasNoDescription": "No description",
-      "submissionHasNoAttachments": "No attachments"
+      "submissionHasNoAttachments": "No attachments",
+      "noComments": "No comments"
     }
   }
 }

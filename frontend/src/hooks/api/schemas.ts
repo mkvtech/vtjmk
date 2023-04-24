@@ -23,6 +23,21 @@ export const conferenceSchema = z.object({
 })
 export type Conference = z.infer<typeof conferenceSchema>
 
+export const commentSchema = z.object({
+  id: z.string(),
+  text: z.string(),
+
+  userId: z.string(),
+  user: z.object({
+    id: z.string(),
+    email: z.string(),
+    fullName: z.string(),
+  }),
+
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+
 export const eventStatusSchema = z.union([z.literal('open'), z.literal('hidden')])
 export type EventStatus = z.infer<typeof eventStatusSchema>
 

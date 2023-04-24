@@ -5,19 +5,20 @@ import { z } from 'zod'
 import { useApi } from '../useApi'
 import {
   Attendance,
+  commentSchema,
   Conference,
   conferenceDocumentTemplatesSchema,
   conferenceSchema,
   Event,
-  eventSchema,
   EventParticipation,
   eventParticipationSchema,
+  eventSchema,
+  participationAvailableReviewerSchema,
+  participationSchema,
   permissionsSchema,
   userParticipationsDocumentTemplatesSchema,
   userParticipationsSchema,
   userSchema,
-  participationSchema,
-  participationAvailableReviewerSchema,
 } from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
@@ -117,6 +118,16 @@ export function useQueryParticipationAvailableReviewers({ participationId }: { p
     client
       .get(`/participations/${participationId}/available_reviewers`)
       .then((response) => participationAvailableReviewersSchema.parse(response.data))
+  )
+}
+
+const participationCommentsSchema = z.array(commentSchema)
+export function useQueryParticipationComments({ participationId }: { participationId: string }) {
+  const { client } = useApi()
+  return useQuery(['participations', participationId, 'comments'], () =>
+    client
+      .get(`/participations/${participationId}/comments`)
+      .then((response) => participationCommentsSchema.parse(response.data))
   )
 }
 

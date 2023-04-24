@@ -42,7 +42,12 @@
     "reviewer": "Recenzentas",
     "noReviewerAssigned": "Recenzentas nepriskirtas",
     "delete": "Panaikinti",
-    "options": "Veiksmai"
+    "options": "Veiksmai",
+    "comment": "Komentaras",
+    "send": "Siųsti",
+    "commentsWithCount_one": "{{count}} komentaras",
+    "commentsWithCount_few": "{{count}} komentarai",
+    "commentsWithCount_other": "{{count}} komentarų"
   },
 
   "components": {
@@ -86,7 +91,8 @@
       "pageSubtitle": "Šiame puslapyje yra informacija apie {{userFullName}} dalyvavimą „{{eventTitle}}“ konferencijoje",
       "submissionHasNoTitle": "Be pavadinimo",
       "submissionHasNoDescription": "Be aprašymo",
-      "submissionHasNoAttachments": "Be failų"
+      "submissionHasNoAttachments": "Be failų",
+      "noComments": "Nėra komentarų"
     }
   }
 }
