@@ -1,9 +1,9 @@
-import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material'
-import { useQueryParticipationAvailableReviewers } from '../../hooks/api/queries'
-import { SyntheticEvent, useMemo, useState } from 'react'
 import { Close, Done } from '@mui/icons-material'
-import { useApi } from '../../hooks/useApi'
+import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material'
+import { SyntheticEvent, useMemo, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
+import { useQueryParticipationAvailableReviewers } from '../../hooks/api/queries'
+import { useApi } from '../../hooks/useApi'
 
 interface Reviewer {
   id: string
@@ -67,9 +67,6 @@ export default function ReviewerForm({
           loading={availableReviewersQuery.isLoading}
           isOptionEqualToValue={(option, value): boolean => option.id === value.id}
           value={value}
-          onBlur={(): void => {
-            onEditDone()
-          }}
           onChange={(event, newValue): void => {
             setValue(newValue)
           }}

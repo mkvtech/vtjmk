@@ -13,12 +13,14 @@ json.event do
   json.extract! @participation.event, *%i[title date]
 end
 
+json.reviewer_id @participation.reviewer_id.to_s
 if @participation.reviewer.present?
-  json.reviewer_id @participation.reviewer.id.to_s
   json.reviewer do
     json.id @participation.reviewer.id.to_s
     json.extract! @participation.reviewer, *%i[email full_name]
   end
+else
+  json.reviewer nil
 end
 
 json.submission_files do
