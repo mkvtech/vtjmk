@@ -1,12 +1,13 @@
 import { ArrowBack } from '@mui/icons-material'
-import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
+import { Alert, AlertTitle, Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
 import { useApi } from '../../hooks/useApi'
 import MultipleFilesUpload from '../../components/MultipleFilesUpload'
-import { FileEntry } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
+import { MultipleFilesUploadValue } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
+import { participationSchema } from '../../hooks/api/schemas'
 
 export default function ParticipationForm(): JSX.Element {
   const { eventId } = useParams()
@@ -16,7 +17,12 @@ export default function ParticipationForm(): JSX.Element {
 
 interface IFormInput {
   submissionTitle: string
-  submissionFiles?: readonly FileEntry[]
+  submissionFiles: MultipleFilesUploadValue
+}
+
+interface CreateParticipationMutationData {
+  submissionTitle: string
+  submissionFiles: File[]
 }
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
@@ -27,7 +33,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       submissionTitle: '',
     },
   })
-  const createMutation = useMutation((data: IFormInput) => {
+  const createMutation = useMutation((data: CreateParticipationMutationData) => {
     if (!data.submissionFiles) {
       throw new Error('missing files')
     }
@@ -36,31 +42,27 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
     formData.append('eventId', eventId)
     formData.append('submissionTitle', data.submissionTitle)
 
-    data.submissionFiles.forEach((fileEntry) => {
-      if (!fileEntry.persisted) {
-        // Note: This is a correct way of sending an array of items to Rails server.
-        // This key format may be not applicable to other servers.
-        // Read:
-        // https://iambryanhaney.medium.com/structuring-multipart-formdata-with-rails-naming-conventions-ded7113f7593
-        // https://smiz.medium.com/how-does-rails-and-rack-parse-form-variables-4576813d75a6
-        formData.append('submissionFiles[]', fileEntry.file)
-      }
+    data.submissionFiles.forEach((file) => {
+      // Note: This is a correct way of sending an array of items to Rails server.
+      // This key format may be not applicable to other servers.
+      // Read:
+      // https://iambryanhaney.medium.com/structuring-multipart-formdata-with-rails-naming-conventions-ded7113f7593
+      // https://smiz.medium.com/how-does-rails-and-rack-parse-form-variables-4576813d75a6
+      formData.append('submissionFiles[]', file)
     })
 
-    return client.post('/participations', formData)
+    return client.post('/participations', formData).then((response) => participationSchema.parse(response.data))
   })
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data)
     createMutation.mutate(
       {
         submissionTitle: data.submissionTitle,
-        submissionFiles: data.submissionFiles,
+        submissionFiles: data.submissionFiles.newFiles.map((entry) => entry.file),
       },
       {
-        onSuccess: (_response) => {
-          // TODO: Navigate to created participation record page
-          navigate(`/events/${eventId}`)
+        onSuccess: (data) => {
+          navigate(`/participations/${data.id}`)
         },
       }
     )
@@ -68,6 +70,10 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
+      <Alert severity='success'>
+        {' '}
+        <AlertTitle>test</AlertTitle> test
+      </Alert>
       <Box sx={{ my: 2 }}>
         <Typography variant='h1'>Participation Form</Typography>
 

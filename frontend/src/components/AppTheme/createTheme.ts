@@ -12,6 +12,13 @@ export default function createTheme({ colorMode }: { colorMode: ColorMode }): Th
           // light: '#3b70d2', // From MUI colors tool
           dark: '#07358b',
         },
+
+        successPaperBackground: {
+          main:
+            colorMode === 'light'
+              ? '#4caf50' // palette.success.light when mode === 'light'
+              : '#6EBE72', // palette.success.main when mode === 'dark',
+        },
       },
 
       typography: {

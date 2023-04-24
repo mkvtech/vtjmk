@@ -7,6 +7,14 @@ import { TypographyStyleOptions } from '@mui/material/styles/createTypography'
 import createTheme from './createTheme'
 
 declare module '@mui/material/styles' {
+  interface Palette {
+    successPaperBackground: Palette['primary']
+  }
+
+  interface PaletteOptions {
+    successPaperBackground: PaletteOptions['primary']
+  }
+
   interface TypographyVariants {
     h1Hero: React.CSSProperties
   }

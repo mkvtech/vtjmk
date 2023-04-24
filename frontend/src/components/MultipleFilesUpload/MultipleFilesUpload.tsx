@@ -1,5 +1,5 @@
 import { Add, AttachFile, Download, Remove } from '@mui/icons-material'
-import { Box, IconButton, Paper, Typography, styled } from '@mui/material'
+import { Box, IconButton, Paper, Typography, styled, useTheme } from '@mui/material'
 import { produce } from 'immer'
 import { useDropzone } from 'react-dropzone'
 
@@ -52,6 +52,7 @@ const MultipleFilesUpload = ({
   value?: MultipleFilesUploadValue
   onChange: (value: MultipleFilesUploadValue) => void
 }): JSX.Element => {
+  const theme = useTheme()
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     onDrop: (acceptedFiles) => {
       const newFileEntries = acceptedFiles.map((newFile) => ({ file: newFile, name: newFile.name }))
@@ -92,7 +93,7 @@ const MultipleFilesUpload = ({
     )
   }
 
-  const filesCount = value ? value.newFiles.length + value.persistedFiles.length : 0
+  const filesCount = value ? value.newFiles.length + value.persistedFiles.filter((file) => !file.removed).length : 0
 
   return (
     <>
@@ -112,7 +113,8 @@ const MultipleFilesUpload = ({
                 display: 'flex',
                 alignItems: 'center',
                 p: 1,
-                backgroundColor: 'green',
+                backgroundColor: theme.palette.successPaperBackground.main,
+                color: theme.palette.success.contrastText,
               }}
             >
               <AttachFile />
@@ -120,7 +122,7 @@ const MultipleFilesUpload = ({
                 {file.name} ({file.file.size} bytes)
               </Typography>
               <IconButton onClick={(): void => removeNewFile(file.file)}>
-                <Remove />
+                <Remove htmlColor={theme.palette.success.contrastText} />
               </IconButton>
             </Paper>
           ))}
@@ -129,7 +131,12 @@ const MultipleFilesUpload = ({
           value.persistedFiles.map((file) => (
             <Paper
               key={file.id}
-              sx={{ display: 'flex', alignItems: 'center', p: 1, backgroundColor: file.removed ? 'red' : '' }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                p: 1,
+                backgroundColor: file.removed ? theme.palette.error.light : '',
+              }}
             >
               <AttachFile />
               <Typography>

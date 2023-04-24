@@ -18,6 +18,10 @@ class ParticipationPolicy < ApplicationPolicy
     manage_conference?
   end
 
+  def destroy?
+    manage_conference?
+  end
+
   private
 
   def participant?

@@ -22,6 +22,7 @@ const policiesSchema = z.object({
         z.object({
           update: z.boolean(),
           updateStatus: z.boolean(),
+          destroy: z.boolean(),
         })
       ),
     }),
@@ -37,7 +38,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
       policies: {
         participations: {
           items: {
-            [participationId]: ['update', 'updateStatus'],
+            [participationId]: ['update', 'updateStatus', 'destroy'],
           },
         },
       },
@@ -45,6 +46,9 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
     schema: policiesSchema,
   })
   const isAllowed = useIsAllowed(policiesQuery, 'participations', participationId)
+
+  const updateAllowed = isAllowed('update')
+  const destroyAllowed = isAllowed('destroy')
 
   return participationQuery.isError ? (
     <PageError withTitle error={participationQuery.error} />
@@ -68,16 +72,18 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
           )}
         </Typography>
 
-        <OptionsButton
-          actions={{ edit: true, delete: true }}
-          onActionClick={(action: OptionsButtonAction): void => {
-            if (action === 'edit') {
-              setEditGeneral(true)
-            } else if (action === 'delete') {
-              throw new Error('Not implemented!')
-            }
-          }}
-        />
+        {(updateAllowed || destroyAllowed) && (
+          <OptionsButton
+            actions={{ edit: updateAllowed, delete: destroyAllowed }}
+            onActionClick={(action: OptionsButtonAction): void => {
+              if (action === 'edit') {
+                setEditGeneral(true)
+              } else if (action === 'delete') {
+                throw new Error('Not implemented!')
+              }
+            }}
+          />
+        )}
       </Box>
 
       <Divider />

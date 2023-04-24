@@ -2,9 +2,9 @@ module Api
   # :nodoc:
   class ParticipationsController < ApplicationController
     before_action :require_authenticated_user
+    before_action :set_participation, only: %i[show update update_status]
 
     def show
-      @participation = Participation.find(params[:id])
       authorize! @participation
     end
 
@@ -23,20 +23,13 @@ module Api
     end
 
     def update
-      @participation = Participation.find(params[:id])
       authorize! @participation
 
       if @participation.update(params.permit(:submission_title, :submission_description))
-        # Add/Attach files
-        @participation.submission_files.attach(params[:submission_files_new].pluck(:file))
-
-        # Remove/Purge files
-        attachment_ids_to_purge = params[:submission_files_persisted].select { _1[:remove] == 'true' }.pluck(:id)
-
-        @participation
-          .submission_files
-          .where(id: attachment_ids_to_purge)
-          .each(&:destroy)
+        Participations::UpdateAttachments.call(
+          participation: @participation,
+          params: params.slice(:submission_files_new, :submission_files_persisted)
+        )
 
         render :show, status: :ok, location: api_participation_url(@participation)
       else
@@ -45,7 +38,6 @@ module Api
     end
 
     def update_status
-      @participation = Participation.find(params[:id])
       authorize! Event.find(@participation.event_id), to: :manage?, with: EventPolicy
 
       unless @participation.update(params.permit(:status))
@@ -53,6 +45,12 @@ module Api
       end
 
       render :show, status: :ok, location: api_participation_url(@participation)
+    end
+
+    private
+
+    def set_participation
+      @participation = Participation.find(params[:id])
     end
   end
 end

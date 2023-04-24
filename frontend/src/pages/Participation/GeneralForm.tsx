@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
+import { Alert, AlertTitle, Box, Button, TextField, Typography } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import MultipleFilesUpload, { MultipleFilesUploadValue } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
 import { useApi } from '../../hooks/useApi'
+import { LoadingButton } from '@mui/lab'
 
 interface InitialFormData {
   submissionTitle?: string | undefined | null
@@ -78,8 +79,6 @@ export default function GeneralForm({
   })
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data)
-
     updateMutation.mutate(
       {
         ...data,
@@ -103,11 +102,18 @@ export default function GeneralForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {updateMutation.isError && (
+        <Alert severity='error' sx={{ mt: 2 }}>
+          <AlertTitle>Something went wrong...</AlertTitle>
+          The data was not updated
+        </Alert>
+      )}
+
       <Controller
         name='submissionTitle'
         control={control}
         render={({ field }): JSX.Element => (
-          <TextField {...field} label='Submission Title' type='text' fullWidth required size='small' sx={{ mt: 2 }} />
+          <TextField {...field} label='Submission Title' type='text' fullWidth size='small' sx={{ mt: 2 }} />
         )}
       />
 
@@ -115,15 +121,7 @@ export default function GeneralForm({
         name='submissionDescription'
         control={control}
         render={({ field }): JSX.Element => (
-          <TextField
-            {...field}
-            label='Submission Description'
-            type='text'
-            fullWidth
-            required
-            multiline
-            sx={{ mt: 2 }}
-          />
+          <TextField {...field} label='Submission Description' type='text' fullWidth multiline sx={{ mt: 2 }} />
         )}
       />
 
@@ -141,9 +139,9 @@ export default function GeneralForm({
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
         <Button onClick={(): void => onDone()}>Cancel</Button>
-        <Button variant='contained' type='submit' sx={{ ml: 2 }}>
+        <LoadingButton loading={updateMutation.isLoading} variant='contained' type='submit' sx={{ ml: 2 }}>
           Update
-        </Button>
+        </LoadingButton>
       </Box>
     </form>
   )

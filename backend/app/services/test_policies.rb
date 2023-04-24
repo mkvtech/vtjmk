@@ -20,7 +20,7 @@ class TestPolicies
     participations: {
       policy_class: ParticipationPolicy,
       resource_class: Participation,
-      items: %w[update update_status]
+      items: %w[update update_status destroy]
     }
   }.freeze
 
