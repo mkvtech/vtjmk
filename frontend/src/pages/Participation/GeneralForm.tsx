@@ -1,10 +1,11 @@
+import { LoadingButton } from '@mui/lab'
 import { Alert, AlertTitle, Box, Button, TextField, Typography } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import MultipleFilesUpload, { MultipleFilesUploadValue } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
 import { useApi } from '../../hooks/useApi'
-import { LoadingButton } from '@mui/lab'
 
 interface InitialFormData {
   submissionTitle?: string | undefined | null
@@ -44,6 +45,7 @@ export default function GeneralForm({
   initialData: InitialFormData
   onDone: () => void
 }): JSX.Element {
+  const { t } = useTranslation()
   const { participationId } = useParams() as { participationId: string }
   const { client } = useApi()
   const queryClient = useQueryClient()
@@ -104,8 +106,8 @@ export default function GeneralForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       {updateMutation.isError && (
         <Alert severity='error' sx={{ mt: 2 }}>
-          <AlertTitle>Something went wrong...</AlertTitle>
-          The data was not updated
+          <AlertTitle>{t('common.somethingWentWrongDotDotDot')}</AlertTitle>
+          {t('common.theDataWasNotUpdated')}
         </Alert>
       )}
 
@@ -113,7 +115,7 @@ export default function GeneralForm({
         name='submissionTitle'
         control={control}
         render={({ field }): JSX.Element => (
-          <TextField {...field} label='Submission Title' type='text' fullWidth size='small' sx={{ mt: 2 }} />
+          <TextField {...field} label={t('common.submissionTitle')} type='text' fullWidth size='small' sx={{ mt: 2 }} />
         )}
       />
 
@@ -121,12 +123,19 @@ export default function GeneralForm({
         name='submissionDescription'
         control={control}
         render={({ field }): JSX.Element => (
-          <TextField {...field} label='Submission Description' type='text' fullWidth multiline sx={{ mt: 2 }} />
+          <TextField
+            {...field}
+            label={t('common.submissionDescription')}
+            type='text'
+            fullWidth
+            multiline
+            sx={{ mt: 2 }}
+          />
         )}
       />
 
       <Typography variant='h2' sx={{ my: 4 }}>
-        Attachments
+        {t('common.attachments')}
       </Typography>
 
       <Controller
@@ -138,9 +147,9 @@ export default function GeneralForm({
       />
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
-        <Button onClick={(): void => onDone()}>Cancel</Button>
+        <Button onClick={(): void => onDone()}>{t('common.cancel')}</Button>
         <LoadingButton loading={updateMutation.isLoading} variant='contained' type='submit' sx={{ ml: 2 }}>
-          Update
+          {t('common.update')}
         </LoadingButton>
       </Box>
     </form>

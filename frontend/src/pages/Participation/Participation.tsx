@@ -9,6 +9,7 @@ import General from './General'
 import { useState } from 'react'
 import OptionsButton, { OptionsButtonAction } from './OptionsButton'
 import Reviewer from './Reviewer'
+import { useTranslation } from 'react-i18next'
 
 export default function Participation(): JSX.Element {
   const { participationId } = useParams()
@@ -32,6 +33,7 @@ const policiesSchema = z.object({
 })
 
 function Page({ participationId }: { participationId: string }): JSX.Element {
+  const { t } = useTranslation()
   const participationQuery = useQueryParticipation({ participationId })
 
   const [editGeneral, setEditGeneral] = useState(false)
@@ -56,21 +58,17 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
     <PageError withTitle error={participationQuery.error} />
   ) : (
     <Container maxWidth='lg' sx={{ my: 8 }}>
-      <Typography variant='h1'>Participation</Typography>
+      <Typography variant='h1'>{t('common.participationRequest')}</Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
         <Typography sx={{ my: 2, flexGrow: 1 }}>
-          This page contains information about{' '}
           {participationQuery.isSuccess ? (
-            <b>{participationQuery.data.user.fullName}</b>
+            t('pages.participation.pageSubtitle', {
+              userFullName: participationQuery.data.user.fullName,
+              eventTitle: participationQuery.data.event.title,
+            })
           ) : (
-            <Skeleton sx={{ display: 'inline-block', width: '200px' }} />
-          )}{' '}
-          participation in{' '}
-          {participationQuery.isSuccess ? (
-            <b>{participationQuery.data.event.title}</b>
-          ) : (
-            <Skeleton sx={{ display: 'inline-block', width: '300px' }} />
+            <Skeleton />
           )}
         </Typography>
 
@@ -103,7 +101,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               <Status editable={isAllowed('updateStatus')} />
 
               <Typography variant='h2' sx={{ my: 4 }}>
-                Participant
+                {t('common.participant')}
               </Typography>
 
               <Typography>{participationQuery.data.user.fullName}</Typography>
@@ -117,7 +115,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               <Divider />
 
               <Typography variant='h2' sx={{ my: 4 }}>
-                Activity
+                {t('pages.participation.activityHeading')}
               </Typography>
             </Grid>
           </Grid>

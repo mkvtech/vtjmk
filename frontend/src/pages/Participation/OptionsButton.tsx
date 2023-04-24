@@ -1,6 +1,7 @@
 import { Delete, Edit, KeyboardArrowDown } from '@mui/icons-material'
 import { Button, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export type OptionsButtonAction = 'edit' | 'delete'
 
@@ -11,6 +12,7 @@ export default function OptionsButton({
   actions: Record<OptionsButtonAction, boolean>
   onActionClick: (action: OptionsButtonAction) => void
 }): JSX.Element {
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const open = Boolean(anchorEl)
 
@@ -30,7 +32,7 @@ export default function OptionsButton({
   return (
     <>
       <Button variant='contained' endIcon={<KeyboardArrowDown />} onClick={handleClick}>
-        Options
+        {t('common.options')}
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {actions.edit && (
@@ -38,7 +40,7 @@ export default function OptionsButton({
             <ListItemIcon>
               <Edit fontSize='small' />
             </ListItemIcon>
-            <ListItemText>Edit</ListItemText>
+            <ListItemText>{t('common.edit')}</ListItemText>
           </MenuItem>
         )}
 
@@ -47,7 +49,7 @@ export default function OptionsButton({
             <ListItemIcon>
               <Delete fontSize='small' />
             </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
+            <ListItemText>{t('common.delete')}</ListItemText>
           </MenuItem>
         )}
       </Menu>

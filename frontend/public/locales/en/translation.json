@@ -28,7 +28,21 @@
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Will take place {{date, datetime}}",
-    "youMustLoginToAttend": "You must <1>login</1> to attend"
+    "youMustLoginToAttend": "You must <1>login</1> to attend",
+    "participationRequest": "Participation Request",
+    "participant": "Participant",
+    "attachments": "Attachments",
+    "somethingWentWrongDotDotDot": "Something went wrong...",
+    "theDataWasNotUpdated": "The data was not updated",
+    "submissionTitle": "Submission Title",
+    "submissionDescription": "Submission Description",
+    "update": "Update",
+    "cancel": "Cancel",
+    "status": "Status",
+    "reviewer": "Reviewer",
+    "noReviewerAssigned": "No reviewer assigned",
+    "delete": "Delete",
+    "options": "Options"
   },
 
   "components": {
@@ -66,6 +80,13 @@
     },
     "event": {
       "participatingMenuParticipatingLabel": "Participating: {{status}}"
+    },
+    "participation": {
+      "activityHeading": "Activity",
+      "pageSubtitle": "This page contains information about {{userFullName}} participation in \"{{eventTitle}}\"",
+      "submissionHasNoTitle": "No title",
+      "submissionHasNoDescription": "No description",
+      "submissionHasNoAttachments": "No attachments"
     }
   }
 }

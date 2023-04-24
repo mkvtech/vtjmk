@@ -1,12 +1,14 @@
-import { Box, IconButton, Skeleton, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import { useQueryParticipation } from '../../hooks/api/queries'
-import NoDataText from '../../components/Typography/NoDataText'
-import { useState } from 'react'
 import { Edit } from '@mui/icons-material'
+import { Box, IconButton, Skeleton, Typography } from '@mui/material'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
+import NoDataText from '../../components/Typography/NoDataText'
+import { useQueryParticipation } from '../../hooks/api/queries'
 import ReviewerForm from './ReviewerForm'
 
 export default function Reviewer({ editable }: { editable: boolean }): JSX.Element {
+  const { t } = useTranslation()
   const { participationId } = useParams() as { participationId: string }
   const participationQuery = useQueryParticipation({ participationId })
 
@@ -15,7 +17,7 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
   return (
     <>
       <Typography variant='h2' sx={{ my: 4 }}>
-        Reviewer
+        {t('common.reviewer')}
       </Typography>
 
       {!participationQuery.isSuccess ? (
@@ -29,8 +31,8 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
           onEditDone={(): void => setEdit(false)}
         />
       ) : !participationQuery.data.reviewer ? (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <NoDataText>No reviewer assigned</NoDataText>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <NoDataText>{t('common.noReviewerAssigned')}</NoDataText>
           {editable && (
             <IconButton onClick={(): void => setEdit(true)}>
               <Edit />

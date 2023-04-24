@@ -28,7 +28,21 @@
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Vyks {{date, datetime}}",
-    "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
+    "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti",
+    "participationRequest": "Dalyvavimo prašymas",
+    "participant": "Dalyvis",
+    "attachments": "Prisiegti failai",
+    "somethingWentWrongDotDotDot": "Įvyko klaida...",
+    "theDataWasNotUpdated": "Duomenys nebuvo atnaujinti",
+    "submissionTitle": "Pavadinimas",
+    "submissionDescription": "Aprašymas",
+    "update": "Atnaujinti",
+    "cancel": "Atšaukti",
+    "status": "Būsena",
+    "reviewer": "Recenzentas",
+    "noReviewerAssigned": "Recenzentas nepriskirtas",
+    "delete": "Panaikinti",
+    "options": "Veiksmai"
   },
 
   "components": {
@@ -66,6 +80,13 @@
     },
     "event": {
       "participatingMenuParticipatingLabel": "Dalyvaujama: {{status}}"
+    },
+    "participation": {
+      "activityHeading": "Komentarai ir pakeitimai",
+      "pageSubtitle": "Šiame puslapyje yra informacija apie {{userFullName}} dalyvavimą „{{eventTitle}}“ konferencijoje",
+      "submissionHasNoTitle": "Be pavadinimo",
+      "submissionHasNoDescription": "Be aprašymo",
+      "submissionHasNoAttachments": "Be failų"
     }
   }
 }

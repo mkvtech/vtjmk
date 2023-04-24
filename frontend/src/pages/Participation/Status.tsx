@@ -56,7 +56,7 @@ export default function Status({ editable }: { editable?: boolean }): JSX.Elemen
   return (
     <>
       <Typography variant='h2' sx={{ mt: 4 }}>
-        Status
+        {t('common.status')}
       </Typography>
 
       {participationQuery.isSuccess ? (
