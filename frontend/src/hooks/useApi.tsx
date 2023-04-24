@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
 import { VtjmkLocale } from '../share'
-import { User } from './api/types'
+import { CurrentUser } from './api/schemas'
 
 const API_SERVER_URL = import.meta.env.VITE_VTJMK_BACKEND_URL || 'http://localhost:3000'
 const API_BASE_URL = `${API_SERVER_URL}/api`
@@ -27,8 +27,6 @@ axiosClient.interceptors.response.use(
     throw error
   }
 )
-
-export type CurrentUser = User
 
 export interface Session {
   readonly jwt: string

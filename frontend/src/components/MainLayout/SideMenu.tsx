@@ -1,11 +1,11 @@
 import { AccountCircle, AdminPanelSettings, Create, Description, ExitToApp, Key, Monitor } from '@mui/icons-material'
 import { Avatar, Box, Button, Drawer, List, Typography } from '@mui/material'
-import { useTheme, styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { useQueryPolicies } from '../../hooks/api/queries'
 import { Session } from '../../hooks/useApi'
-import { DRAWER_WIDTH, SideMenuPolicies, sideMenuPoliciesSchema } from './share'
 import SideMenuItem from './SideMenuItem'
+import { DRAWER_WIDTH, SideMenuPolicies, sideMenuPoliciesSchema } from './share'
 
 const sideMenuStructure = [
   {
@@ -128,7 +128,7 @@ export default function SideMenu({ open, session }: { open: boolean; session: Se
     >
       <Box sx={{ pt: 4, pb: 2, bgcolor: theme.palette.primary.dark }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Avatar sx={{ width: 64, height: 64, mb: 2 }}>M</Avatar>
+          <Avatar src={session.currentUser.avatarUrl} />
         </Box>
 
         <Typography sx={{ textAlign: 'center', color: 'white' }}>{session.currentUser.fullName}</Typography>

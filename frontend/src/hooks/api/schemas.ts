@@ -38,6 +38,14 @@ export const commentSchema = z.object({
   updatedAt: z.string().transform(isoToDate),
 })
 
+export const currentUserSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  fullName: z.string(),
+  avatarUrl: z.string(),
+})
+export type CurrentUser = z.infer<typeof currentUserSchema>
+
 export const eventStatusSchema = z.union([z.literal('open'), z.literal('hidden')])
 export type EventStatus = z.infer<typeof eventStatusSchema>
 
