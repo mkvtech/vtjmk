@@ -65,6 +65,14 @@ export const participationSchema = z.object({
     title: z.string(),
     date: z.string().transform(isoToDate),
   }),
+  reviewerId: z.string().nullable(),
+  reviewer: z
+    .object({
+      id: z.string(),
+      email: z.string(),
+      fullName: z.string(),
+    })
+    .nullable(),
   status: participationStatusSchema,
   submissionTitle: z.string().nullable(),
   submissionDescription: z.string().nullable(),
@@ -80,6 +88,12 @@ export const participationSchema = z.object({
   updatedAt: z.string().transform(isoToDate),
 })
 export type Participation = z.infer<typeof participationSchema>
+
+export const participationAvailableReviewerSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  fullName: z.string(),
+})
 
 export const eventParticipationSchema = z.object({
   id: z.string(),

@@ -8,6 +8,7 @@ import { useIsAllowed } from '../../hooks/api/share'
 import General from './General'
 import { useState } from 'react'
 import OptionsButton, { OptionsButtonAction } from './OptionsButton'
+import Reviewer from './Reviewer'
 
 export default function Participation(): JSX.Element {
   const { participationId } = useParams()
@@ -21,6 +22,7 @@ const policiesSchema = z.object({
       items: z.record(
         z.object({
           update: z.boolean(),
+          updateReviewer: z.boolean(),
           updateStatus: z.boolean(),
           destroy: z.boolean(),
         })
@@ -38,7 +40,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
       policies: {
         participations: {
           items: {
-            [participationId]: ['update', 'updateStatus', 'destroy'],
+            [participationId]: ['update', 'updateReviewer', 'updateStatus', 'destroy'],
           },
         },
       },
@@ -106,11 +108,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
 
               <Typography>{participationQuery.data.user.fullName}</Typography>
 
-              <Typography variant='h2' sx={{ my: 4 }}>
-                Reviewer
-              </Typography>
-
-              <Typography>{participationQuery.data.user.fullName}</Typography>
+              <Reviewer editable={isAllowed('updateReviewer')} />
             </Grid>
 
             <Grid item xs={12} md={9} order={{ xs: 2, md: 1 }}>

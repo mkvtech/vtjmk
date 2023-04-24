@@ -17,6 +17,7 @@ import {
   userParticipationsSchema,
   userSchema,
   participationSchema,
+  participationAvailableReviewerSchema,
 } from './schemas'
 
 // TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
@@ -106,6 +107,16 @@ export function useQueryParticipation({ participationId }: { participationId: st
   const { client } = useApi()
   return useQuery(['participations', participationId], () =>
     client.get(`/participations/${participationId}`).then((response) => participationSchema.parse(response.data))
+  )
+}
+
+const participationAvailableReviewersSchema = z.array(participationAvailableReviewerSchema)
+export function useQueryParticipationAvailableReviewers({ participationId }: { participationId: string }) {
+  const { client } = useApi()
+  return useQuery(['participations', participationId, 'availableReviewers'], () =>
+    client
+      .get(`/participations/${participationId}/available_reviewers`)
+      .then((response) => participationAvailableReviewersSchema.parse(response.data))
   )
 }
 
