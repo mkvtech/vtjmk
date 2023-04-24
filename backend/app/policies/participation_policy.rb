@@ -18,6 +18,10 @@ class ParticipationPolicy < ApplicationPolicy
     manage_conference?
   end
 
+  def update_reviewer?
+    manage_conference?
+  end
+
   def destroy?
     manage_conference?
   end

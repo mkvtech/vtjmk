@@ -2,7 +2,7 @@ module Api
   # :nodoc:
   class ParticipationsController < ApplicationController
     before_action :require_authenticated_user
-    before_action :set_participation, only: %i[show update update_status]
+    before_action :set_participation, only: %i[show update update_reviewer update_status]
 
     def show
       authorize! @participation
@@ -38,9 +38,19 @@ module Api
     end
 
     def update_status
-      authorize! Event.find(@participation.event_id), to: :manage?, with: EventPolicy
+      authorize! @participation
 
       unless @participation.update(params.permit(:status))
+        return render json: @participation.errors, status: :unprocessable_entity
+      end
+
+      render :show, status: :ok, location: api_participation_url(@participation)
+    end
+
+    def update_reviewer
+      authorize! @participation
+
+      unless @participation.update(params.permit(:reviewer_id))
         return render json: @participation.errors, status: :unprocessable_entity
       end
 

@@ -28,7 +28,12 @@ Rails.application.routes.draw do
 
     resources :participations, only: %i[create show update] do
       member do
+        patch 'update_reviewer'
         patch 'update_status'
+      end
+
+      scope module: :participations do
+        get '/available_reviewers', to: 'users#available_reviewers_index'
       end
     end
 
