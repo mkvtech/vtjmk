@@ -2,6 +2,7 @@ import { Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ReadonlyFilesView from '../../components/MultipleFilesUpload/ReadonlyFilesView'
+import PageError from '../../components/PageError/PageError'
 import NoDataText from '../../components/Typography/NoDataText'
 import { useQueryParticipation } from '../../hooks/api/queries'
 import GeneralForm from './GeneralForm'
@@ -26,36 +27,44 @@ export default function General({ edit, onEditDone }: { edit: boolean; onEditDon
 
   return (
     <>
-      {participationQuery.isSuccess ? (
+      {participationQuery.isLoading ? (
+        <>
+          <Typography variant='h2' sx={{ mt: 4 }}>
+            <Skeleton />
+          </Typography>
+
+          <Typography>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton width='60%' />
+          </Typography>
+        </>
+      ) : participationQuery.isSuccess ? (
         <>
           {participationQuery.data.submissionTitle ? (
-            <Typography variant='h2' sx={{ mt: 4 }}>
-              {participationQuery.data.submissionTitle}
-            </Typography>
-          ) : (
-            <NoDataText sx={{ my: 2 }}>{t('pages.participation.submissionHasNoTitle')}</NoDataText>
-          )}
-        </>
-      ) : (
-        <Typography variant='h2' sx={{ mt: 4 }}>
-          <Skeleton />
-        </Typography>
-      )}
+            <>
+              <Typography variant='h2' sx={{ mt: 4 }}>
+                {participationQuery.data.submissionTitle}
+              </Typography>
 
-      {participationQuery.isSuccess ? (
-        <>
-          {participationQuery.data.submissionDescription ? (
-            <Typography>{participationQuery.data.submissionDescription}</Typography>
-          ) : (
-            <NoDataText>{t('pages.participation.submissionHasNoDescription')}</NoDataText>
-          )}
+              {participationQuery.data.submissionDescription ? (
+                <Typography sx={{ my: 2 }}>{participationQuery.data.submissionDescription}</Typography>
+              ) : (
+                <NoDataText sx={{ my: 2 }}>{t('pages.participation.submissionHasNoDescription')}</NoDataText>
+              )}
+            </>
+          ) : participationQuery.data.submissionDescription ? (
+            <>
+              <Typography variant='h2' sx={{ mt: 4 }}>
+                {t('common.submissionDescription')}
+              </Typography>
+
+              <Typography sx={{ my: 2 }}>{participationQuery.data.submissionDescription}</Typography>
+            </>
+          ) : null}
         </>
       ) : (
-        <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton width='60%' />
-        </>
+        <PageError withTitle={false} error={participationQuery.error} />
       )}
 
       <Typography variant='h2' sx={{ my: 4 }}>

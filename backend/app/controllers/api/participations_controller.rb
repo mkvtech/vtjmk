@@ -26,7 +26,7 @@ module Api
       authorize! @participation
 
       if @participation.update(params.permit(:submission_title, :submission_description))
-        Participations::UpdateAttachments.call(
+        ::Participations::UpdateAttachments.call(
           participation: @participation,
           params: params.slice(:submission_files_new, :submission_files_persisted)
         )
