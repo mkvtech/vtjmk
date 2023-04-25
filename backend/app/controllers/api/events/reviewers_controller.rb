@@ -5,9 +5,9 @@ module Api
       before_action :require_authenticated_user
 
       def index
-        event = Event.find(params[:event_id])
+        event = Event.includes(:reviewers, event_reviewers: :reviewer).find(params[:event_id])
         authorize! event, to: :reviewers_manage, with: EventPolicy
-        @reviewers = event.reviewers
+        @event_reviewers = event.event_reviewers
       end
 
       def create
@@ -17,7 +17,6 @@ module Api
         @event_reviewer = EventReviewer.new(params.permit(:event_id, :reviewer_id))
 
         if @event_reviewer.save
-          @reviewer = @event_reviewer.reviewer
           render :show, status: :created
         else
           render json: @event_reviewer.errors, status: :unprocessable_entity

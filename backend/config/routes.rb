@@ -19,14 +19,17 @@ Rails.application.routes.draw do
     resources :document_templates, only: %i[create show update destroy]
     post '/documents/generate_participation_certificate', to: 'documents#generate_participation_certificate'
 
-    resources :events, only: %i[index show update]
+    resources :events, only: %i[index show update] do
+      scope module: :events do
+        resources :reviewers, only: %i[index create destroy]
+
+        get '/users/available_as_reviewers', to: 'users#available_as_reviewers_index'
+      end
+    end
+
     namespace 'events' do
       scope ':event_id', as: 'events' do
         resources :participations, only: %i[index]
-      end
-
-      scope module: :events do
-        resources :reviewers, only: %i[index create destroy]
       end
     end
 
@@ -42,6 +45,8 @@ Rails.application.routes.draw do
         get '/available_reviewers', to: 'users#available_reviewers_index'
       end
     end
+
+    resources :users, only: %i[index]
 
     # Authenticated User
     namespace 'user' do
@@ -63,9 +68,6 @@ Rails.application.routes.draw do
 
     # Other
     post '/policies', to: 'policies#index'
-
-    # TODO: Work on these
-    resources :users
   end
 
   # Debug

@@ -11,6 +11,10 @@ class EventPolicy < ApplicationPolicy
     read_or_manage?
   end
 
+  def reviewers_manage?
+    manage?
+  end
+
   def update?
     manage?
   end

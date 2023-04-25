@@ -1,1 +1,1 @@
-json.array! @reviewers, partial: 'api/events/reviewers/reviewer', as: :reviewer
+json.array! @event_reviewers, partial: 'api/events/reviewers/event_reviewer', as: :event_reviewer
