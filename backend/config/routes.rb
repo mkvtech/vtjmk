@@ -24,6 +24,10 @@ Rails.application.routes.draw do
       scope ':event_id', as: 'events' do
         resources :participations, only: %i[index]
       end
+
+      scope module: :events do
+        resources :reviewers, only: %i[index create destroy]
+      end
     end
 
     resources :participations, only: %i[create show update] do

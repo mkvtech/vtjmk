@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_24_172007) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_25_180307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_172007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conference_id"], name: "index_document_templates_on_conference_id"
+  end
+
+  create_table "event_reviewers", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "reviewer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_event_reviewers_on_event_id"
+    t.index ["reviewer_id"], name: "index_event_reviewers_on_reviewer_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -164,6 +173,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_172007) do
   add_foreign_key "attendances", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "document_templates", "conferences"
+  add_foreign_key "event_reviewers", "events"
+  add_foreign_key "event_reviewers", "users", column: "reviewer_id"
   add_foreign_key "events", "conferences"
   add_foreign_key "participations", "events"
   add_foreign_key "participations", "users"

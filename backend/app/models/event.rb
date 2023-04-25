@@ -3,6 +3,8 @@ class Event < ApplicationRecord
   extend Mobility
 
   belongs_to :conference
+  has_many :event_reviewers, dependent: :destroy
+  has_many :reviewers, through: :event_reviewers
 
   enum status: { open: 'open', hidden: 'hidden' }
 
