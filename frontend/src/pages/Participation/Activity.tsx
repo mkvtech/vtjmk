@@ -1,4 +1,5 @@
-import { Box, Skeleton, Typography } from '@mui/material'
+import { Avatar, Box, Skeleton, Tooltip, Typography } from '@mui/material'
+import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import PageError from '../../components/PageError/PageError'
@@ -33,15 +34,25 @@ export default function Activity({ showForm }: { showForm: boolean }): JSX.Eleme
               <Typography>{t('common.commentsWithCount', { count: commentsQuery.data.length })}</Typography>
 
               {commentsQuery.data.map((comment) => (
-                <Box key={comment.id} sx={{ mt: 4 }}>
-                  <Typography>
-                    <b>{comment.user.fullName}</b>{' '}
-                    <Typography component='span' color='textSecondary'>
-                      {Intl.DateTimeFormat(i18n.language).format(comment.createdAt)}
-                    </Typography>
-                  </Typography>
+                <Box key={comment.id} sx={{ mt: 4, display: 'flex' }}>
+                  <Avatar src={comment.user.avatarUrl} />
 
-                  <Typography>{comment.text}</Typography>
+                  <Box sx={{ ml: 2 }}>
+                    <Typography>
+                      <b>{comment.user.fullName}</b>{' '}
+                      <Tooltip
+                        title={Intl.DateTimeFormat(i18n.language, { dateStyle: 'long', timeStyle: 'long' }).format(
+                          comment.createdAt
+                        )}
+                      >
+                        <Typography component='span' color='textSecondary'>
+                          {dayjs(comment.createdAt).fromNow()}
+                        </Typography>
+                      </Tooltip>
+                    </Typography>
+
+                    <Typography sx={{ whiteSpace: 'pre-wrap' }}>{comment.text}</Typography>
+                  </Box>
                 </Box>
               ))}
             </>
