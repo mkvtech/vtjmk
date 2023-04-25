@@ -1,6 +1,9 @@
 import { CssBaseline } from '@mui/material'
 import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs'
+import 'dayjs/locale/lt'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { I18nextProvider } from 'react-i18next'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
@@ -9,6 +12,8 @@ import AppThemeProvider from './components/AppTheme/AppTheme'
 import { ApiProvider } from './hooks/useApi'
 import i18n from './i18n'
 import router from './router'
+
+dayjs.extend(relativeTime)
 
 const queryClient = new QueryClient({
   defaultOptions: {

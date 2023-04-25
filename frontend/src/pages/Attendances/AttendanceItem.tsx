@@ -1,12 +1,9 @@
 import { Button, CircularProgress, ListItem, ListItemText } from '@mui/material'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 import { useMutation, useQueryClient } from 'react-query'
 import { AttendanceStatus } from '../../hooks/api/schemas'
 import { useApi } from '../../hooks/useApi'
 import { AttendanceWithUser } from './types'
-
-dayjs.extend(relativeTime)
 
 export default function AttendanceItem({ attendance }: { attendance: AttendanceWithUser }): JSX.Element {
   const { client } = useApi()

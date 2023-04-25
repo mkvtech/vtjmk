@@ -32,6 +32,7 @@ export const commentSchema = z.object({
     id: z.string(),
     email: z.string(),
     fullName: z.string(),
+    avatarUrl: z.string(),
   }),
 
   createdAt: z.string().transform(isoToDate),
@@ -81,6 +82,7 @@ export const participationSchema = z.object({
     id: z.string(),
     email: z.string(),
     fullName: z.string(),
+    avatarUrl: z.string(),
   }),
   eventId: z.string(),
   event: z.object({
@@ -94,6 +96,7 @@ export const participationSchema = z.object({
       id: z.string(),
       email: z.string(),
       fullName: z.string(),
+      avatarUrl: z.string(),
     })
     .nullable(),
   status: participationStatusSchema,

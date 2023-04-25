@@ -4,7 +4,9 @@ import React from 'react'
 // Note: 3-rd level import from mui can cause problems:
 // https://mui.com/material-ui/guides/minimizing-bundle-size/#option-one-use-path-imports
 import { TypographyStyleOptions } from '@mui/material/styles/createTypography'
+import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
+import { i18nLanguageToVtjmkLocale } from '../../share'
 import createTheme from './createTheme'
 
 declare module '@mui/material/styles' {
@@ -57,6 +59,7 @@ export function useColorMode(): ColorModeContextValue {
   return value
 }
 
+// This components handles both color mode AND locale changes
 export default function AppThemeProvider({ children }: React.PropsWithChildren): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const {
@@ -97,7 +100,7 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
   }
 
   const muiTheme = React.useMemo(() => {
-    const theme = createTheme({ colorMode, locale: language === 'lt' ? language : 'en-US' })
+    const theme = createTheme({ colorMode, locale: i18nLanguageToVtjmkLocale(language) })
 
     if (!import.meta.env.PROD) {
       console.log('MUI theme', theme)
@@ -107,6 +110,10 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
 
     return theme
   }, [colorMode, language])
+
+  React.useMemo(() => {
+    dayjs.locale(i18nLanguageToVtjmkLocale(language))
+  }, [language])
 
   return (
     <ColorModeContext.Provider value={contextValue}>
