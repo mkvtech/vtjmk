@@ -55,7 +55,7 @@ export default function Status({ editable }: { editable?: boolean }): JSX.Elemen
 
   return (
     <>
-      <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
+      <Typography component='h2' variant='h4' sx={{ mb: 2 }}>
         {t('common.status')}
       </Typography>
 

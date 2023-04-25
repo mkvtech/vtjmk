@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import NoDataText from '../../components/Typography/NoDataText'
 import { useQueryParticipation } from '../../hooks/api/queries'
 import ReviewerForm from './ReviewerForm'
+import UserButton from './UserButton'
 
 export default function Reviewer({ editable }: { editable: boolean }): JSX.Element {
   const { t } = useTranslation()
@@ -40,10 +41,11 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
           )}
         </Box>
       ) : (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography>{participationQuery.data.reviewer.fullName}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <UserButton user={participationQuery.data.reviewer} withEmail sx={{ flexGrow: 1, minWidth: 0 }} />
+
           {editable && (
-            <IconButton onClick={(): void => setEdit(true)}>
+            <IconButton onClick={(): void => setEdit(true)} sx={{ ml: 1 }}>
               <Edit />
             </IconButton>
           )}

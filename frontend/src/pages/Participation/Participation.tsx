@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Grid, Skeleton, Typography } from '@mui/material'
+import { Box, Container, Divider, Grid, Paper, Skeleton, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ import General from './General'
 import OptionsButton, { OptionsButtonAction } from './OptionsButton'
 import Reviewer from './Reviewer'
 import Status from './Status'
+import UserButton from './UserButton'
 
 export default function Participation(): JSX.Element {
   const { participationId } = useParams()
@@ -100,15 +101,15 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
       ) : (
         <>
           <Grid container columnSpacing={{ xs: 0, md: 4 }}>
-            <Grid item xs={12} md={3} order={{ xs: 1, md: 2 }}>
-              <Box sx={{ position: 'sticky', top: '150px' }}>
+            <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+              <Paper variant='outlined' sx={{ position: 'sticky', top: '150px', mt: 4, p: 2 }}>
                 <Status editable={isAllowed('updateStatus')} />
 
                 <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
                   {t('common.participant')}
                 </Typography>
 
-                <Typography>{participationQuery.data.user.fullName}</Typography>
+                <UserButton user={participationQuery.data.user} withEmail />
 
                 <Reviewer editable={isAllowed('updateReviewer')} />
 
@@ -127,10 +128,10 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
                 <Typography>
                   <SpanCreatedAt date={participationQuery.data.updatedAt} />
                 </Typography>
-              </Box>
+              </Paper>
             </Grid>
 
-            <Grid item xs={12} md={9} order={{ xs: 2, md: 1 }}>
+            <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
               <General edit={editGeneral} onEditDone={(): void => setEditGeneral(false)} />
 
               <Divider />
