@@ -1,20 +1,14 @@
-import { Box, Container, Skeleton, Typography } from '@mui/material'
-import { Navigate, useParams } from 'react-router-dom'
 import { LoadingButton } from '@mui/lab'
+import { Box, Container, Skeleton } from '@mui/material'
 import { useRef } from 'react'
 import { useMutation } from 'react-query'
-import Link from '../../components/Link'
-import LexicalEditor, { LexicalEditorHandle } from '../../components/Lexical/LexicalEditor'
-import { useApi } from '../../hooks/useApi'
-import { useQueryEvent } from '../../hooks/api/queries'
+import { useParams } from 'react-router-dom'
+import LexicalEditor, { LexicalEditorHandle } from '../../../components/Lexical/LexicalEditor'
+import { useQueryEvent } from '../../../hooks/api/queries'
+import { useApi } from '../../../hooks/useApi'
 
-export default function EventDescriptionEdit(): JSX.Element {
-  const { eventId } = useParams()
-
-  return eventId ? <Page eventId={eventId} /> : <Navigate to='/conferences' replace />
-}
-
-function Page({ eventId }: { eventId: string }): JSX.Element {
+export default function Description(): JSX.Element {
+  const { eventId } = useParams() as { eventId: string }
   const { client } = useApi()
   const lexicalEditorRef = useRef<LexicalEditorHandle>(null)
 
@@ -36,20 +30,6 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ mt: 8, mb: 8 }}>
-      <Typography>
-        <Link href={`/events/${eventId}/edit`}>Back to event editing</Link>
-      </Typography>
-
-      <Typography variant='h1' sx={{ mb: 2 }}>
-        Editing &quot;
-        {eventQuery.isSuccess ? eventQuery.data.title : <Skeleton sx={{ display: 'inline-block', width: '40%' }} />}
-        &quot; description.
-      </Typography>
-
-      <Box sx={{ my: 4 }}>
-        <Typography>This page allows you to edit public appearance of the event.</Typography>
-      </Box>
-
       {eventQuery.isLoading ? (
         <>
           <Skeleton variant='rounded' height='58px' />

@@ -10,7 +10,6 @@ import CreateAccount from './pages/CreateAccount'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
 import DocumentTemplates from './pages/DocumentTemplates'
 import Event from './pages/Event'
-import EventDescriptionEdit from './pages/EventDescriptionEdit'
 import EventEdit from './pages/EventEdit'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -41,7 +40,6 @@ const router = createBrowserRouter([
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
       { path: '/events/:eventId/attendants', element: <Attendances /> },
-      { path: '/events/:eventId/descriptionEdit', element: <EventDescriptionEdit /> },
       { path: '/events/:eventId/edit', element: <EventEdit /> },
       { path: '/events/:eventId/participants', element: <Participants /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
