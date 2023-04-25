@@ -63,6 +63,20 @@ export const eventSchema = z.object({
 })
 export type Event = z.infer<typeof eventSchema>
 
+export const eventReviewerSchema = z.object({
+  id: z.string(),
+  eventId: z.string(),
+  reviewerId: z.string(),
+  reviewer: z.object({
+    id: z.string(),
+    email: z.string(),
+    fullName: z.string(),
+    avatarUrl: z.string(),
+  }),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+
 export const userSchema = z.object({
   id: z.string(),
   email: z.string(),

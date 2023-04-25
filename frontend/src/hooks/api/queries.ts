@@ -12,6 +12,7 @@ import {
   Event,
   EventParticipation,
   eventParticipationSchema,
+  eventReviewerSchema,
   eventSchema,
   participationAvailableReviewerSchema,
   participationSchema,
@@ -104,6 +105,31 @@ export function useQueryEvent(id: string): UseQueryResult<Readonly<Event>> {
   )
 }
 
+const eventUsersAvailableAsReviewersSchema = z.array(
+  z.object({
+    id: z.string(),
+    email: z.string(),
+    fullName: z.string(),
+    avatarUrl: z.string(),
+  })
+)
+export function useQueryEventUsersAvailableAsReviewers({ eventId }: { eventId: string }) {
+  const { client } = useApi()
+  return useQuery(['events', eventId, 'users', 'available_as_reviewers'], () =>
+    client
+      .get(`/events/${eventId}/users/available_as_reviewers`)
+      .then((response) => eventUsersAvailableAsReviewersSchema.parse(response.data))
+  )
+}
+
+const eventReviewersSchema = z.array(eventReviewerSchema)
+export function useQueryEventReviewers({ eventId }: { eventId: string }) {
+  const { client } = useApi()
+  return useQuery(['events', eventId, 'reviewers'], () =>
+    client.get(`/events/${eventId}/reviewers`).then((response) => eventReviewersSchema.parse(response.data))
+  )
+}
+
 export function useQueryParticipation({ participationId }: { participationId: string }) {
   const { client } = useApi()
   return useQuery(['participations', participationId], () =>
@@ -135,6 +161,12 @@ const eventsParticipationsResponseSchema = z.array(eventParticipationSchema.merg
 export async function fetchEventsParticipations({ client, eventId }: { client: AxiosInstance; eventId: string }) {
   const response = await client.get(`/events/${eventId}/participations`)
   return eventsParticipationsResponseSchema.parse(response.data)
+}
+
+const usersSchema = z.array(userSchema)
+export function useQueryUsers() {
+  const { client } = useApi()
+  return useQuery(['users'], () => client.get('/users').then((response) => usersSchema.parse(response.data)))
 }
 
 export function fetchUserParticipations({ client }: { client: AxiosInstance }) {
