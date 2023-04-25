@@ -55,13 +55,13 @@ export default function Status({ editable }: { editable?: boolean }): JSX.Elemen
 
   return (
     <>
-      <Typography variant='h2' sx={{ mt: 4 }}>
+      <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
         {t('common.status')}
       </Typography>
 
       {participationQuery.isSuccess ? (
         <>
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }} ref={anchorRef}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }} ref={anchorRef}>
             {updateStatusMutation.isLoading ? (
               <CircularProgress size='32px' />
             ) : (

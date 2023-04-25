@@ -1,14 +1,14 @@
-import { Avatar, Box, Skeleton, Tooltip, Typography } from '@mui/material'
-import dayjs from 'dayjs'
+import { Avatar, Box, Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import PageError from '../../components/PageError/PageError'
 import NoDataText from '../../components/Typography/NoDataText'
+import SpanCreatedAt from '../../components/Typography/SpanCreatedAt'
 import { useQueryParticipationComments } from '../../hooks/api/queries'
 import CommentForm from './CommentForm'
 
 export default function Activity({ showForm }: { showForm: boolean }): JSX.Element {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { participationId } = useParams() as { participationId: string }
 
   const commentsQuery = useQueryParticipationComments({ participationId })
@@ -39,16 +39,7 @@ export default function Activity({ showForm }: { showForm: boolean }): JSX.Eleme
 
                   <Box sx={{ ml: 2 }}>
                     <Typography>
-                      <b>{comment.user.fullName}</b>{' '}
-                      <Tooltip
-                        title={Intl.DateTimeFormat(i18n.language, { dateStyle: 'long', timeStyle: 'long' }).format(
-                          comment.createdAt
-                        )}
-                      >
-                        <Typography component='span' color='textSecondary'>
-                          {dayjs(comment.createdAt).fromNow()}
-                        </Typography>
-                      </Tooltip>
+                      <b>{comment.user.fullName}</b> <SpanCreatedAt date={comment.createdAt} />
                     </Typography>
 
                     <Typography sx={{ whiteSpace: 'pre-wrap' }}>{comment.text}</Typography>

@@ -1,11 +1,11 @@
 import { Box, Button, Container, Divider, Paper, Typography } from '@mui/material'
 import dayjs from 'dayjs'
+import { useTranslation } from 'react-i18next'
 import { Navigate, Link as RouterLink } from 'react-router-dom'
 import Link from '../../components/Link'
+import ParticipationStatusChip from '../../components/ParticipationStatusChip'
 import { useQueryUserParticipations } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
-import { useTranslation } from 'react-i18next'
-import ParticipationStatusChip from '../../components/ParticipationStatusChip'
 
 export default function UserParticipations(): JSX.Element {
   const { t } = useTranslation()
@@ -58,7 +58,7 @@ export default function UserParticipations(): JSX.Element {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography>
                     <Typography component='span' color='textSecondary'>
-                      {t('common.createdAt', { date: participation.createdAt })}
+                      {t('common.createdAtDate', { date: participation.createdAt })}
                       {/* {Intl.DateTimeFormat(i18n.language).format(participation.createdAt)} */}
                     </Typography>
                   </Typography>

@@ -16,7 +16,7 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
 
   return (
     <>
-      <Typography variant='h2' sx={{ my: 4 }}>
+      <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
         {t('common.reviewer')}
       </Typography>
 

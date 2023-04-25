@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import PageError from '../../components/PageError/PageError'
+import SpanCreatedAt from '../../components/Typography/SpanCreatedAt'
 import { useQueryParticipation, useQueryPolicies } from '../../hooks/api/queries'
 import { useIsAllowed } from '../../hooks/api/share'
 import Activity from './Activity'
@@ -103,13 +104,29 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               <Box sx={{ position: 'sticky', top: '150px' }}>
                 <Status editable={isAllowed('updateStatus')} />
 
-                <Typography variant='h2' sx={{ my: 4 }}>
+                <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
                   {t('common.participant')}
                 </Typography>
 
                 <Typography>{participationQuery.data.user.fullName}</Typography>
 
                 <Reviewer editable={isAllowed('updateReviewer')} />
+
+                <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
+                  {t('common.createdAt')}
+                </Typography>
+
+                <Typography>
+                  <SpanCreatedAt date={participationQuery.data.createdAt} />
+                </Typography>
+
+                <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
+                  {t('common.lastUpdate')}
+                </Typography>
+
+                <Typography>
+                  <SpanCreatedAt date={participationQuery.data.updatedAt} />
+                </Typography>
               </Box>
             </Grid>
 
