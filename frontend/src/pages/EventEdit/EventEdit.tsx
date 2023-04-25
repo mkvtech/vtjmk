@@ -2,6 +2,7 @@ import { Box, Container, Skeleton, Tab, Tabs, Typography } from '@mui/material'
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
+import PageError from '../../components/PageError/PageError'
 import { useQueryEvent } from '../../hooks/api/queries'
 import Description from './tabs/Description'
 import General from './tabs/General'
@@ -21,7 +22,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       {eventQuery.isError ? (
-        <Typography variant='h1'>Could not load event :(</Typography>
+        <PageError error={eventQuery} withTitle />
       ) : (
         <>
           <Typography>

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { mergeRegister } from '@lexical/utils'
-import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND } from 'lexical'
 import { $createHeadingNode, $isHeadingNode } from '@lexical/rich-text'
 import { $wrapNodes } from '@lexical/selection'
+import { mergeRegister } from '@lexical/utils'
+import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND } from 'lexical'
 
 import { Box, Checkbox, Divider, FormControl, IconButton, MenuItem, Paper, Select, Stack } from '@mui/material'
 
@@ -17,7 +17,7 @@ import FormatItalicIcon from '@mui/icons-material/FormatItalic'
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined'
 import LinkIcon from '@mui/icons-material/Link'
 
-export default function ToolbarPlugin(): JSX.Element {
+export default function ToolbarPlugin({ toolbarEnd }: { toolbarEnd?: JSX.Element | undefined | null }): JSX.Element {
   const [editor] = useLexicalComposerContext()
 
   const [blockType, setBlockType] = useState('paragraph')
@@ -56,7 +56,7 @@ export default function ToolbarPlugin(): JSX.Element {
   }, [updateToolbar, editor])
 
   return (
-    <Paper sx={{ mb: 4 }}>
+    <Paper sx={{ mb: 4, display: 'flex', justifyContent: 'space-between' }}>
       <Stack
         direction='row'
         divider={<Divider orientation='vertical' flexItem />}
@@ -149,6 +149,8 @@ export default function ToolbarPlugin(): JSX.Element {
           </IconButton>
         </Box>
       </Stack>
+
+      {toolbarEnd}
     </Paper>
   )
 }

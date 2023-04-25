@@ -1,13 +1,13 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react'
-import { EditorState } from 'lexical'
-import { LexicalComposer } from '@lexical/react/LexicalComposer'
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
-import { ContentEditable } from '@lexical/react/LexicalContentEditable'
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
+import { LexicalComposer } from '@lexical/react/LexicalComposer'
+import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { HeadingNode } from '@lexical/rich-text'
+import { EditorState } from 'lexical'
+import { forwardRef, useImperativeHandle, useRef } from 'react'
 import ToolbarPlugin from './plugins/Toolbar'
 import { lexicalGlobalStyles, lexicalTheme } from './theme'
 
@@ -33,7 +33,10 @@ export interface LexicalEditorHandle {
 }
 
 export default forwardRef(function LexicalEditor(
-  { initialEditorState }: { initialEditorState?: string | null },
+  {
+    initialEditorState,
+    toolbarEnd,
+  }: { initialEditorState?: string | null; toolbarEnd?: JSX.Element | undefined | null },
   ref
 ): JSX.Element {
   const editorStateRef = useRef<EditorState>()
@@ -47,7 +50,7 @@ export default forwardRef(function LexicalEditor(
       {lexicalGlobalStyles}
       <LexicalComposer initialConfig={{ ...editorConfig, editorState: initialEditorState || null }}>
         <div className='lexical-editor-container'>
-          <ToolbarPlugin />
+          <ToolbarPlugin toolbarEnd={toolbarEnd} />
           <div className='lexical-editor-inner'>
             <RichTextPlugin
               contentEditable={
