@@ -1,4 +1,6 @@
-import { ThemeProvider, useMediaQuery } from '@mui/material'
+import { CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material'
+import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import React from 'react'
 
 // Note: 3-rd level import from mui can cause problems:
@@ -6,7 +8,7 @@ import React from 'react'
 import { TypographyStyleOptions } from '@mui/material/styles/createTypography'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { i18nLanguageToVtjmkLocale } from '../../share'
+import { i18nLanguageToDayjsLocale, i18nLanguageToVtjmkLocale } from '../../share'
 import createTheme from './createTheme'
 
 declare module '@mui/material/styles' {
@@ -115,9 +117,17 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
     dayjs.locale(i18nLanguageToVtjmkLocale(language))
   }, [language])
 
+  console.log(i18nLanguageToDayjsLocale(language))
+
   return (
     <ColorModeContext.Provider value={contextValue}>
-      <ThemeProvider theme={muiTheme}>{children}</ThemeProvider>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+
+        <MuiLocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18nLanguageToDayjsLocale(language)}>
+          {children}
+        </MuiLocalizationProvider>
+      </ThemeProvider>
     </ColorModeContext.Provider>
   )
 }

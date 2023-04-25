@@ -1,6 +1,3 @@
-import { CssBaseline } from '@mui/material'
-import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
 import 'dayjs/locale/lt'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -42,15 +39,11 @@ function App(): JSX.Element {
   return (
     <I18nextProvider i18n={i18n}>
       <AppThemeProvider>
-        <CssBaseline />
-
-        <MuiLocalizationProvider dateAdapter={AdapterDayjs}>
-          <QueryClientProvider client={queryClient}>
-            <ApiProvider>
-              <RouterProvider router={router} />
-            </ApiProvider>
-          </QueryClientProvider>
-        </MuiLocalizationProvider>
+        <QueryClientProvider client={queryClient}>
+          <ApiProvider>
+            <RouterProvider router={router} />
+          </ApiProvider>
+        </QueryClientProvider>
       </AppThemeProvider>
     </I18nextProvider>
   )

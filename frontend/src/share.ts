@@ -4,3 +4,7 @@ export type VtjmkLocale = 'en-US' | 'lt'
 export function i18nLanguageToVtjmkLocale(i18nLanguage: string): VtjmkLocale {
   return i18nLanguage === 'lt' ? 'lt' : 'en-US'
 }
+
+export function i18nLanguageToDayjsLocale(i18nLanguage: string): string {
+  return i18nLanguage === 'lt' ? 'lt' : 'en'
+}
