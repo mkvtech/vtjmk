@@ -1,1 +1,1 @@
-export type VtjmkLocale = 'en' | 'lt'
+export type VtjmkLocale = 'en-US' | 'lt'

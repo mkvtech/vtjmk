@@ -1,14 +1,14 @@
 import { CssBaseline } from '@mui/material'
 import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { RouterProvider } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { I18nextProvider } from 'react-i18next'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { RouterProvider } from 'react-router-dom'
 
+import AppThemeProvider from './components/AppTheme/AppTheme'
 import { ApiProvider } from './hooks/useApi'
 import i18n from './i18n'
 import router from './router'
-import AppThemeProvider from './components/AppTheme/AppTheme'
 
 const queryClient = new QueryClient({
   defaultOptions: {

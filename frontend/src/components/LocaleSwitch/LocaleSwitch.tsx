@@ -27,7 +27,7 @@ export default function LocaleSwitch(): JSX.Element {
       </IconButton>
 
       <Menu id='languages-menu' anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={(): void => setAnchorEl(null)}>
-        <MenuItem onClick={(): void => handleLanguageMenuSetLocale('en')}>English</MenuItem>
+        <MenuItem onClick={(): void => handleLanguageMenuSetLocale('en-US')}>English</MenuItem>
         <MenuItem onClick={(): void => handleLanguageMenuSetLocale('lt')}>Lithuanian</MenuItem>
       </Menu>
     </>

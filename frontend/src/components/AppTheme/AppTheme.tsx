@@ -4,6 +4,7 @@ import React from 'react'
 // Note: 3-rd level import from mui can cause problems:
 // https://mui.com/material-ui/guides/minimizing-bundle-size/#option-one-use-path-imports
 import { TypographyStyleOptions } from '@mui/material/styles/createTypography'
+import { useTranslation } from 'react-i18next'
 import createTheme from './createTheme'
 
 declare module '@mui/material/styles' {
@@ -58,6 +59,9 @@ export function useColorMode(): ColorModeContextValue {
 
 export default function AppThemeProvider({ children }: React.PropsWithChildren): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const {
+    i18n: { language },
+  } = useTranslation()
   const [colorMode, setColorMode] = React.useState<ColorMode>('light')
 
   React.useMemo(() => {
@@ -93,7 +97,7 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
   }
 
   const muiTheme = React.useMemo(() => {
-    const theme = createTheme({ colorMode })
+    const theme = createTheme({ colorMode, locale: language === 'lt' ? language : 'en-US' })
 
     if (!import.meta.env.PROD) {
       console.log('MUI theme', theme)
@@ -102,7 +106,7 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
     }
 
     return theme
-  }, [colorMode])
+  }, [colorMode, language])
 
   return (
     <ColorModeContext.Provider value={contextValue}>
