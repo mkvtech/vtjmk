@@ -1,13 +1,13 @@
 import { ArrowBack } from '@mui/icons-material'
-import { Alert, AlertTitle, Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
-import { useApi } from '../../hooks/useApi'
 import MultipleFilesUpload from '../../components/MultipleFilesUpload'
 import { MultipleFilesUploadValue } from '../../components/MultipleFilesUpload/MultipleFilesUpload'
 import { participationSchema } from '../../hooks/api/schemas'
+import { useApi } from '../../hooks/useApi'
 
 export default function ParticipationForm(): JSX.Element {
   const { eventId } = useParams()
@@ -70,10 +70,6 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
-      <Alert severity='success'>
-        {' '}
-        <AlertTitle>test</AlertTitle> test
-      </Alert>
       <Box sx={{ my: 2 }}>
         <Typography variant='h1'>Participation Form</Typography>
 
