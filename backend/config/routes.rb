@@ -72,4 +72,7 @@ Rails.application.routes.draw do
 
   # Debug
   get '/debug/database', to: 'debug#database'
+
+  # Everything else goes to React App
+  get '/*path', to: 'application#react_app'
 end

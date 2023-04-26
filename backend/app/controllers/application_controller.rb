@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     head :ok
   end
 
+  def react_app
+    render file: 'public/index.html', layout: false
+  end
+
   def current_user
     return @current_user if defined?(@current_user)
 
