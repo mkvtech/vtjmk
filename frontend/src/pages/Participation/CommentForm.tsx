@@ -27,8 +27,6 @@ export default function CommentForm(): JSX.Element {
   )
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data)
-
     createCommentMutation.mutate(data, {
       onSuccess: () => {
         setValue('text', '')

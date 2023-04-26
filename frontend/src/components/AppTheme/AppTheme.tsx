@@ -117,8 +117,6 @@ export default function AppThemeProvider({ children }: React.PropsWithChildren):
     dayjs.locale(i18nLanguageToVtjmkLocale(language))
   }, [language])
 
-  console.log(i18nLanguageToDayjsLocale(language))
-
   return (
     <ColorModeContext.Provider value={contextValue}>
       <ThemeProvider theme={muiTheme}>

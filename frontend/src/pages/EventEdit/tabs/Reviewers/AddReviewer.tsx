@@ -28,8 +28,6 @@ export default function AddReviewer(): JSX.Element {
   const onSubmit = (event: SyntheticEvent): void => {
     event.preventDefault()
 
-    console.log(value)
-
     if (!value) {
       return
     }

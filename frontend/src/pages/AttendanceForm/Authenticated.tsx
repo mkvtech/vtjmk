@@ -12,15 +12,11 @@ export default function Authenticated({ eventId }: { eventId: string }): JSX.Ele
   const createAttendanceMutation = useMutationCreateAttendance()
 
   const handleSubmit = (event: SyntheticEvent): void => {
-    console.log('submit')
-
     event.preventDefault()
     createAttendanceMutation.mutate(
       { comment, eventId },
       {
         onSuccess: (_response) => {
-          console.log('success')
-
           navigate(`/events/${eventId}`)
         },
       }
