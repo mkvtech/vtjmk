@@ -1,18 +1,34 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test'
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('Login', async ({ page }) => {
+  page.setDefaultTimeout(10000)
+
+  await page.goto('/')
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  await expect(page).toHaveTitle(/VTJMK/)
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  // Go to login page
+  await page.getByRole('link', { name: 'Login' }).click()
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  await expect(page).toHaveURL('/login')
 
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/);
-});
+  // Login with invalid credentials
+  await page.getByLabel('Email').fill('admin@example.com')
+  await page.getByLabel('Password').fill('invalid password')
+
+  await page.getByRole('button', { name: 'Login' }).click()
+
+  await expect(page).toHaveURL('/login')
+
+  // Login with valid credentials
+  await page.getByLabel('Email').fill('admin@example.com')
+  await page.getByLabel('Password').fill('password')
+
+  await page.getByRole('button', { name: 'Login' }).click()
+
+  await expect(page).toHaveURL('/')
+
+  // Expect to see authorized content
+  expect(page.getByText('John Doe')).toBeDefined()
+})
