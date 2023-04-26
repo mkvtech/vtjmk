@@ -58,22 +58,24 @@ class TestPolicies
       .index_with { |action| !!allowed_to?("#{action}?", with: config[:policy_class]) }
   end
 
-  def items_actions(input:, config:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def items_actions(input:, config:)
     resources = config[:resource_class].where(id: input.keys).index_by(&:id)
 
     input.to_h do |resource_id, actions_input|
       actions = Array(actions_input)
       resource = resources[resource_id.to_i]
-
-      next if resource.nil?
+      valid_actions = actions.map(&:underscore).intersection(config[:items])
 
       [
         resource_id,
-        actions
-          .map(&:underscore)
-          .intersection(config[:items])
-          .index_with { |action| !!allowed_to?("#{action}?", resource) } # rubocop:disable Style/DoubleNegation
+        test_actions_for_resource(resource:, actions: valid_actions)
       ]
     end
+  end
+
+  def test_actions_for_resource(resource:, actions:)
+    return actions.index_with(false) if resource.nil?
+
+    actions.index_with { |action| !!allowed_to?("#{action}?", resource) }
   end
 end
