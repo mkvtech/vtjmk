@@ -80,6 +80,10 @@ gem 'mobility'
 # Ruby gem for creating letter avatar from user's name (or any other string :-) ).
 gem 'letter_avatar'
 
+# Ruby gem that converts office documents to PDF using LibreOffice / OpenOffice.
+# NOTE: LibreOffice packge must be installed
+gem 'libreconv'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

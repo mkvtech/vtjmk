@@ -17,6 +17,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
 import { fetchUserParticipations, fetchUserParticipationsDocumentTemplates } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
+import { contentDispositionToFilename } from '../../share'
 
 type DocumentType = 'docx' | 'pdf'
 
@@ -71,19 +72,20 @@ export default function UserParticipationCertificate(): JSX.Element {
 
   const generateDocumentMutation = useMutation(
     (data: GenerateDocumentMutationData) =>
-      client
-        .post('/documents/generate_participation_certificate', data, { responseType: 'blob' })
-        .then((response) => response.data),
+      client.post('/documents/generate_participation_certificate', data, { responseType: 'blob' }),
     {
-      onSuccess: (data) => {
+      onSuccess: (response) => {
         // Note: This is a 'hacky' solution for downloading files using AJAX but it seems to be popular:
         // https://stackoverflow.com/questions/41938718/how-to-download-files-using-axios
         // https://medium.com/yellowcode/download-api-files-with-react-fetch-393e4dae0d9e
 
+        const { data } = response
+        const filename = contentDispositionToFilename(response.headers['content-disposition']) || 'file.docx'
+
         const href = URL.createObjectURL(data)
         const link = document.createElement('a')
         link.href = href
-        link.setAttribute('download', 'file.docx')
+        link.setAttribute('download', filename)
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)

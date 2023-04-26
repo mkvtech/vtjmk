@@ -6,6 +6,10 @@ class ParticipationPolicy < ApplicationPolicy
     participant? || manage_conference?
   end
 
+  def generate_certificate?
+    participant? && record.approved?
+  end
+
   def comment?
     participant? || manage_conference?
   end
