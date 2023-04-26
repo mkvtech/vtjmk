@@ -9,7 +9,8 @@ module Api
     end
 
     def create
-      authorize!
+      event = Event.find(params[:event_id])
+      authorize! event, to: :participate, with: EventPolicy
       @participation = Participation.new(
         status: 'pending', user: current_user,
         **params.permit(:event_id, :submission_title, :submission_description, submission_files: [])

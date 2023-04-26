@@ -2,10 +2,6 @@
 class ParticipationPolicy < ApplicationPolicy
   pre_check :require_user, :allow_admin
 
-  def create?
-    true
-  end
-
   def show?
     participant? || manage_conference?
   end

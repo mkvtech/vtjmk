@@ -10,7 +10,7 @@ class TestPolicies
     events: {
       policy_class: EventPolicy,
       resource_class: Event,
-      items: %w[update participations_index]
+      items: %w[update participate participations_index]
     },
     conferences: {
       policy_class: ConferencePolicy,
