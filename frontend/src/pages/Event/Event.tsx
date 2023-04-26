@@ -2,18 +2,18 @@ import { Edit } from '@mui/icons-material'
 import { Badge, Button, Container, Divider, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import dayjs from 'dayjs'
-import { Link as RouterLink, Navigate, useParams } from 'react-router-dom'
-import { z } from 'zod'
 import { Trans, useTranslation } from 'react-i18next'
+import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
+import { z } from 'zod'
 
-import Link from '../../components/Link'
-import { fetchEventsParticipations, useQueryConference, useQueryEvent } from '../../hooks/api/queries'
-import { useApi } from '../../hooks/useApi'
-import { useIsAllowed } from '../../hooks/api/share'
-import ParticipationMenu from './ParticipationMenu'
 import { useQuery } from 'react-query'
 import LexicalView from '../../components/Lexical/LexicalView'
+import Link from '../../components/Link'
 import PageError from '../../components/PageError'
+import { fetchEventsParticipations, useQueryConference, useQueryEvent } from '../../hooks/api/queries'
+import { useIsAllowed } from '../../hooks/api/share'
+import { useApi } from '../../hooks/useApi'
+import ParticipationMenu from './ParticipationMenu'
 
 const EVENT_PAGE_POLICIES_SCHEMA = z.object({
   policies: z.object({
@@ -21,6 +21,7 @@ const EVENT_PAGE_POLICIES_SCHEMA = z.object({
       items: z.record(
         z.object({
           update: z.boolean(),
+          participate: z.boolean(),
           participationsIndex: z.boolean(),
         })
       ),
@@ -41,7 +42,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
     policies: {
       events: {
         items: {
-          [eventId]: ['update', 'participationsIndex'],
+          [eventId]: ['update', 'participate', 'participationsIndex'],
         },
       },
     },
@@ -93,6 +94,21 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                 {dayjs(eventQuery.data.date).isBefore(dayjs())
                   ? t('common.tookPlace', { date: eventQuery.data.date })
                   : t('common.willTakePlace', { date: eventQuery.data.date })}
+                .{' '}
+                {dayjs(eventQuery.data.registrationTo).isBefore(dayjs())
+                  ? t('common.registrationWasFromDateToDate', {
+                      fromDate: eventQuery.data.registrationFrom,
+                      toDate: eventQuery.data.registrationTo,
+                    })
+                  : dayjs(eventQuery.data.registrationFrom).isAfter(dayjs())
+                  ? t('common.registrationWillFromDateToDate', {
+                      fromDate: eventQuery.data.registrationFrom,
+                      toDate: eventQuery.data.registrationTo,
+                    })
+                  : t('common.registrationIsFromDateToDate', {
+                      fromDate: eventQuery.data.registrationFrom,
+                      toDate: eventQuery.data.registrationTo,
+                    })}
               </Typography>
 
               {!session ? (
@@ -102,7 +118,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                   </Trans>
                 </Typography>
               ) : (
-                <ParticipationMenu eventId={eventId} />
+                <ParticipationMenu eventId={eventId} isAllowedToParticipate={isAllowed('participate')} />
               )}
             </Box>
           </Box>

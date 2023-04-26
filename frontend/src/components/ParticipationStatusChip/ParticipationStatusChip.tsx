@@ -10,9 +10,11 @@ export const statusToI18nKeyMap = {
 
 export default function ParticipationStatusChip({
   status,
+  onClick,
   sx,
 }: {
   status: ParticipationStatus
+  onClick?: () => void | null | undefined
   sx?: SxProps<Theme>
 }): JSX.Element {
   const { t } = useTranslation()
@@ -21,6 +23,7 @@ export default function ParticipationStatusChip({
     <Chip
       label={t(statusToI18nKeyMap[status])}
       color={status === 'approved' ? 'success' : status === 'rejected' ? 'error' : 'warning'}
+      onClick={onClick}
       sx={sx}
     />
   )
