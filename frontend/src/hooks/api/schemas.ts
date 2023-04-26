@@ -76,6 +76,7 @@ export const eventReviewerSchema = z.object({
   createdAt: z.string().transform(isoToDate),
   updatedAt: z.string().transform(isoToDate),
 })
+export type EventReviewer = z.infer<typeof eventReviewerSchema>
 
 export const userSchema = z.object({
   id: z.string(),

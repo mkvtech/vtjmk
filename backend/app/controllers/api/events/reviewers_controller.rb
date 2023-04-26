@@ -27,7 +27,7 @@ module Api
         event = Event.find(params[:event_id])
         authorize! event, to: :reviewers_manage, with: EventPolicy
 
-        event_reviewer = event.event_reviewers.find_by!(reviewer_id: params[:reviewer_id])
+        event_reviewer = event.event_reviewers.find_by!(reviewer_id: params[:id])
         event_reviewer.destroy
       end
     end
