@@ -17,7 +17,7 @@ export default function ParticipationForm(): JSX.Element {
 
 interface IFormInput {
   submissionTitle: string
-  submissionFiles: MultipleFilesUploadValue
+  submissionFiles?: MultipleFilesUploadValue
 }
 
 interface CreateParticipationMutationData {
@@ -31,6 +31,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const { control, handleSubmit } = useForm<IFormInput>({
     defaultValues: {
       submissionTitle: '',
+      submissionFiles: undefined,
     },
   })
   const createMutation = useMutation((data: CreateParticipationMutationData) => {
@@ -58,7 +59,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
     createMutation.mutate(
       {
         submissionTitle: data.submissionTitle,
-        submissionFiles: data.submissionFiles.newFiles.map((entry) => entry.file),
+        submissionFiles: data.submissionFiles?.newFiles.map((entry) => entry.file) || [],
       },
       {
         onSuccess: (data) => {
