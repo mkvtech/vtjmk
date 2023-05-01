@@ -1,4 +1,7 @@
 # Conference model
 class Conference < ApplicationRecord
-  validates :title, presence: true
+  extend Mobility
+
+  translates :title, type: :string
+  translates :description, type: :text
 end
