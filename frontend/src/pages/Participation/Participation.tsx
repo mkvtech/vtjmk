@@ -1,4 +1,4 @@
-import { Box, Container, Divider, Grid, Paper, Skeleton, Typography } from '@mui/material'
+import { Box, Container, Divider, Grid, Link, Paper, Skeleton, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
@@ -72,6 +72,10 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
     <PageError withTitle error={participationQuery.error} />
   ) : (
     <Container maxWidth='lg' sx={{ my: 8 }}>
+      <Link component='button' onClick={(): void => navigate(-1)}>
+        {t('common.back')}
+      </Link>
+
       <Typography variant='h1'>{t('common.participationRequest')}</Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
