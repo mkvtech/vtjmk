@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :participations, only: %i[create show update] do
+    resources :participations, only: %i[create show update destroy] do
       member do
         patch 'update_reviewer'
         patch 'update_status'

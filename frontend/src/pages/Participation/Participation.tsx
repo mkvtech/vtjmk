@@ -1,12 +1,14 @@
 import { Box, Container, Divider, Grid, Paper, Skeleton, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useParams } from 'react-router-dom'
+import { useMutation } from 'react-query'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import PageError from '../../components/PageError/PageError'
 import SpanCreatedAt from '../../components/Typography/SpanCreatedAt'
 import { useQueryParticipation, useQueryPolicies } from '../../hooks/api/queries'
 import { useIsAllowed } from '../../hooks/api/share'
+import { useApi } from '../../hooks/useApi'
 import Activity from './Activity'
 import General from './General'
 import OptionsButton, { OptionsButtonAction } from './OptionsButton'
@@ -38,6 +40,8 @@ const policiesSchema = z.object({
 
 function Page({ participationId }: { participationId: string }): JSX.Element {
   const { t } = useTranslation()
+  const { client } = useApi()
+  const navigate = useNavigate()
   const participationQuery = useQueryParticipation({ participationId })
 
   const [editGeneral, setEditGeneral] = useState(false)
@@ -54,6 +58,12 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
     schema: policiesSchema,
   })
   const isAllowed = useIsAllowed(policiesQuery, 'participations', participationId)
+
+  const destroyMutation = useMutation(() => client.delete(`/participations/${participationId}`), {
+    onSuccess: () => {
+      navigate('/')
+    },
+  })
 
   const updateAllowed = isAllowed('update')
   const destroyAllowed = isAllowed('destroy')
@@ -83,7 +93,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               if (action === 'edit') {
                 setEditGeneral(true)
               } else if (action === 'delete') {
-                throw new Error('Not implemented!')
+                destroyMutation.mutate()
               }
             }}
           />

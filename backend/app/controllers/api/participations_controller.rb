@@ -2,7 +2,7 @@ module Api
   # :nodoc:
   class ParticipationsController < ApplicationController
     before_action :require_authenticated_user
-    before_action :set_participation, only: %i[show update update_reviewer update_status]
+    before_action :set_participation, only: %i[show update update_reviewer update_status destroy]
 
     def show
       authorize! @participation
@@ -56,6 +56,10 @@ module Api
       end
 
       render :show, status: :ok, location: api_participation_url(@participation)
+    end
+
+    def destroy
+      @participation.destroy
     end
 
     private
