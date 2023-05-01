@@ -6,6 +6,7 @@
     "approved": "Patvirtinta",
     "attachments": "Prisiegti failai",
     "backToTheMainWebsite": "Grįžti į pagrindinį puslapį",
+    "byName": "{{name}}",
     "cancel": "Atšaukti",
     "comment": "Komentaras",
     "commentsWithCount_few": "{{count}} komentarai",
@@ -51,6 +52,7 @@
     "tookPlace": "Įvyko {{date, datetime}}",
     "unknown": "Nežinoma",
     "update": "Atnaujinti",
+    "view": "Žiūrėti",
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Vyks {{date, datetime}}",
@@ -101,6 +103,12 @@
       "submissionHasNoDescription": "Be aprašymo",
       "submissionHasNoAttachments": "Be failų",
       "noComments": "Nėra komentarų"
+    },
+    "reviewedParticipations": {
+      "papersAssignedForReview": "Recenzavimo moksliniai straipsniai",
+      "youDontHaveAnyReviewsAssigned": "Jums nėra priskirtų mokslinių straipsnių",
+      "thesePapersAreAwaitingReview": "Šie moksliniai darbai laukia Jūsų peržiūros",
+      "previouslyReviewedPapers": "Anksčiau peržiūrėti darbai"
     }
   }
 }

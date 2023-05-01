@@ -6,6 +6,7 @@
     "approved": "Approved",
     "attachments": "Attachments",
     "backToTheMainWebsite": "Back to the main website",
+    "byName": "by {{name}}",
     "cancel": "Cancel",
     "comment": "Comment",
     "commentsWithCount_one": "{{count}} comment",
@@ -50,6 +51,7 @@
     "tookPlace": "Took place {{date, datetime}}",
     "unknown": "Unknown",
     "update": "Update",
+    "view": "View",
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Will take place {{date, datetime}}",
@@ -100,6 +102,12 @@
       "submissionHasNoDescription": "No description",
       "submissionHasNoAttachments": "No attachments",
       "noComments": "No comments"
+    },
+    "reviewedParticipations": {
+      "papersAssignedForReview": "Papers Assigned to You for Review",
+      "youDontHaveAnyReviewsAssigned": "You don't have any papers assigned to You for review",
+      "thesePapersAreAwaitingReview": "These papers are awaiting a review from You",
+      "previouslyReviewedPapers": "Previously Reviewed Papers"
     }
   }
 }

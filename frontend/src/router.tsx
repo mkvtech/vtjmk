@@ -19,6 +19,7 @@ import Participation from './pages/Participation/Participation'
 import ParticipationForm from './pages/ParticipationForm'
 import PermissionCreate from './pages/PermissionCreate'
 import Permissions from './pages/Permissions'
+import ReviewParticipations from './pages/ReviewedParticipations/ReviewedParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
 import UserParticipations from './pages/UserParticipations'
 
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
       { path: '/permissions/create', element: <PermissionCreate /> },
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
       { path: '/user/participations', element: <UserParticipations /> },
+      { path: '/user/reviewParticipations', element: <ReviewParticipations /> },
       { path: '*', element: <Page404 /> },
     ],
   },

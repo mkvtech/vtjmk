@@ -9,4 +9,8 @@ class UserPolicy < ApplicationPolicy
   def manage_events?
     Permission.exists?(user:, action: %i[read manage])
   end
+
+  def review_participations?
+    Participation.exists?(reviewer: user)
+  end
 end

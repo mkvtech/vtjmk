@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { AxiosInstance } from 'axios'
+import queryString from 'query-string'
 import { useQuery, UseQueryResult } from 'react-query'
 import { z } from 'zod'
 import { useApi } from '../useApi'
@@ -22,12 +23,11 @@ import {
   userSchema,
 } from './schemas'
 
-// TODO: Use URLSearchParams or https://github.com/sindresorhus/query-string
-// Check how this function works with `undefined`
-function addParams(params: Record<string, string>): string {
-  const searchParams = new URLSearchParams(params).toString()
-
-  return searchParams.length ? `?${searchParams}` : ''
+// function addParams<T extends queryString.StringifiableRecord>(params?: T): string {
+// function addParams<T>(params?: T): string {
+// function addParams<T extends Record<string, queryString.Stringifiable>>(params?: T): string {
+function addParams(params?: Parameters<typeof queryString.stringify>[0]): string {
+  return params ? `?${queryString.stringify(params)}` : ''
 }
 
 export function useQueryAttendances(params: {
@@ -169,13 +169,24 @@ export function useQueryUsers() {
   return useQuery(['users'], () => client.get('/users').then((response) => usersSchema.parse(response.data)))
 }
 
-export function fetchUserParticipations({ client }: { client: AxiosInstance }) {
-  return client.get('/user/participations').then((response) => userParticipationsSchema.parse(response.data))
+interface UserParticipationsParams {
+  reviewable?: boolean
+}
+export function fetchUserParticipations({
+  client,
+  params,
+}: {
+  client: AxiosInstance
+  params?: UserParticipationsParams
+}) {
+  return client
+    .get(`/user/participations${addParams(params)}`)
+    .then((response) => userParticipationsSchema.parse(response.data))
 }
 
-export function useQueryUserParticipations() {
+export function useQueryUserParticipations(params?: UserParticipationsParams) {
   const { client } = useApi()
-  return useQuery(['user', 'participations'], () => fetchUserParticipations({ client }))
+  return useQuery(['user', 'participations', params], () => fetchUserParticipations({ client, params }))
 }
 
 export function useQueryUserParticipation(params: {

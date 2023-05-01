@@ -5,7 +5,7 @@ class TestPolicies
   RESOURCE_NAME_TO_CONFIG_MAP = {
     user: {
       policy_class: UserPolicy,
-      general: %w[admin manage_events]
+      general: %w[admin manage_events review_participations]
     },
     events: {
       policy_class: EventPolicy,

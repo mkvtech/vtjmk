@@ -78,6 +78,13 @@ export const eventReviewerSchema = z.object({
 })
 export type EventReviewer = z.infer<typeof eventReviewerSchema>
 
+const userSchemaSimple = z.object({
+  id: z.string(),
+  email: z.string(),
+  fullName: z.string(),
+  avatarUrl: z.string(),
+})
+
 export const userSchema = z.object({
   id: z.string(),
   email: z.string(),
@@ -148,7 +155,25 @@ export const eventParticipationSchema = z.object({
 })
 export type EventParticipation = z.infer<typeof eventParticipationSchema>
 
-export const userParticipationSchema = eventParticipationSchema.merge(z.object({ event: eventSchema }))
+export const userParticipationSchema = z.object({
+  id: z.string(),
+
+  status: participationStatusSchema,
+  submissionTitle: z.string().nullable(),
+  submissionDescription: z.string().nullable(),
+
+  userId: z.string(),
+  user: userSchemaSimple,
+
+  reviewerId: z.string().nullable(),
+  reviewer: userSchemaSimple.nullable(),
+
+  eventId: z.string(),
+  event: eventSchema,
+
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
 export type UserParticipation = z.infer<typeof userParticipationSchema>
 
 export const userParticipationsSchema = z.array(userParticipationSchema)
