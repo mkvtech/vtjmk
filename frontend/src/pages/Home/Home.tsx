@@ -29,17 +29,6 @@ export default function Home(): JSX.Element {
             Conferences for Junior Researchers
           </Trans>
         </Typography>
-
-        <Typography component='p' sx={{ textAlign: 'center', mt: 12 }}>
-          <Trans i18nKey='common.pageUnderConstruction'>
-            🚧
-            <Box component='span' fontStyle='italic'>
-              This page is currently under construction...
-            </Box>
-          </Trans>
-        </Typography>
-
-        {/* TODO: Paragraphs: conferences, upcoming events, footage */}
       </Container>
     </>
   )
