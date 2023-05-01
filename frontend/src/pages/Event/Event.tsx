@@ -65,7 +65,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   const conferenceQuery = useQueryConference(eventQuery.data?.conferenceId)
   const participationsQuery = useQuery(
     ['events', eventId, 'participations'],
-    () => fetchEventsParticipations({ client, eventId }),
+    () => fetchEventsParticipations({ client, params: { eventId } }),
     {
       enabled: isAllowed('participationsIndex'),
       select: (data) => data.filter((participation) => participation.status === 'pending').length,

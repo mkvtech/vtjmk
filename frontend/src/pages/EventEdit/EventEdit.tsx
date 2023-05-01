@@ -6,6 +6,7 @@ import PageError from '../../components/PageError/PageError'
 import { useQueryEvent } from '../../hooks/api/queries'
 import Description from './tabs/Description'
 import General from './tabs/General'
+import Participants from './tabs/Participants'
 import Reviewers from './tabs/Reviewers'
 
 export default function EventEdit(): JSX.Element {
@@ -47,10 +48,19 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
               <Tab label='General' />
               <Tab label='Description' />
               <Tab label='Reviewers' />
+              <Tab label='Participants' />
             </Tabs>
           </Box>
 
-          {tabIndex === 0 ? <General /> : tabIndex === 1 ? <Description /> : tabIndex === 2 ? <Reviewers /> : null}
+          {tabIndex === 0 ? (
+            <General />
+          ) : tabIndex === 1 ? (
+            <Description />
+          ) : tabIndex === 2 ? (
+            <Reviewers />
+          ) : tabIndex === 3 ? (
+            <Participants />
+          ) : null}
         </>
       )}
     </Container>

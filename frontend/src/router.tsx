@@ -14,7 +14,6 @@ import EventEdit from './pages/EventEdit'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Page404 from './pages/Page404/Page404'
-import Participants from './pages/Participants'
 import Participation from './pages/Participation/Participation'
 import ParticipationForm from './pages/ParticipationForm'
 import PermissionCreate from './pages/PermissionCreate'
@@ -42,7 +41,6 @@ const router = createBrowserRouter([
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
       { path: '/events/:eventId/attendants', element: <Attendances /> },
       { path: '/events/:eventId/edit', element: <EventEdit /> },
-      { path: '/events/:eventId/participants', element: <Participants /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
       { path: '/home', element: <Home /> },
       { path: '/participations/:participationId', element: <Participation /> },

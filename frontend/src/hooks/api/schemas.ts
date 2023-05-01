@@ -147,6 +147,7 @@ export const participationAvailableReviewerSchema = z.object({
 export const eventParticipationSchema = z.object({
   id: z.string(),
   userId: z.string(),
+  user: userSchemaSimple,
   eventId: z.string(),
   status: participationStatusSchema,
   comment: z.string().optional(),

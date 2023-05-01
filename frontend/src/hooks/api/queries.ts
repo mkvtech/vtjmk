@@ -157,9 +157,20 @@ export function useQueryParticipationComments({ participationId }: { participati
   )
 }
 
-const eventsParticipationsResponseSchema = z.array(eventParticipationSchema.merge(z.object({ user: userSchema })))
-export async function fetchEventsParticipations({ client, eventId }: { client: AxiosInstance; eventId: string }) {
-  const response = await client.get(`/events/${eventId}/participations`)
+const eventsParticipationsResponseSchema = z.array(eventParticipationSchema)
+export async function fetchEventsParticipations({
+  client,
+  params,
+}: {
+  client: AxiosInstance
+  params: {
+    eventId: string
+    status?: 'pending' | 'approved' | 'rejected'
+    order?: 'createdAt' | 'status' | 'users.fullName'
+  }
+}) {
+  const queryParams = { status: params.status, order: params.order }
+  const response = await client.get(`/events/${params.eventId}/participations${addParams(queryParams)}`)
   return eventsParticipationsResponseSchema.parse(response.data)
 }
 
