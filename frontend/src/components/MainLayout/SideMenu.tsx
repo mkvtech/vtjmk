@@ -1,4 +1,13 @@
-import { AccountCircle, AdminPanelSettings, Create, Description, ExitToApp, Key, Monitor } from '@mui/icons-material'
+import {
+  AccountCircle,
+  AdminPanelSettings,
+  Create,
+  Description,
+  ExitToApp,
+  Key,
+  Monitor,
+  Visibility,
+} from '@mui/icons-material'
 import { Avatar, Box, Button, Drawer, List, Typography } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
@@ -48,14 +57,22 @@ const sideMenuStructure = [
     id: 'management',
     displayNameTranslationKey: 'components.mainLayout.sideMenuLabelManagement',
     icon: <Create />,
-    isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.manageEvents,
+    isVisible: (policies: SideMenuPolicies): boolean =>
+      policies.policies.user.general.manageEvents || policies.policies.user.general.reviewParticipations,
     items: [
       {
         id: 'events',
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelEvents',
         icon: <Create />,
-        isVisible: true,
+        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.manageEvents,
         path: '/',
+      },
+      {
+        id: 'reviewParticipations',
+        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelReviewParticipations',
+        icon: <Visibility />,
+        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewParticipations,
+        path: '/user/reviewParticipations',
       },
     ],
   },
@@ -104,7 +121,7 @@ export default function SideMenu({ open, session }: { open: boolean; session: Se
     params: {
       policies: {
         user: {
-          general: ['admin', 'manageEvents'],
+          general: ['admin', 'manageEvents', 'reviewParticipations'],
         },
       },
     },

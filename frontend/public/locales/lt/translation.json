@@ -64,17 +64,18 @@
       "appBarUpcomingConferencesTabLabel": "Artėjančios konferencijos",
       "appBarAboutTabLabel": "Apie",
 
-      "sideMenuLabelParticipations": "Dalyvavimai",
+      "sideMenuLabelAdministration": "Administravimas",
+      "sideMenuLabelCreateConference": "Sukūrti konferenciją",
       "sideMenuLabelDocuments": "Dokumentai",
       "sideMenuLabelEventCard": "Konferencijos kortelė",
-      "sideMenuLabelParticipationCertificate": "Dalyvavimo sertifikatas",
-      "sideMenuLabelProfile": "Profilis",
-      "sideMenuLabelManagement": "Management",
       "sideMenuLabelEvents": "Konferencijos",
-      "sideMenuLabelAdministration": "Administravimas",
-      "sideMenuLabelSystemStatus": "Sistemos statusas",
+      "sideMenuLabelManagement": "Management",
+      "sideMenuLabelParticipationCertificate": "Dalyvavimo sertifikatas",
+      "sideMenuLabelParticipations": "Dalyvavimai",
       "sideMenuLabelPermissions": "Leidimai",
-      "sideMenuLabelCreateConference": "Sukūrti konferenciją"
+      "sideMenuLabelProfile": "Profilis",
+      "sideMenuLabelReviewParticipations": "Recenzavimas",
+      "sideMenuLabelSystemStatus": "Sistemos statusas"
     }
   },
 

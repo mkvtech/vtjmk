@@ -63,17 +63,18 @@
       "appBarUpcomingConferencesTabLabel": "Upcoming Conferences",
       "appBarAboutTabLabel": "About",
 
-      "sideMenuLabelParticipations": "Participations",
+      "sideMenuLabelAdministration": "Administration",
+      "sideMenuLabelCreateConference": "Create Conference",
       "sideMenuLabelDocuments": "Documents",
       "sideMenuLabelEventCard": "Event Card",
-      "sideMenuLabelParticipationCertificate": "Participation Certificate",
-      "sideMenuLabelProfile": "Profile",
-      "sideMenuLabelManagement": "Management",
       "sideMenuLabelEvents": "Events",
-      "sideMenuLabelAdministration": "Administration",
-      "sideMenuLabelSystemStatus": "System Status",
+      "sideMenuLabelManagement": "Management",
+      "sideMenuLabelParticipationCertificate": "Participation Certificate",
+      "sideMenuLabelParticipations": "Participations",
       "sideMenuLabelPermissions": "Permissions",
-      "sideMenuLabelCreateConference": "Create Conference"
+      "sideMenuLabelProfile": "Profile",
+      "sideMenuLabelReviewParticipations": "Assigned papers",
+      "sideMenuLabelSystemStatus": "System Status"
     }
   },
 
