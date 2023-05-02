@@ -2,8 +2,6 @@ import { Outlet, createBrowserRouter } from 'react-router-dom'
 
 import MainLayout from './components/MainLayout'
 
-import AttendanceForm from './pages/AttendanceForm'
-import Attendances from './pages/Attendances'
 import Conference from './pages/Conference'
 import ConferenceEdit from './pages/ConferenceEdit'
 import ConferencesList from './pages/ConferencesList'
@@ -38,9 +36,7 @@ const router = createBrowserRouter([
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
       { path: '/conferences/:conferenceId/edit/*', element: <ConferenceEdit /> },
       { path: '/events/:eventId', element: <Event /> },
-      { path: '/events/:eventId/attend', element: <AttendanceForm /> },
-      { path: '/events/:eventId/attendants', element: <Attendances /> },
-      { path: '/events/:eventId/edit', element: <EventEdit /> },
+      { path: '/events/:eventId/edit/*', element: <EventEdit /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
       { path: '/home', element: <Home /> },
       { path: '/participations/:participationId', element: <Participation /> },

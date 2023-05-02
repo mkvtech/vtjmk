@@ -127,11 +127,11 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             <>
               <Divider />
 
-              <Box display='flex' justifyContent='space-between' sx={{ my: 2 }}>
+              <Box display='flex' justifyContent='flex-end' sx={{ my: 2 }}>
                 {isAllowed('participationsIndex') && (
                   <Box display='flex'>
-                    <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='primary'>
-                      <Button component={RouterLink} to={`/events/${eventId}/participants`}>
+                    <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='warning'>
+                      <Button component={RouterLink} to={`/events/${eventId}/edit/participants`} variant='outlined'>
                         {t('common.viewParticipants')}
                       </Button>
                     </Badge>
@@ -144,6 +144,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                     startIcon={<Edit />}
                     component={RouterLink}
                     to={`/events/${eventId}/edit`}
+                    sx={{ ml: 2 }}
                   >
                     {t('common.edit')}
                   </Button>

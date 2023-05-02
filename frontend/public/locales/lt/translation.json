@@ -78,6 +78,8 @@
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Vyks {{date, datetime}}",
+    "reviewers": "Recenzentai",
+    "participants": "Dalyviai",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 

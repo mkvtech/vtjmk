@@ -16,6 +16,8 @@
     "commentsWithCount_other": "{{count}} comments",
     "conferences": "Conferences",
     "contacts": "Contacts",
+    "reviewers": "Reviewers",
+    "participants": "Participants",
     "createdAt": "Created at",
     "createdAtDate": "Created at {{date, datetime}}",
     "createEvent": "Create New Event",
