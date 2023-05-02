@@ -105,7 +105,7 @@ export default function AppBarTabs(): JSX.Element {
           </AppBarTabLink>
         ))}
 
-        <Popper open={!!anchorElement} anchorEl={anchorElement} onMouseLeave={handleMenuClose}>
+        <Popper open={!!anchorElement} anchorEl={anchorElement} onMouseLeave={handleMenuClose} sx={{ zIndex: 2000 }}>
           <Paper>
             <MenuList>
               {tabMenu.map((item) => (
