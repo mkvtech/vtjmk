@@ -3,6 +3,8 @@ require 'libreconv'
 module Api
   # Generates documents and returns files
   class DocumentsController < ApplicationController
+    before_action :require_authenticated_user
+
     def generate_participation_certificate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       participation = Participation.where(user: current_user).find(params[:participation_id])
 

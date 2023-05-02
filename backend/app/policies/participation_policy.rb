@@ -11,7 +11,7 @@ class ParticipationPolicy < ApplicationPolicy
   end
 
   def comment?
-    participant? || manage_conference?
+    participant? || reviewer? || manage_conference?
   end
 
   def update?
@@ -19,7 +19,7 @@ class ParticipationPolicy < ApplicationPolicy
   end
 
   def update_status?
-    manage_conference?
+    reviewer? || manage_conference?
   end
 
   def update_reviewer?
@@ -34,6 +34,10 @@ class ParticipationPolicy < ApplicationPolicy
 
   def participant?
     record.user_id == user.id
+  end
+
+  def reviewer?
+    record.reviewer_id == user.id
   end
 
   def manage_conference?

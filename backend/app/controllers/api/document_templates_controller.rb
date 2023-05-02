@@ -2,7 +2,7 @@ module Api
   # :nodoc:
   class DocumentTemplatesController < ApplicationController
     before_action :require_authenticated_user
-    before_action :set_document_template, only: %i[show update destroy]
+    before_action :set_document_template, only: %i[show destroy]
 
     def show
       authorize! @document_template
@@ -19,18 +19,6 @@ module Api
 
       if @document_template.save
         render :show, status: :created, location: api_document_template_url(@document_template)
-      else
-        render json: @document_template.errors, status: :unprocessable_entity
-      end
-    end
-
-    def update
-      authorize! @document_template
-
-      document_template_params = params.permit(:name, :document_type, :placeholder_prefix, :placeholder_postfix)
-
-      if @document_template.update(document_template_params)
-        render :show, status: :ok, location: api_document_template_url(@document_template)
       else
         render json: @document_template.errors, status: :unprocessable_entity
       end

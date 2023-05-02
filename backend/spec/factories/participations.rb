@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :participation do
-    status { 1 }
+    status { 'pending' }
     user { nil }
     event { nil }
   end

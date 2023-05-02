@@ -42,7 +42,7 @@ RSpec.describe '/api/document_templates' do
     end
   end
 
-  describe 'POST' do
+  describe 'POST /' do
     subject(:make_request) { post('/api/document_templates', params:, headers:) }
 
     let(:headers) { auth_headers_for(user) }
@@ -101,6 +101,42 @@ RSpec.describe '/api/document_templates' do
           'placeholderPostfix' => '',
           'conferenceId' => conference.id.to_s
         )
+      end
+    end
+  end
+
+  describe 'DELETE /:id' do
+    subject(:make_request) { delete("/api/document_templates/#{document_template.id}", headers:) }
+
+    let(:headers) { auth_headers_for(user) }
+    let(:user) { create(:user) }
+    let(:conference) { create(:conference) }
+    let!(:document_template) { create(:document_template, conference:) }
+
+    context 'when not authenticated' do
+      let(:headers) { {} }
+
+      it 'returns unauthorized' do
+        expect { make_request }.not_to change(DocumentTemplate, :count)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'without permission' do
+      it 'returns error' do
+        expect { make_request }.not_to change(DocumentTemplate, :count)
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'with permission' do
+      before do
+        create(:permission, user:, target: conference, action: :manage)
+      end
+
+      it 'deletes document_template' do
+        expect { make_request }.to change(DocumentTemplate, :count).by(-1)
+        expect(response).to have_http_status(:success)
       end
     end
   end

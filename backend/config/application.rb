@@ -18,8 +18,6 @@ require 'action_cable/engine'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative '../app/middleware/slow_down'
-
 module Vtjmkais
   # :nodoc:
   class Application < Rails::Application
@@ -50,9 +48,6 @@ module Vtjmkais
                           exclude_params: excluded_routes,
                           exclude_response: excluded_routes,
                           content_type_check: ->(_content_type) { true }
-
-    # Slow down responses for debug purpose
-    config.middleware.use Middleware::SlowDown, lag_range: 0.5..1 if ENV['ENABLE_LAG']
 
     config.i18n.available_locales = %i[en lt]
   end

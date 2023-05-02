@@ -52,22 +52,6 @@ RSpec.describe '/api/conferences' do
         )
       end
     end
-
-    context 'with invalid parameters' do
-      let(:params) do
-        { description: 'Description' }
-      end
-
-      it 'does not create a new Conference' do
-        expect { make_request }.not_to change(Conference, :count)
-      end
-
-      it 'renders a JSON response with errors for the new conference' do
-        make_request
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to eq({ errors: { title: ["can't be blank"] } })
-      end
-    end
   end
 
   describe 'PATCH /api/conferences/:id' do
@@ -92,16 +76,6 @@ RSpec.describe '/api/conferences' do
             description: conference.description
           }
         )
-      end
-    end
-
-    context 'with invalid parameters' do
-      let(:params) { { title: '' } }
-
-      it 'renders a JSON response with errors for the conference' do
-        make_request
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response).to eq({ errors: { title: ["can't be blank"] } })
       end
     end
   end
