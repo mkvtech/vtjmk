@@ -145,8 +145,8 @@ export default function Login(): JSX.Element {
               </Link>
             </li>
             <li>
-              <Link onClick={(): void => handleFillForm({ email: 'karolis.corkery@example.com@example.com' })}>
-                Reviewer, karolis.corkery@example.com@example.com
+              <Link onClick={(): void => handleFillForm({ email: 'karolis.corkery@example.com' })}>
+                Reviewer, karolis.corkery@example.com
               </Link>
             </li>
             <li>
