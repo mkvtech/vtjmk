@@ -1,7 +1,6 @@
 import { Box, Container, Skeleton, Tab, Tabs, Typography } from '@mui/material'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, Route, Link as RouterLink, Routes, useMatch, useParams } from 'react-router-dom'
 import Link from '../../components/Link/Link'
 import PageError from '../../components/PageError/PageError'
 import { useQueryConference } from '../../hooks/api/queries'
@@ -18,7 +17,8 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   const { t } = useTranslation()
   const conferenceQuery = useQueryConference(conferenceId)
 
-  const [tabIndex, setTabIndex] = useState(0)
+  const match = useMatch('/conferences/:id/edit/:tab')
+  const currentTab = match?.params.tab || 'general'
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
@@ -45,19 +45,23 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
           </Typography>
 
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={tabIndex}
-              onChange={(event, newTabIndex): void => setTabIndex(newTabIndex)}
-              aria-label='event tabs'
-            >
-              <Tab label={t('common.general')} />
-              <Tab label={t('common.description')} />
-              <Tab label={t('common.documentTemplates')} />
-              <Tab label={t('common.events')} />
+            <Tabs value={currentTab} aria-label='tabs'>
+              <Tab label={t('common.general')} value='general' to='general' component={RouterLink} />
+              <Tab label={t('common.description')} value='description' to='description' component={RouterLink} />
+              <Tab
+                label={t('common.documentTemplates')}
+                value='documentTemplates'
+                to='documentTemplates'
+                component={RouterLink}
+              />
+              <Tab label={t('common.events')} value='events' to='events' component={RouterLink} />
             </Tabs>
           </Box>
 
-          {tabIndex === 0 ? <General /> : tabIndex === 1 ? <Description /> : null}
+          <Routes>
+            <Route path='general' element={<General />} />
+            <Route path='description' element={<Description />} />
+          </Routes>
         </>
       )}
     </Container>

@@ -67,7 +67,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
                   variant='contained'
                   startIcon={<Edit />}
                   component={RouterLink}
-                  to={`/conferences/${conferenceId}/edit`}
+                  to={`/conferences/${conferenceId}/edit/general`}
                 >
                   {t('common.edit')}
                 </Button>

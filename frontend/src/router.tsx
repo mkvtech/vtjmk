@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       { path: '/conferences/:conferenceId', element: <Conference /> },
       { path: '/conferences/:conferenceId/documentTemplates', element: <DocumentTemplates /> },
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
-      { path: '/conferences/:conferenceId/edit', element: <ConferenceEdit /> },
+      { path: '/conferences/:conferenceId/edit/*', element: <ConferenceEdit /> },
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
       { path: '/events/:eventId/attendants', element: <Attendances /> },
