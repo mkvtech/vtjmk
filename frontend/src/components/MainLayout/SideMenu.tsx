@@ -1,13 +1,4 @@
-import {
-  AccountCircle,
-  AdminPanelSettings,
-  Create,
-  Description,
-  ExitToApp,
-  Key,
-  Monitor,
-  Visibility,
-} from '@mui/icons-material'
+import { AdminPanelSettings, Create, Description, ExitToApp, Key, Visibility } from '@mui/icons-material'
 import { Avatar, Box, Button, Drawer, List, Typography } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
@@ -31,13 +22,6 @@ const sideMenuStructure = [
     isVisible: true,
     items: [
       {
-        id: 'eventCard',
-        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelEventCard',
-        icon: <Create />,
-        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.manageEvents,
-        path: '/',
-      },
-      {
         id: 'participationCertificate',
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelParticipationCertificate',
         icon: <Create />,
@@ -47,26 +31,12 @@ const sideMenuStructure = [
     ],
   },
   {
-    id: 'profile',
-    displayNameTranslationKey: 'components.mainLayout.sideMenuLabelProfile',
-    icon: <AccountCircle />,
-    isVisible: true,
-    path: '/',
-  },
-  {
     id: 'management',
     displayNameTranslationKey: 'components.mainLayout.sideMenuLabelManagement',
     icon: <Create />,
     isVisible: (policies: SideMenuPolicies): boolean =>
       policies.policies.user.general.manageEvents || policies.policies.user.general.reviewParticipations,
     items: [
-      {
-        id: 'events',
-        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelEvents',
-        icon: <Create />,
-        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.manageEvents,
-        path: '/',
-      },
       {
         id: 'reviewParticipations',
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelReviewParticipations',
@@ -83,25 +53,11 @@ const sideMenuStructure = [
     isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.admin,
     items: [
       {
-        id: 'systemStatus',
-        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelSystemStatus',
-        icon: <Monitor />,
-        isVisible: true,
-        path: '/',
-      },
-      {
         id: 'permissions',
         displayNameTranslationKey: 'components.mainLayout.sideMenuLabelPermissions',
         icon: <Key />,
         isVisible: true,
         path: '/permissions',
-      },
-      {
-        id: 'createConference',
-        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelCreateConference',
-        icon: <Create />,
-        isVisible: true,
-        path: '/conferences/new',
       },
     ],
   },
