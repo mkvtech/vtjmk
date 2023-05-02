@@ -11,10 +11,7 @@ module Api
     def create
       event = Event.find(params[:event_id])
       authorize! event, to: :participate, with: EventPolicy
-      @participation = Participation.new(
-        status: 'pending', user: current_user,
-        **params.permit(:event_id, :submission_title, :submission_description, submission_files: [])
-      )
+      @participation = create_participation
 
       if @participation.save
         render :show, status: :created, location: api_participation_url(@participation)
@@ -66,6 +63,13 @@ module Api
 
     def set_participation
       @participation = Participation.find(params[:id])
+    end
+
+    def create_participation
+      Participation.new(
+        status: 'pending', user: current_user,
+        **params.permit(:event_id, :submission_title, :submission_description, submission_files: [])
+      )
     end
   end
 end
