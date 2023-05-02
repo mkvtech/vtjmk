@@ -5,6 +5,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link/Link'
 import PageError from '../../components/PageError/PageError'
 import { useQueryConference } from '../../hooks/api/queries'
+import Description from './tabs/Description/Description'
 import General from './tabs/General/General'
 
 export default function ConferenceEdit(): JSX.Element {
@@ -56,7 +57,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
             </Tabs>
           </Box>
 
-          {tabIndex === 0 ? <General /> : null}
+          {tabIndex === 0 ? <General /> : tabIndex === 1 ? <Description /> : null}
         </>
       )}
     </Container>

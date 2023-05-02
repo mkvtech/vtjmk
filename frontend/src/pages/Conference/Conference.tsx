@@ -3,10 +3,10 @@ import { Box, Button, Container, Divider, List, ListItem, Typography } from '@mu
 import { useTranslation } from 'react-i18next'
 import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
 import { z } from 'zod'
+import LexicalView from '../../components/Lexical/LexicalView'
 import Link from '../../components/Link'
-import { useQueryPolicies } from '../../hooks/api/queries'
+import { useQueryConference, useQueryPolicies } from '../../hooks/api/queries'
 import { useIsAllowed } from '../../hooks/api/share'
-import useQueryConference from '../../hooks/api/useQueryConference'
 import useQueryEvents from '../../hooks/api/useQueryEvents'
 
 const policiesSchema = z.object({
@@ -77,7 +77,9 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
 
           <Divider />
 
-          <Typography>{conferenceQuery.data.descrption}</Typography>
+          <Box sx={{ my: 2 }}>
+            <LexicalView initialEditorState={conferenceQuery.data.description} />
+          </Box>
 
           {isAllowed('documentTemplatesIndex') && (
             <Link href={`/conferences/${conferenceId}/documentTemplates`}>{t('common.documentTemplates')}</Link>
