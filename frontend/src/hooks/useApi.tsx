@@ -161,6 +161,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
 
           // Update locale-dependant queries
           queryClient.removeQueries(['events'])
+          queryClient.removeQueries(['conferences'])
         },
 
         apiServerUrl: API_SERVER_URL,
