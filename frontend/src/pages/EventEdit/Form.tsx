@@ -21,14 +21,10 @@ import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
+import { eventStatusToI18nKeyMap } from '../../components/EventStatusChip/EventStatusChip'
 import { Event } from '../../hooks/api/schemas'
 import { ApiResponseError, useApi } from '../../hooks/useApi'
 import { belongsToArray } from '../../utils'
-
-const eventStatusToSelectedTextMap = {
-  open: 'Open',
-  hidden: 'Hidden',
-}
 
 interface IFormInput {
   title: string
@@ -243,7 +239,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                     fullWidth
                     size='small'
                     required
-                    renderValue={(selected): string => eventStatusToSelectedTextMap[selected]}
+                    renderValue={(selected): string => t(eventStatusToI18nKeyMap[selected])}
                   >
                     <MenuItem value='open'>
                       <ListItemIcon>

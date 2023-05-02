@@ -4,13 +4,15 @@ module Api
     before_action :set_event, only: %i[show update]
 
     def index # rubocop:disable Metrics/AbcSize
-      @events = Event.order(:date)
+      @events = Event.order(:date).where(status: :open)
       @events = @events.where(conference_id: params[:conference_id]) if params[:conference_id].present?
       @events = @events.where(date: params[:from]..) if params[:from].present?
       @events = @events.where(date: ..params[:to]) if params[:to].present?
     end
 
-    def show; end
+    def show
+      render status: :not_found unless allowed_to? :show?, @event
+    end
 
     def update
       event_params = params.permit(

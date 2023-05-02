@@ -7,6 +7,7 @@ import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useQuery } from 'react-query'
+import EventStatusChip from '../../components/EventStatusChip/EventStatusChip'
 import LexicalView from '../../components/Lexical/LexicalView'
 import Link from '../../components/Link'
 import PageError from '../../components/PageError'
@@ -127,7 +128,11 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             <>
               <Divider />
 
-              <Box display='flex' justifyContent='flex-end' sx={{ my: 2 }}>
+              <Box sx={{ my: 2, display: 'flex', alignContent: 'center' }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  <EventStatusChip status={eventQuery.data.status} />
+                </Box>
+
                 {isAllowed('participationsIndex') && (
                   <Box display='flex'>
                     <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='warning'>

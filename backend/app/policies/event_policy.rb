@@ -19,6 +19,10 @@ class EventPolicy < ApplicationPolicy
     manage?
   end
 
+  def show?
+    record.open? || manage?
+  end
+
   def update?
     manage?
   end
