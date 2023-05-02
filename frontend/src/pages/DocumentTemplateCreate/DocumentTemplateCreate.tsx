@@ -12,7 +12,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import dayjs from 'dayjs'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
@@ -33,6 +35,7 @@ interface FormValues {
 }
 
 function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const { client } = useApi()
@@ -48,6 +51,9 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   const watchPlaceholderPrefix = watch('placeholderPrefix')
   const watchPlaceholderPostfix = watch('placeholderPostfix')
   const watchDocx = watch('docx')
+
+  const wrapPlaceholder = (placeholder: string): string =>
+    `${watchPlaceholderPrefix}${placeholder}${watchPlaceholderPostfix}`
 
   const createDocumentTemplateMutation = useMutation((data: FormValues) => {
     if (!data.docx) {
@@ -76,11 +82,11 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography>
-        <Link href={`/conferences/${conferenceId}/documentTemplates`}>Back to document templates</Link>
+        <Link href={`/conferences/${conferenceId}/edit/documentTemplates`}>Back to document templates</Link>
       </Typography>
 
       <Typography variant='h1' sx={{ mb: 2 }}>
-        Create new Document Template
+        {t('common.addNewDocumentTemplate')}
       </Typography>
 
       <Divider />
@@ -88,7 +94,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container maxWidth='md' sx={{ mb: 4 }}>
           <Typography variant='h2' sx={{ mt: 4 }}>
-            General
+            {t('common.general')}
           </Typography>
 
           <Grid container spacing={2} sx={{ mt: 1 }}>
@@ -97,21 +103,21 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
                 name='name'
                 control={control}
                 render={({ field }): JSX.Element => (
-                  <TextField {...field} label='Name' type='text' fullWidth required size='small' />
+                  <TextField {...field} label={t('common.name')} type='text' fullWidth required size='small' />
                 )}
               />
             </Grid>
 
             <Grid item xs={6}>
               <FormControl fullWidth size='small'>
-                <InputLabel id='document-type-label'>Type</InputLabel>
+                <InputLabel id='document-type-label'>{t('common.type')}</InputLabel>
                 <Controller
                   name='documentType'
                   control={control}
                   render={({ field }): JSX.Element => (
                     <Select {...field} labelId='document-type-label' label='Type' fullWidth size='small' required>
-                      <MenuItem value='participationCertificate'>Participation Certificate</MenuItem>
-                      <MenuItem value='eventCard'>Event Card</MenuItem>
+                      <MenuItem value='participationCertificate'>{t('common.participationCertificate')}</MenuItem>
+                      <MenuItem value='eventCard'>{t('common.eventCard')}</MenuItem>
                     </Select>
                   )}
                 />
@@ -120,7 +126,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
           </Grid>
 
           <Typography variant='h2' sx={{ mt: 4 }}>
-            Placeholder format
+            {t('pages.documentTemplateCreate.placeholderFormat')}
           </Typography>
 
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 2 }}>
@@ -128,7 +134,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
               name='placeholderPrefix'
               control={control}
               render={({ field }): JSX.Element => (
-                <TextField {...field} sx={{ width: '100px' }} label='Prefix' type='text' size='small' />
+                <TextField {...field} sx={{ width: '120px' }} label={t('common.prefix')} type='text' size='small' />
               )}
             />
 
@@ -138,33 +144,40 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
               name='placeholderPostfix'
               control={control}
               render={({ field }): JSX.Element => (
-                <TextField {...field} sx={{ width: '100px' }} label='Postfix' type='text' size='small' />
+                <TextField {...field} sx={{ width: '120px' }} label={t('common.postfix')} type='text' size='small' />
               )}
             />
           </Box>
 
           <Grid container spacing={2} sx={{ mt: 4 }}>
             <Grid item xs={6}>
-              <Typography variant='h3'>Example Template</Typography>
+              <Typography variant='h3'>{t('pages.documentTemplateCreate.exampleTemplate')}</Typography>
               <Typography sx={{ mt: 1 }}>
-                Document generated at {watchPlaceholderPrefix}DATE{watchPlaceholderPostfix} for {watchPlaceholderPrefix}
-                USER_FULLNAME{watchPlaceholderPostfix}
+                {t('pages.documentTemplateCreate.documentTemplateExampleContent', {
+                  date: wrapPlaceholder('DATE'),
+                  userFullName: wrapPlaceholder('USER_FULLNAME'),
+                })}
               </Typography>
             </Grid>
 
             <Grid item xs={6}>
-              <Typography variant='h3'>Example Generated Document</Typography>
-              <Typography sx={{ mt: 1 }}>Document generated at 2023-04-04 for John Doe</Typography>
+              <Typography variant='h3'>{t('pages.documentTemplateCreate.exampleGeneratedDocument')}</Typography>
+              <Typography sx={{ mt: 1 }}>
+                {t('pages.documentTemplateCreate.documentTemplateExampleContent', {
+                  date: dayjs().format('LL'),
+                  userFullName: 'John Doe',
+                })}
+              </Typography>
             </Grid>
           </Grid>
 
           <Typography variant='h2' sx={{ mt: 4 }}>
-            File
+            {t('common.file')}
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
             <Button variant='contained' component='label'>
-              Upload
+              {t('common.upload')}
               <input {...register('docx')} hidden type='file' />
             </Button>
 
@@ -178,7 +191,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
 
         <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 4 }}>
           <LoadingButton variant='contained' type='submit' loading={createDocumentTemplateMutation.isLoading}>
-            Create
+            {t('common.add')}
           </LoadingButton>
         </Box>
       </form>

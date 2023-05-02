@@ -3,6 +3,8 @@
 
   "common": {
     "about": "Apie",
+    "add": "Pridėti",
+    "addNewDocumentTemplate": "Pridėti naują dokumentų šabloną",
     "approved": "Patvirtinta",
     "attachments": "Prisiegti failai",
     "back": "Atgal",
@@ -25,22 +27,28 @@
     "edit": "Redaguoti",
     "editingSomethingQuoted": "Redaguoti „{{something}}“",
     "email": "El. paštas",
+    "eventCard": "Konferencijos kortėlė",
     "events": "Įvykiai",
+    "file": "Failas",
     "fullName": "Vardas ir pavardė",
     "general": "Bendra informacija",
     "github": "GitHub",
     "lastUpdate": "Paskutinis pakeitimas",
     "login": "Prisijungti",
     "logout": "Atsijungti",
+    "name": "Pavadinimas",
     "noReviewerAssigned": "Recenzentas nepriskirtas",
     "options": "Veiksmai",
     "pageUnderConstruction": "🚧<1>Šis puslapis dar nėra baigtas...</1>",
     "participant": "Dalyvis",
     "participate": "Dalyvauti",
+    "participationCertificate": "Dalyvavimo sertifikatas",
     "participationRequest": "Dalyvavimo prašymas",
     "participationRequestStatus": "Dalyvavimo prašymo statusas",
     "password": "Slaptažodis",
     "pending": "Laukiama",
+    "postfix": "Postfiksas",
+    "prefix": "Prefiksas",
     "profile": "Profilis",
     "registrationIsFromDateToDate": "Registracija vyksta nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
     "registrationWasFromDateToDate": "Registracija vyko nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
@@ -56,8 +64,10 @@
     "theDataWasNotUpdated": "Duomenys nebuvo atnaujinti",
     "title": "Pavadinimas",
     "tookPlace": "Įvyko {{date, datetime}}",
+    "type": "Tipas",
     "unknown": "Nežinoma",
     "update": "Atnaujinti",
+    "upload": "Įkelti",
     "view": "Žiūrėti",
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
@@ -115,6 +125,12 @@
       "youDontHaveAnyReviewsAssigned": "Jums nėra priskirtų mokslinių straipsnių",
       "thesePapersAreAwaitingReview": "Šie moksliniai darbai laukia Jūsų peržiūros",
       "previouslyReviewedPapers": "Anksčiau peržiūrėti darbai"
+    },
+    "documentTemplateCreate": {
+      "exampleTemplate": "Šablono pavyzdis",
+      "exampleGeneratedDocument": "Sugeneruoto dokumento pavyzdis",
+      "placeholderFormat": "Raktinių žodžių formatas",
+      "documentTemplateExampleContent": "Šis dokumentas buvo sugeneruotas {{date}} vartotojui {{userFullName}}"
     }
   }
 }

@@ -56,7 +56,9 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
         <Typography component='p'>We are loading conference...</Typography>
       ) : (
         <div>
-          <Typography variant='h1'>{conferenceQuery.data.title}</Typography>
+          <Typography variant='h1' sx={{ my: 4 }}>
+            {conferenceQuery.data.title}
+          </Typography>
 
           {isAllowed('update') && (
             <>
@@ -81,11 +83,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
             <LexicalView initialEditorState={conferenceQuery.data.description} />
           </Box>
 
-          {isAllowed('documentTemplatesIndex') && (
-            <Link href={`/conferences/${conferenceId}/documentTemplates`}>{t('common.documentTemplates')}</Link>
-          )}
-
-          <Typography variant='h2'>{t('common.events')}</Typography>
+          <Typography variant='h1'>{t('common.events')}</Typography>
 
           {eventsQuery.isError ? (
             <Typography component='p'>Cannot load conference events</Typography>

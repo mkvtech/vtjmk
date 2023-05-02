@@ -3,6 +3,8 @@
 
   "common": {
     "about": "About",
+    "add": "Add",
+    "addNewDocumentTemplate": "Add Document Template",
     "approved": "Approved",
     "attachments": "Attachments",
     "back": "Back",
@@ -24,22 +26,28 @@
     "edit": "Edit",
     "editingSomethingQuoted": "Editing \"{{something}}\"",
     "email": "Email",
+    "eventCard": "Conference Card",
     "events": "Events",
+    "file": "File",
     "fullName": "Full Name",
     "general": "General",
     "github": "GitHub",
     "lastUpdate": "Last Update",
     "login": "Login",
     "logout": "Logout",
+    "name": "Name",
     "noReviewerAssigned": "No reviewer assigned",
     "options": "Options",
     "pageUnderConstruction": "🚧<1>This page is currently under construction...</1>",
     "participant": "Participant",
     "participate": "Participate",
+    "participationCertificate": "Participation Certificate",
     "participationRequest": "Participation Request",
     "participationRequestStatus": "Participation request status",
     "password": "Password",
     "pending": "Pending",
+    "postfix": "Postfix",
+    "prefix": "Prefix",
     "profile": "Profile",
     "registrationIsFromDateToDate": "Registration started from {{fromDate, datetime}} and ends in {{toDate, datetime}}",
     "registrationWasFromDateToDate": "Registration started from {{fromDate, datetime}} and ended in {{toDate, datetime}}",
@@ -55,8 +63,10 @@
     "theDataWasNotUpdated": "The data was not updated",
     "title": "Title",
     "tookPlace": "Took place {{date, datetime}}",
+    "type": "Type",
     "unknown": "Unknown",
     "update": "Update",
+    "upload": "Upload",
     "view": "View",
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
@@ -114,6 +124,12 @@
       "youDontHaveAnyReviewsAssigned": "You don't have any papers assigned to You for review",
       "thesePapersAreAwaitingReview": "These papers are awaiting a review from You",
       "previouslyReviewedPapers": "Previously Reviewed Papers"
+    },
+    "documentTemplateCreate": {
+      "exampleTemplate": "Example Template",
+      "exampleGeneratedDocument": "Generated Document",
+      "placeholderFormat": "Placeholder Format",
+      "documentTemplateExampleContent": "This document was generated at {{date}} for {{userFullName}}"
     }
   }
 }

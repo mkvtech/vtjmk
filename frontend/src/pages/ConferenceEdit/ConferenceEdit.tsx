@@ -5,6 +5,7 @@ import Link from '../../components/Link/Link'
 import PageError from '../../components/PageError/PageError'
 import { useQueryConference } from '../../hooks/api/queries'
 import Description from './tabs/Description/Description'
+import DocumentTemplates from './tabs/DocumentTemplates'
 import General from './tabs/General/General'
 
 export default function ConferenceEdit(): JSX.Element {
@@ -61,6 +62,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
           <Routes>
             <Route path='general' element={<General />} />
             <Route path='description' element={<Description />} />
+            <Route path='documentTemplates' element={<DocumentTemplates />} />
           </Routes>
         </>
       )}

@@ -9,7 +9,6 @@ import ConferenceEdit from './pages/ConferenceEdit'
 import ConferencesList from './pages/ConferencesList'
 import CreateAccount from './pages/CreateAccount'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
-import DocumentTemplates from './pages/DocumentTemplates'
 import Event from './pages/Event'
 import EventEdit from './pages/EventEdit'
 import Home from './pages/Home'
@@ -36,7 +35,6 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/conferences', element: <ConferencesList /> },
       { path: '/conferences/:conferenceId', element: <Conference /> },
-      { path: '/conferences/:conferenceId/documentTemplates', element: <DocumentTemplates /> },
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
       { path: '/conferences/:conferenceId/edit/*', element: <ConferenceEdit /> },
       { path: '/events/:eventId', element: <Event /> },
