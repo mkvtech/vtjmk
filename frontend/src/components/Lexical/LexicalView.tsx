@@ -3,6 +3,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { HeadingNode } from '@lexical/rich-text'
+import UpdatePlugin from './plugins/Update'
 import { lexicalGlobalStyles, lexicalTheme } from './theme'
 
 const editorConfig = {
@@ -15,7 +16,6 @@ const editorConfig = {
 
 // This component renders saved Lexical JSON state. Internally, it is a read-only editor, however visually it appears as rendered HTML.
 export default function LexicalView({ initialEditorState }: { initialEditorState?: string | null }): JSX.Element {
-  // Note: This is only an initial state. Lexical will not update itself 'reactively', you have to use editorState.update() with React.useRef() instead
   return (
     <>
       {lexicalGlobalStyles}
@@ -27,6 +27,8 @@ export default function LexicalView({ initialEditorState }: { initialEditorState
               placeholder={null}
               ErrorBoundary={LexicalErrorBoundary}
             />
+
+            <UpdatePlugin editorState={initialEditorState} />
           </div>
         </div>
       </LexicalComposer>
