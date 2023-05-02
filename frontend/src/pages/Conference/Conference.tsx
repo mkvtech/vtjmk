@@ -5,9 +5,8 @@ import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import LexicalView from '../../components/Lexical/LexicalView'
 import Link from '../../components/Link'
-import { useQueryConference, useQueryPolicies } from '../../hooks/api/queries'
+import { useQueryConference, useQueryEvents, useQueryPolicies } from '../../hooks/api/queries'
 import { useIsAllowed } from '../../hooks/api/share'
-import useQueryEvents from '../../hooks/api/useQueryEvents'
 
 const policiesSchema = z.object({
   policies: z.object({
@@ -46,7 +45,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   const isAllowed = useIsAllowed(policiesQuery, 'conferences', conferenceId)
 
   const conferenceQuery = useQueryConference(conferenceId)
-  const eventsQuery = useQueryEvents(conferenceId)
+  const eventsQuery = useQueryEvents({ conferenceId })
 
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
