@@ -459,7 +459,7 @@ Participation.import!(
     { id: 105, status: :approved, user_id: 56, event_id:  5, reviewer_id: nil },
     { id: 106, status: :approved, user_id: 57, event_id:  4, reviewer_id:  11 },
     { id: 107, status: :approved, user_id: 57, event_id:  7, reviewer_id:  17 },
-    { id: 108, status: :approved, user_id: 57, event_id:  3, reviewer_id:   9 },
+    { id: 108, status: :approved, user_id: 57, event_id:  3, reviewer_id:   9 }
   ]
 )
 
