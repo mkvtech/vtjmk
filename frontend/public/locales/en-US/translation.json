@@ -55,9 +55,9 @@
     "prefix": "Prefix",
     "profile": "Profile",
     "registration": "Registration",
-    "registrationIsFromDateToDate": "Registration started from {{fromDate, datetime}} and ends in {{toDate, datetime}}",
-    "registrationWasFromDateToDate": "Registration started from {{fromDate, datetime}} and ended in {{toDate, datetime}}",
-    "registrationWillFromDateToDate": "Registration starts from {{fromDate, datetime}} and ends in {{toDate, datetime}}",
+    "registrationIsFromDateToDate": "Registration started from {{fromDate, datetime(dateStyle: long)}} and ends in {{toDate, datetime(dateStyle: long)}}",
+    "registrationWasFromDateToDate": "Registration started from {{fromDate, datetime(dateStyle: long)}} and ended in {{toDate, datetime(dateStyle: long)}}",
+    "registrationWillFromDateToDate": "Registration starts from {{fromDate, datetime(dateStyle: long)}} and ends in {{toDate, datetime(dateStyle: long)}}",
     "rejected": "Rejected",
     "reviewer": "Reviewer",
     "send": "Send",
@@ -70,7 +70,7 @@
     "theDataWasNotUpdated": "The data was not updated",
     "title": "Title",
     "to": "To",
-    "tookPlace": "Took place {{date, datetime}}",
+    "tookPlace": "Took place {{date, datetime(dateStyle: long)}}",
     "type": "Type",
     "unknown": "Unknown",
     "update": "Update",
@@ -78,7 +78,7 @@
     "view": "View",
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
-    "willTakePlace": "Will take place {{date, datetime}}",
+    "willTakePlace": "Will take place {{date, datetime(dateStyle: long)}}",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 
@@ -141,7 +141,8 @@
     },
     "conferenceEdit": {
       "eventsTab": {
-        "copyDescriptionFromConference": "Copy description"
+        "copyTitleFromConference": "Copy title from conference",
+        "copyDescriptionFromConference": "Copy description from conference"
       }
     }
   }

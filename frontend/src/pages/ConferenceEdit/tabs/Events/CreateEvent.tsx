@@ -11,6 +11,7 @@ import { useApi } from '../../../../hooks/useApi'
 
 interface IFormInput {
   title: string
+  copyTitle: boolean
   copyDescription: boolean
   date: Dayjs
   registrationFrom: Dayjs
@@ -20,7 +21,8 @@ interface IFormInput {
 interface CreateEventMutationInput {
   conferenceId: string
   title: string
-  description: string
+  copyTitleFromConference: boolean
+  copyDescriptionFromConference: boolean
   date: string
   registrationFrom: string
   registrationTo: string
@@ -59,7 +61,8 @@ export default function CreateEvent({
       {
         conferenceId: conference.id,
         title: data.title,
-        description: data.copyDescription ? conference.description : '',
+        copyTitleFromConference: data.copyTitle,
+        copyDescriptionFromConference: data.copyDescription,
         date: data.date.toISOString(),
         registrationFrom: data.registrationFrom.toISOString(),
         registrationTo: data.registrationTo.toISOString(),
@@ -94,6 +97,11 @@ export default function CreateEvent({
 
         <FormControlLabel
           sx={{ mt: 2 }}
+          control={<Checkbox {...register('copyTitle')} defaultChecked={true} />}
+          label={t('pages.conferenceEdit.eventsTab.copyTitleFromConference')}
+        />
+
+        <FormControlLabel
           control={<Checkbox {...register('copyDescription')} defaultChecked={true} />}
           label={t('pages.conferenceEdit.eventsTab.copyDescriptionFromConference')}
         />

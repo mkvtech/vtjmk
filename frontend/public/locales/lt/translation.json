@@ -54,9 +54,9 @@
     "prefix": "Prefiksas",
     "profile": "Profilis",
     "registration": "Registracija",
-    "registrationIsFromDateToDate": "Registracija vyksta nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
-    "registrationWasFromDateToDate": "Registracija vyko nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
-    "registrationWillFromDateToDate": "Registracija vyks nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
+    "registrationIsFromDateToDate": "Registracija vyksta nuo {{fromDate, datetime(dateStyle: long)}} iki {{toDate, datetime(dateStyle: long)}}",
+    "registrationWasFromDateToDate": "Registracija vyko nuo {{fromDate, datetime(dateStyle: long)}} iki {{toDate, datetime(dateStyle: long)}}",
+    "registrationWillFromDateToDate": "Registracija vyks nuo {{fromDate, datetime(dateStyle: long)}} iki {{toDate, datetime(dateStyle: long)}}",
     "rejected": "Atšaukta",
     "reviewer": "Recenzentas",
     "send": "Siųsti",
@@ -69,7 +69,7 @@
     "theDataWasNotUpdated": "Duomenys nebuvo atnaujinti",
     "title": "Pavadinimas",
     "to": "Iki",
-    "tookPlace": "Įvyko {{date, datetime}}",
+    "tookPlace": "Įvyko {{date, datetime(dateStyle: long)}}",
     "type": "Tipas",
     "unknown": "Nežinoma",
     "update": "Atnaujinti",
@@ -77,7 +77,7 @@
     "view": "Žiūrėti",
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
-    "willTakePlace": "Vyks {{date, datetime}}",
+    "willTakePlace": "Vyks {{date, datetime(dateStyle: long)}}",
     "reviewers": "Recenzentai",
     "participants": "Dalyviai",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
@@ -142,7 +142,8 @@
     },
     "conferenceEdit": {
       "eventsTab": {
-        "copyDescriptionFromConference": "Kopijuoti aprašymą"
+        "copyTitleFromConference": "Nukopijuoti pavadinimą iš konferencijos",
+        "copyDescriptionFromConference": "Nukopijuoti aprašymą iš konferencijos"
       }
     }
   }

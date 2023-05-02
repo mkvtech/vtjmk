@@ -65,7 +65,7 @@ Mobility.configure do
     # fallbacks
     #
     # Or uncomment this line to enable fallbacks with a global default.
-    # fallbacks { :pt => :en }
+    fallbacks({ lt: :en, en: :lt })
 
     # Presence
     #
