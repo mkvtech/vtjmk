@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom'
 import LocaleSwitch from '../../components/LocaleSwitch'
-import { ApiResponseError, post } from '../../hooks/api/types'
-import { useApi } from '../../hooks/useApi'
+import { ApiResponseError, useApi } from '../../hooks/useApi'
 
 export default function Login(): JSX.Element {
   const { t } = useTranslation()
@@ -19,9 +18,7 @@ export default function Login(): JSX.Element {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const loginMutation = useMutation((data: { email: string; password: string }) => {
-    return post(client, '/login', data)
-  })
+  const loginMutation = useMutation((data: { email: string; password: string }) => client.post('/login', data))
 
   const onSubmit = (event: SyntheticEvent): void => {
     event.preventDefault()
@@ -85,7 +82,7 @@ export default function Login(): JSX.Element {
                   ? 'Network error'
                   : loginMutation.error instanceof ApiResponseError
                   ? loginMutation.error.errors.map((error) => error.fullMessage).join(' ')
-                  : null}
+                  : 'Unexpected Error'}
               </Alert>
             ) : null}
 

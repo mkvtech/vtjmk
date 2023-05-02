@@ -16,7 +16,7 @@ module Api
       user = ::User.find_by(email: params[:email])
 
       if user.nil? || !user.authenticate(params[:password])
-        error = { type: 'invalid_email_or_password', fullMessage: 'Invalid email or password' }
+        error = { type: 'invalid_email_or_password', fullMessage: t('invalid_email_or_password') }
         return render json: { errors: [error] }, status: :unprocessable_entity
       end
 

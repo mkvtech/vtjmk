@@ -32,6 +32,8 @@
 en:
   hello: "Hello world"
 
+  invalid_email_or_password: 'Invalid email or password'
+
   activerecord:
     attributes:
       event:

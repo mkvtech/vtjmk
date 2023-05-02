@@ -1,12 +1,17 @@
 import { ArrowBack } from '@mui/icons-material'
 import { Box, Button, Divider, Link, Paper, TextField, Typography, useTheme } from '@mui/material'
-import { SyntheticEvent, useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
-import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
+import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom'
 import LocaleSwitch from '../../components/LocaleSwitch'
-import { ApiResponseError, post } from '../../hooks/api/types'
-import { useApi } from '../../hooks/useApi'
+import { ApiResponseError, useApi } from '../../hooks/useApi'
+
+interface IFormInput {
+  fullName: string
+  email: string
+  password: string
+}
 
 export default function CreateAccount(): JSX.Element {
   const { t } = useTranslation()
@@ -14,52 +19,38 @@ export default function CreateAccount(): JSX.Element {
   const navigate = useNavigate()
   const { client, setSession, isAuthenticated } = useApi()
 
-  const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [fullNameError, setFullNameError] = useState('')
-
-  const signupMutation = useMutation((data: { email: string; password: string; fullName: string }) => {
-    return post(client, '/signup', data)
+  const { handleSubmit, control, setError } = useForm<IFormInput>({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+    },
   })
 
-  const handleSubmit = (event: SyntheticEvent): void => {
-    event.preventDefault()
-    signupMutation.mutate(
-      { email, password, fullName },
-      {
-        onSuccess: (response) => {
-          // TODO: Validate with zod
+  const signupMutation = useMutation((data: { email: string; password: string; fullName: string }) =>
+    client.post('/signup', data)
+  )
 
-          setSession({ jwt: response.data.jwt, currentUser: response.data.user })
-          navigate('/')
-        },
-        onError: (error) => {
-          if (error instanceof ApiResponseError) {
-            const emailErrors = error.errors.filter((error) => error.path === 'email').map((error) => error.message)
-            if (emailErrors.length) {
-              setEmailError(`Email ${emailErrors.join(', ')}`)
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    signupMutation.mutate(data, {
+      onSuccess: (response) => {
+        // TODO: Validate with zod
+
+        setSession({ jwt: response.data.jwt, currentUser: response.data.user })
+        navigate('/')
+      },
+      onError: (error) => {
+        if (error instanceof ApiResponseError) {
+          error.errors.forEach(({ path, message }) => {
+            if (path !== 'email' && path !== 'fullName' && path !== 'password') {
+              return
             }
 
-            const passwordErrors = error.errors
-              .filter((error) => error.path === 'password')
-              .map((error) => error.message)
-            if (passwordErrors.length) {
-              setPasswordError(`Password ${passwordErrors.join(', ')}`)
-            }
-
-            const fullNameErrors = error.errors
-              .filter((error) => error.path === 'fullName')
-              .map((error) => error.message)
-            if (fullNameErrors.length) {
-              setFullNameError(`Full Name ${fullNameErrors.join(', ')}`)
-            }
-          }
-        },
-      }
-    )
+            setError(path, { type: 'custom', message })
+          })
+        }
+      },
+    })
   }
 
   if (isAuthenticated) {
@@ -94,43 +85,58 @@ export default function CreateAccount(): JSX.Element {
           <Divider />
 
           <Box sx={{ px: 4, pb: 4, pt: 2 }}>
-            <form onSubmit={handleSubmit}>
-              <Box>
-                <TextField
-                  label={t('common.fullName')}
-                  type='text'
-                  required
-                  fullWidth
-                  margin='normal'
-                  onChange={(event): void => setFullName(event.currentTarget.value)}
-                  error={fullNameError.length > 0}
-                  helperText={fullNameError}
-                />
-              </Box>
-              <Box>
-                <TextField
-                  label={t('common.email')}
-                  type='email'
-                  required
-                  fullWidth
-                  margin='normal'
-                  onChange={(event): void => setEmail(event.currentTarget.value)}
-                  error={emailError.length > 0}
-                  helperText={emailError}
-                />
-              </Box>
-              <Box>
-                <TextField
-                  label={t('common.password')}
-                  type='password'
-                  required
-                  fullWidth
-                  margin='normal'
-                  onChange={(event): void => setPassword(event.currentTarget.value)}
-                  error={passwordError.length > 0}
-                  helperText={passwordError}
-                />
-              </Box>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Controller
+                name='fullName'
+                control={control}
+                render={({ field, fieldState: { error } }): JSX.Element => (
+                  <TextField
+                    {...field}
+                    label={t('common.fullName')}
+                    type='text'
+                    required
+                    fullWidth
+                    margin='normal'
+                    error={!!error}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name='email'
+                control={control}
+                render={({ field, fieldState: { error } }): JSX.Element => (
+                  <TextField
+                    {...field}
+                    label={t('common.email')}
+                    type='email'
+                    required
+                    fullWidth
+                    margin='normal'
+                    error={!!error}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+
+              <Controller
+                name='password'
+                control={control}
+                render={({ field, fieldState: { error } }): JSX.Element => (
+                  <TextField
+                    {...field}
+                    label={t('common.password')}
+                    type='password'
+                    required
+                    fullWidth
+                    margin='normal'
+                    error={!!error}
+                    helperText={error?.message}
+                  />
+                )}
+              />
+
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }} margin='normal'>
                 <Button component={RouterLink} to='/login' variant='text'>
                   {t('pages.createAccount.buttonLabelLoginWithExistingAccount')}
