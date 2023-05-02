@@ -3,7 +3,7 @@ class ParticipationPolicy < ApplicationPolicy
   pre_check :require_user, :allow_admin
 
   def show?
-    participant? || manage_conference?
+    participant? || reviewer? || manage_conference?
   end
 
   def generate_certificate?
