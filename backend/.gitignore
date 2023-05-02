@@ -34,3 +34,6 @@
 # Ignore LetterAvatars cache files
 /public/system/letter_avatars/*
 !/public/system/letter_avatars/.keep
+
+# SimpleCov, code coverage
+coverage
