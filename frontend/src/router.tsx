@@ -5,6 +5,7 @@ import MainLayout from './components/MainLayout'
 import AttendanceForm from './pages/AttendanceForm'
 import Attendances from './pages/Attendances'
 import Conference from './pages/Conference'
+import ConferenceEdit from './pages/ConferenceEdit'
 import ConferencesList from './pages/ConferencesList'
 import CreateAccount from './pages/CreateAccount'
 import DocumentTemplateCreate from './pages/DocumentTemplateCreate'
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: '/conferences/:conferenceId', element: <Conference /> },
       { path: '/conferences/:conferenceId/documentTemplates', element: <DocumentTemplates /> },
       { path: '/conferences/:conferenceId/documentTemplates/create', element: <DocumentTemplateCreate /> },
+      { path: '/conferences/:conferenceId/edit', element: <ConferenceEdit /> },
       { path: '/events/:eventId', element: <Event /> },
       { path: '/events/:eventId/attend', element: <AttendanceForm /> },
       { path: '/events/:eventId/attendants', element: <Attendances /> },

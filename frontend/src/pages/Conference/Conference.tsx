@@ -1,6 +1,7 @@
-import { Container, List, ListItem, Typography } from '@mui/material'
-import { Navigate, useParams } from 'react-router-dom'
+import { Edit } from '@mui/icons-material'
+import { Box, Button, Container, Divider, List, ListItem, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import Link from '../../components/Link'
 import { useQueryPolicies } from '../../hooks/api/queries'
@@ -14,6 +15,7 @@ const policiesSchema = z.object({
       items: z.record(
         z.object({
           documentTemplatesIndex: z.boolean(),
+          update: z.boolean(),
         })
       ),
     }),
@@ -34,7 +36,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
       policies: {
         conferences: {
           items: {
-            [conferenceId]: ['documentTemplatesIndex'],
+            [conferenceId]: ['update', 'documentTemplatesIndex'],
           },
         },
       },
@@ -55,6 +57,25 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
       ) : (
         <div>
           <Typography variant='h1'>{conferenceQuery.data.title}</Typography>
+
+          {isAllowed('update') && (
+            <>
+              <Divider />
+
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
+                <Button
+                  variant='contained'
+                  startIcon={<Edit />}
+                  component={RouterLink}
+                  to={`/conferences/${conferenceId}/edit`}
+                >
+                  {t('common.edit')}
+                </Button>
+              </Box>
+            </>
+          )}
+
+          <Divider />
 
           <Typography>{conferenceQuery.data.descrption}</Typography>
 

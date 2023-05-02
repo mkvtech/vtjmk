@@ -15,7 +15,7 @@ class TestPolicies
     conferences: {
       policy_class: ConferencePolicy,
       resource_class: Conference,
-      items: %w[document_templates_index]
+      items: %w[document_templates_index update]
     },
     participations: {
       policy_class: ParticipationPolicy,
