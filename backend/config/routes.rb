@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :conferences do
       scope module: :conferences do
         resources :document_templates, only: %i[index]
+        resources :events, only: %i[create]
       end
     end
 

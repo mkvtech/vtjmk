@@ -4,9 +4,10 @@ import { Navigate, Route, Link as RouterLink, Routes, useMatch, useParams } from
 import Link from '../../components/Link/Link'
 import PageError from '../../components/PageError/PageError'
 import { useQueryConference } from '../../hooks/api/queries'
-import Description from './tabs/Description/Description'
+import Description from './tabs/Description'
 import DocumentTemplates from './tabs/DocumentTemplates'
-import General from './tabs/General/General'
+import Events from './tabs/Events'
+import General from './tabs/General'
 
 export default function ConferenceEdit(): JSX.Element {
   const { conferenceId } = useParams()
@@ -63,6 +64,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
             <Route path='general' element={<General />} />
             <Route path='description' element={<Description />} />
             <Route path='documentTemplates' element={<DocumentTemplates />} />
+            <Route path='events' element={<Events />} />
           </Routes>
         </>
       )}

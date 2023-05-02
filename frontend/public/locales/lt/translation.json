@@ -19,6 +19,7 @@
     "contacts": "Kontaktai",
     "createdAt": "Sukurta",
     "createdAtDate": "Sukurta {{date, datetime}}",
+    "createEvent": "Sukūrti naują įvykį",
     "dataWasUpdated": "Duomenys buvo atnaujinti",
     "date": "Data",
     "delete": "Panaikinti",
@@ -30,6 +31,7 @@
     "eventCard": "Konferencijos kortėlė",
     "events": "Įvykiai",
     "file": "Failas",
+    "from": "Nuo",
     "fullName": "Vardas ir pavardė",
     "general": "Bendra informacija",
     "github": "GitHub",
@@ -41,6 +43,7 @@
     "options": "Veiksmai",
     "pageUnderConstruction": "🚧<1>Šis puslapis dar nėra baigtas...</1>",
     "participant": "Dalyvis",
+    "participantRegistration": "Dalyvių registracija",
     "participate": "Dalyvauti",
     "participationCertificate": "Dalyvavimo sertifikatas",
     "participationRequest": "Dalyvavimo prašymas",
@@ -50,6 +53,7 @@
     "postfix": "Postfiksas",
     "prefix": "Prefiksas",
     "profile": "Profilis",
+    "registration": "Registracija",
     "registrationIsFromDateToDate": "Registracija vyksta nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
     "registrationWasFromDateToDate": "Registracija vyko nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
     "registrationWillFromDateToDate": "Registracija vyks nuo {{fromDate, datetime}} iki {{toDate, datetime}}",
@@ -61,8 +65,10 @@
     "status": "Būsena",
     "submissionDescription": "Aprašymas",
     "submissionTitle": "Pavadinimas",
+    "submit": "Siųsti",
     "theDataWasNotUpdated": "Duomenys nebuvo atnaujinti",
     "title": "Pavadinimas",
+    "to": "Iki",
     "tookPlace": "Įvyko {{date, datetime}}",
     "type": "Tipas",
     "unknown": "Nežinoma",
@@ -131,6 +137,11 @@
       "exampleGeneratedDocument": "Sugeneruoto dokumento pavyzdis",
       "placeholderFormat": "Raktinių žodžių formatas",
       "documentTemplateExampleContent": "Šis dokumentas buvo sugeneruotas {{date}} vartotojui {{userFullName}}"
+    },
+    "conferenceEdit": {
+      "eventsTab": {
+        "copyDescriptionFromConference": "Kopijuoti aprašymą"
+      }
     }
   }
 }

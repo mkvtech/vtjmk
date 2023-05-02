@@ -18,6 +18,7 @@
     "contacts": "Contacts",
     "createdAt": "Created at",
     "createdAtDate": "Created at {{date, datetime}}",
+    "createEvent": "Create New Event",
     "dataWasUpdated": "Data updated successfully",
     "date": "Date",
     "delete": "Delete",
@@ -29,6 +30,7 @@
     "eventCard": "Conference Card",
     "events": "Events",
     "file": "File",
+    "from": "From",
     "fullName": "Full Name",
     "general": "General",
     "github": "GitHub",
@@ -40,6 +42,7 @@
     "options": "Options",
     "pageUnderConstruction": "🚧<1>This page is currently under construction...</1>",
     "participant": "Participant",
+    "participantRegistration": "Participant Registration",
     "participate": "Participate",
     "participationCertificate": "Participation Certificate",
     "participationRequest": "Participation Request",
@@ -49,6 +52,7 @@
     "postfix": "Postfix",
     "prefix": "Prefix",
     "profile": "Profile",
+    "registration": "Registration",
     "registrationIsFromDateToDate": "Registration started from {{fromDate, datetime}} and ends in {{toDate, datetime}}",
     "registrationWasFromDateToDate": "Registration started from {{fromDate, datetime}} and ended in {{toDate, datetime}}",
     "registrationWillFromDateToDate": "Registration starts from {{fromDate, datetime}} and ends in {{toDate, datetime}}",
@@ -60,8 +64,10 @@
     "status": "Status",
     "submissionDescription": "Submission Description",
     "submissionTitle": "Submission Title",
+    "submit": "Submit",
     "theDataWasNotUpdated": "The data was not updated",
     "title": "Title",
+    "to": "To",
     "tookPlace": "Took place {{date, datetime}}",
     "type": "Type",
     "unknown": "Unknown",
@@ -130,6 +136,11 @@
       "exampleGeneratedDocument": "Generated Document",
       "placeholderFormat": "Placeholder Format",
       "documentTemplateExampleContent": "This document was generated at {{date}} for {{userFullName}}"
+    },
+    "conferenceEdit": {
+      "eventsTab": {
+        "copyDescriptionFromConference": "Copy description"
+      }
     }
   }
 }
