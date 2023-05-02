@@ -1,9 +1,11 @@
-import { Box, Button, Container, Divider, Paper, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, Paper, Skeleton, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { Navigate, Link as RouterLink } from 'react-router-dom'
 import Link from '../../components/Link'
+import PageError from '../../components/PageError/PageError'
 import ParticipationStatusChip from '../../components/ParticipationStatusChip'
+import NoDataText from '../../components/Typography/NoDataText'
 import { useQueryUserParticipations } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
 
@@ -22,52 +24,60 @@ export default function UserParticipations(): JSX.Element {
         Participated Conferences
       </Typography>
 
-      {userParticipationsQuery.isLoading
-        ? 'Loading'
-        : userParticipationsQuery.isSuccess
-        ? userParticipationsQuery.data.map((participation) => (
-            <Paper key={participation.id} sx={{ mt: 2 }}>
-              <Box sx={{ p: 2 }}>
-                <Typography variant='h2'>{participation.event.title}</Typography>
+      {userParticipationsQuery.isLoading ? (
+        <>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </>
+      ) : userParticipationsQuery.isSuccess && userParticipationsQuery.data.length ? (
+        userParticipationsQuery.data.map((participation) => (
+          <Paper key={participation.id} sx={{ mt: 2 }}>
+            <Box sx={{ p: 2 }}>
+              <Typography variant='h2'>{participation.event.title}</Typography>
 
-                <Typography>
-                  {dayjs(participation.event.date).isBefore(dayjs())
-                    ? `Conference took place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`
-                    : `Conference will take place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`}
-                </Typography>
+              <Typography>
+                {dayjs(participation.event.date).isBefore(dayjs())
+                  ? `Conference took place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`
+                  : `Conference will take place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`}
+              </Typography>
 
-                <Typography>
-                  <Link href={`/events/${participation.eventId}`}>Event page</Link>
-                </Typography>
+              <Typography>
+                <Link href={`/events/${participation.eventId}`}>Event page</Link>
+              </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box sx={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
+              <Box>
+                <Button
+                  component={RouterLink}
+                  to={`/user/documents/participationCertificate?participationId=${participation.id}`}
+                >
+                  Get Certificate
+                </Button>
+                <Button component={RouterLink} to={`/participations/${participation.id}`}>
+                  View
+                </Button>
               </Box>
-
-              <Divider />
-
-              <Box sx={{ p: 1, display: 'flex', justifyContent: 'space-between' }}>
-                <Box>
-                  <Button
-                    component={RouterLink}
-                    to={`/user/documents/participationCertificate?participationId=${participation.id}`}
-                  >
-                    Get Certificate
-                  </Button>
-                  <Button component={RouterLink} to={`/participations/${participation.id}`}>
-                    View
-                  </Button>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography>
-                    <Typography component='span' color='textSecondary'>
-                      {t('common.createdAtDate', { date: participation.createdAt })}
-                      {/* {Intl.DateTimeFormat(i18n.language).format(participation.createdAt)} */}
-                    </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography>
+                  <Typography component='span' color='textSecondary'>
+                    {t('common.createdAtDate', { date: participation.createdAt })}
+                    {/* {Intl.DateTimeFormat(i18n.language).format(participation.createdAt)} */}
                   </Typography>
-                  <ParticipationStatusChip status={participation.status} sx={{ ml: 2 }} />
-                </Box>
+                </Typography>
+                <ParticipationStatusChip status={participation.status} sx={{ ml: 2 }} />
               </Box>
-            </Paper>
-          ))
-        : 'Error'}
+            </Box>
+          </Paper>
+        ))
+      ) : userParticipationsQuery.isSuccess ? (
+        <NoDataText sx={{ mt: 4 }}>{t('common.noData')}</NoDataText>
+      ) : (
+        <PageError error={userParticipationsQuery.error} />
+      )}
     </Container>
   )
 }

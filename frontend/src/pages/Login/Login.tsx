@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios'
 import { SyntheticEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
-import { Navigate, useNavigate, Link as RouterLink } from 'react-router-dom'
+import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom'
 import LocaleSwitch from '../../components/LocaleSwitch'
 import { ApiResponseError, post } from '../../hooks/api/types'
 import { useApi } from '../../hooks/useApi'
@@ -145,6 +145,11 @@ export default function Login(): JSX.Element {
             <li>
               <Link onClick={(): void => handleFillForm({ email: 'agne.reynolds@example.com' })}>
                 Event Manager, agne.reynolds@example.com
+              </Link>
+            </li>
+            <li>
+              <Link onClick={(): void => handleFillForm({ email: 'karolis.corkery@example.com@example.com' })}>
+                Reviewer, karolis.corkery@example.com@example.com
               </Link>
             </li>
             <li>
