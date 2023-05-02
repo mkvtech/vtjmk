@@ -37,7 +37,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
       ) : (
         <>
           <Typography>
-            <Link href={`/events/${eventId}`}>Back to event page</Link>
+            <Link href={`/events/${eventId}`}>{t('common.backToEventPage')}</Link>
           </Typography>
 
           <Typography variant='h1' sx={{ mb: 2 }}>

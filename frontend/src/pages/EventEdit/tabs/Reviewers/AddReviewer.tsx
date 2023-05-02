@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab'
 import { Autocomplete, Box, TextField, Typography, createFilterOptions } from '@mui/material'
 import { SyntheticEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { useQueryEventUsersAvailableAsReviewers } from '../../../../hooks/api/queries'
@@ -14,6 +15,7 @@ interface User {
 
 export default function AddReviewer(): JSX.Element {
   const { eventId } = useParams() as { eventId: string }
+  const { t } = useTranslation()
   const { client } = useApi()
   const queryClient = useQueryClient()
 
@@ -48,7 +50,7 @@ export default function AddReviewer(): JSX.Element {
 
   return (
     <form onSubmit={onSubmit}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
         <Autocomplete
           getOptionLabel={(options): string => options.fullName}
           filterOptions={createFilterOptions({ matchFrom: 'any', limit: 20 })}
@@ -79,7 +81,7 @@ export default function AddReviewer(): JSX.Element {
           loading={addReviewerMutation.isLoading}
           disabled={!value}
         >
-          Add
+          {t('common.add')}
         </LoadingButton>
       </Box>
     </form>

@@ -21,6 +21,17 @@
     "createdAtDate": "Sukurta {{date, datetime}}",
     "createEvent": "Sukūrti naują įvykį",
     "dataWasUpdated": "Duomenys buvo atnaujinti",
+    "backToEventPage": "Atgal į konferencijos puslapį",
+    "participantsLimit": "Dalyvių limitas",
+    "administration": "Administravimas",
+    "open": "Atidaryta",
+    "hidden": "Paslėpta",
+    "participantsRegistration": "Dalyvių registracija",
+    "save": "Saugoti",
+    "addReviewer": "Pridėti recenzentą",
+    "all": "Visi",
+    "noData": "Nėra duomenų",
+    "sort": "Rūšiuoti",
     "date": "Data",
     "delete": "Panaikinti",
     "description": "Aprašymas",
@@ -144,6 +155,15 @@
       "eventsTab": {
         "copyTitleFromConference": "Nukopijuoti pavadinimą iš konferencijos",
         "copyDescriptionFromConference": "Nukopijuoti aprašymą iš konferencijos"
+      }
+    },
+    "eventEdit": {
+      "generalTab": {
+        "eventIsVisibleForAllUsers": "Konferencija yra visiems vartotojams",
+        "eventIsVisibleOnlyForConferenceManagement": "Konferencija yra matoma tik organizatoriams"
+      },
+      "descriptionTab": {
+        "descriptionWasUpdatedSuccessfully": "Aprašymas buvo išsaugotas"
       }
     }
   }

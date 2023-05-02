@@ -79,6 +79,16 @@
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
     "willTakePlace": "Will take place {{date, datetime(dateStyle: long)}}",
+    "backToEventPage": "Back to event page",
+    "participantsLimit": "Participants Limit",
+    "administration": "Administration",
+    "open": "Open",
+    "hidden": "Hidden",
+    "participantsRegistration": "Participants Registration",
+    "addReviewer": "Add a Reviewer",
+    "all": "All",
+    "noData": "No data",
+    "sort": "Sort",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 
@@ -143,6 +153,15 @@
       "eventsTab": {
         "copyTitleFromConference": "Copy title from conference",
         "copyDescriptionFromConference": "Copy description from conference"
+      }
+    },
+    "eventEdit": {
+      "generalTab": {
+        "eventIsVisibleForAllUsers": "Event is visible for all users",
+        "eventIsVisibleOnlyForConferenceManagement": "Event is visible only for conference management"
+      },
+      "descriptionTab": {
+        "descriptionWasUpdatedSuccessfully": "Description was updated successfully"
       }
     }
   }

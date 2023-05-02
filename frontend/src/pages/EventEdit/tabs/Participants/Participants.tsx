@@ -1,5 +1,6 @@
 import { Box, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Skeleton } from '@mui/material'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import PageError from '../../../../components/PageError/PageError'
@@ -12,6 +13,7 @@ type SortOrder = 'createdAt' | 'status' | 'users.fullName'
 type StatusFilterInput = 'all' | 'pending' | 'approved' | 'rejected'
 
 export default function Participants(): JSX.Element {
+  const { t } = useTranslation()
   const { eventId } = useParams() as { eventId: string }
   const { client } = useApi()
 
@@ -50,26 +52,31 @@ export default function Participants(): JSX.Element {
     <Container maxWidth='lg' sx={{ mt: 4, mb: 8 }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <FormControl size='small' sx={{ minWidth: 120 }}>
-          <InputLabel id='participants-filter-label'>Status</InputLabel>
+          <InputLabel id='participants-filter-label'>{t('common.status')}</InputLabel>
           <Select
             labelId='participants-filter-label'
-            label='Filter'
+            label={t('common.status')}
             value={statusFilter}
             onChange={handleFilterSelectChange}
           >
-            <MenuItem value='all'>All</MenuItem>
-            <MenuItem value='approved'>Approved</MenuItem>
-            <MenuItem value='rejected'>Rejected</MenuItem>
-            <MenuItem value='pending'>Pending</MenuItem>
+            <MenuItem value='all'>{t('common.all')}</MenuItem>
+            <MenuItem value='approved'>{t('common.approved')}</MenuItem>
+            <MenuItem value='rejected'>{t('common.rejected')}</MenuItem>
+            <MenuItem value='pending'>{t('common.pending')}</MenuItem>
           </Select>
         </FormControl>
 
         <FormControl size='small' sx={{ minWidth: 150, ml: 2 }}>
-          <InputLabel id='participants-sort-label'>Sort</InputLabel>
-          <Select labelId='participants-sort-label' label='Sort' value={order} onChange={handleOrderSelectChange}>
-            <MenuItem value='createdAt'>Date</MenuItem>
-            <MenuItem value='users.fullName'>Full Name</MenuItem>
-            <MenuItem value='status'>Status</MenuItem>
+          <InputLabel id='participants-sort-label'>{t('common.sort')}</InputLabel>
+          <Select
+            labelId='participants-sort-label'
+            label={t('common.sort')}
+            value={order}
+            onChange={handleOrderSelectChange}
+          >
+            <MenuItem value='createdAt'>{t('common.date')}</MenuItem>
+            <MenuItem value='users.fullName'>{t('common.fullName')}</MenuItem>
+            <MenuItem value='status'>{t('common.status')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -88,7 +95,7 @@ export default function Participants(): JSX.Element {
         </>
       ) : participationsQuery.isSuccess ? (
         <>
-          <NoDataText>No Data</NoDataText>
+          <NoDataText>{t('common.noData')}</NoDataText>
         </>
       ) : (
         <PageError error={participationsQuery.error} />

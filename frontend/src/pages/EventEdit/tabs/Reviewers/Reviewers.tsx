@@ -1,4 +1,5 @@
 import { Container, Skeleton, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import PageError from '../../../../components/PageError/PageError'
 import { useQueryEventReviewers } from '../../../../hooks/api/queries'
@@ -7,18 +8,19 @@ import ReviewersListItem from './ReviewersListItem'
 
 export default function Reviewers(): JSX.Element {
   const { eventId } = useParams() as { eventId: string }
+  const { t } = useTranslation()
   const reviewersQuery = useQueryEventReviewers({ eventId })
 
   return (
     <Container maxWidth='lg' sx={{ mt: 4, mb: 8 }}>
       <Typography variant='h2' sx={{ mt: 4 }}>
-        Add a Reviewer
+        {t('common.addReviewer')}
       </Typography>
 
       <AddReviewer />
 
       <Typography variant='h2' sx={{ mt: 4 }}>
-        Reviewers
+        {t('common.reviewers')}
       </Typography>
 
       {reviewersQuery.isLoading ? (

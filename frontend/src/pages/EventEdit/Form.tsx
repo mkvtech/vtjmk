@@ -19,6 +19,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs, { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { Event } from '../../hooks/api/schemas'
 import { ApiResponseError, useApi } from '../../hooks/useApi'
@@ -50,6 +51,7 @@ interface UpdateEventMutationInput {
 const fieldNames = ['title', 'participantsLimit', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
 
 export default function Form({ event }: { event: Event }): JSX.Element {
+  const { t } = useTranslation()
   const [alertErrorMessages, setAlertErrorMessages] = useState<readonly string[]>([])
 
   const { client } = useApi()
@@ -115,12 +117,12 @@ export default function Form({ event }: { event: Event }): JSX.Element {
 
         {updateEventMutation.isSuccess && (
           <Box sx={{ my: 2 }}>
-            <Alert severity='success'>Event was successfully updated</Alert>
+            <Alert severity='success'>{t('common.dataWasUpdated')}</Alert>
           </Box>
         )}
 
         <Typography variant='h2' sx={{ mt: 4 }}>
-          General
+          {t('common.general')}
         </Typography>
 
         <Grid container spacing={2} sx={{ mt: 1 }}>
@@ -129,7 +131,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
               name='title'
               control={control}
               render={({ field }): JSX.Element => (
-                <TextField {...field} label='Title' type='text' fullWidth required size='small' />
+                <TextField {...field} label={t('common.title')} type='text' fullWidth required size='small' />
               )}
             />
           </Grid>
@@ -146,7 +148,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                   onChange={(event): void => field.onChange(+event.target.value)}
                   value={field.value || ''}
                   size='small'
-                  label='Participants Limit'
+                  label={t('common.participantsLimit')}
                   type='number'
                   fullWidth
                 />
@@ -162,7 +164,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                 <>
                   <DatePicker
                     {...field}
-                    label='Date'
+                    label={t('common.date')}
                     slotProps={{
                       textField: {
                         size: 'small',
@@ -177,7 +179,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
         </Grid>
 
         <Typography variant='h2' sx={{ mt: 4 }}>
-          Registration
+          {t('common.participantsRegistration')}
         </Typography>
 
         <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
@@ -188,7 +190,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
               render={({ field }): JSX.Element => (
                 <DatePicker
                   {...field}
-                  label='From'
+                  label={t('common.from')}
                   slotProps={{
                     textField: {
                       size: 'small',
@@ -207,7 +209,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
               render={({ field, fieldState: { error } }): JSX.Element => (
                 <DatePicker
                   {...field}
-                  label='To'
+                  label={t('common.to')}
                   slotProps={{
                     textField: {
                       size: 'small',
@@ -223,13 +225,13 @@ export default function Form({ event }: { event: Event }): JSX.Element {
         </Grid>
 
         <Typography variant='h2' sx={{ mt: 4 }}>
-          Administration
+          {t('common.administration')}
         </Typography>
 
         <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
           <Grid item xs={6}>
             <FormControl sx={{ minWidth: 120 }} fullWidth size='small'>
-              <InputLabel id='participants-filter-label'>Status</InputLabel>
+              <InputLabel id='participants-filter-label'>{t('common.status')}</InputLabel>
               <Controller
                 name='status'
                 control={control}
@@ -237,7 +239,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                   <Select
                     {...field}
                     labelId='participants-filter-label'
-                    label='Status'
+                    label={t('common.status')}
                     fullWidth
                     size='small'
                     required
@@ -247,13 +249,19 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                       <ListItemIcon>
                         <Visibility />
                       </ListItemIcon>
-                      <ListItemText primary='Open' secondary='Event is visible for all users' />
+                      <ListItemText
+                        primary={t('common.open')}
+                        secondary={t('pages.eventEdit.generalTab.eventIsVisibleForAllUsers')}
+                      />
                     </MenuItem>
                     <MenuItem value='hidden'>
                       <ListItemIcon>
                         <VisibilityOff />
                       </ListItemIcon>
-                      <ListItemText primary='Hidden' secondary='Event is visible only for conference management' />
+                      <ListItemText
+                        primary={t('common.hidden')}
+                        secondary={t('pages.eventEdit.generalTab.eventIsVisibleOnlyForConferenceManagement')}
+                      />
                     </MenuItem>
                   </Select>
                 )}
@@ -267,7 +275,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
 
       <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 4 }}>
         <LoadingButton variant='contained' type='submit' loading={updateEventMutation.isLoading}>
-          Update
+          {t('common.update')}
         </LoadingButton>
       </Box>
     </form>
