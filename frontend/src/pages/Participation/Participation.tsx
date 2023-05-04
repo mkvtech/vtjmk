@@ -1,17 +1,15 @@
 import { Box, Container, Divider, Grid, Link, Paper, Skeleton, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import PageError from '../../components/PageError/PageError'
 import SpanCreatedAt from '../../components/Typography/SpanCreatedAt'
 import { useQueryParticipation, useQueryPolicies } from '../../hooks/api/queries'
 import { useIsAllowed } from '../../hooks/api/share'
-import { useApi } from '../../hooks/useApi'
 import Activity from './Activity'
 import General from './General'
-import OptionsButton, { OptionsButtonAction } from './OptionsButton'
+import OptionsButton from './OptionsButton'
 import Reviewer from './Reviewer'
 import Status from './Status'
 import UserButton from './UserButton'
@@ -29,6 +27,7 @@ const policiesSchema = z.object({
         z.object({
           comment: z.boolean(),
           destroy: z.boolean(),
+          generateCertificate: z.boolean(),
           update: z.boolean(),
           updateReviewer: z.boolean(),
           updateStatus: z.boolean(),
@@ -40,7 +39,6 @@ const policiesSchema = z.object({
 
 function Page({ participationId }: { participationId: string }): JSX.Element {
   const { t } = useTranslation()
-  const { client } = useApi()
   const navigate = useNavigate()
   const participationQuery = useQueryParticipation({ participationId })
 
@@ -50,7 +48,14 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
       policies: {
         participations: {
           items: {
-            [participationId]: ['comment', 'destroy', 'update', 'updateReviewer', 'updateStatus'],
+            [participationId]: [
+              'comment',
+              'destroy',
+              'generateCertificate',
+              'update',
+              'updateReviewer',
+              'updateStatus',
+            ],
           },
         },
       },
@@ -59,14 +64,11 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
   })
   const isAllowed = useIsAllowed(policiesQuery, 'participations', participationId)
 
-  const destroyMutation = useMutation(() => client.delete(`/participations/${participationId}`), {
-    onSuccess: () => {
-      navigate('/')
-    },
-  })
-
   const updateAllowed = isAllowed('update')
   const destroyAllowed = isAllowed('destroy')
+  const generateCertificateAllowed = isAllowed('generateCertificate')
+
+  const showOptions = updateAllowed || destroyAllowed || generateCertificateAllowed
 
   return participationQuery.isError ? (
     <PageError withTitle error={participationQuery.error} />
@@ -90,16 +92,10 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
           )}
         </Typography>
 
-        {(updateAllowed || destroyAllowed) && (
+        {showOptions && (
           <OptionsButton
-            actions={{ edit: updateAllowed, delete: destroyAllowed }}
-            onActionClick={(action: OptionsButtonAction): void => {
-              if (action === 'edit') {
-                setEditGeneral(true)
-              } else if (action === 'delete') {
-                destroyMutation.mutate()
-              }
-            }}
+            actions={{ edit: updateAllowed, delete: destroyAllowed, generateCertificate: generateCertificateAllowed }}
+            onEditClick={(): void => setEditGeneral(true)}
           />
         )}
       </Box>

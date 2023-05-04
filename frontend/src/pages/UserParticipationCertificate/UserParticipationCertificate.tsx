@@ -14,7 +14,9 @@ import {
   Typography,
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
+import { Trans, useTranslation } from 'react-i18next'
 import { useMutation, useQuery } from 'react-query'
+import { useSearchParams } from 'react-router-dom'
 import { fetchUserParticipations, fetchUserParticipationsDocumentTemplates } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
 import { contentDispositionToFilename } from '../../share'
@@ -34,11 +36,15 @@ interface GenerateDocumentMutationData {
 }
 
 export default function UserParticipationCertificate(): JSX.Element {
+  const { t } = useTranslation()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryStringParticipationId = searchParams.get('participationId')
+
   const { control, watch, setValue, getValues } = useForm<FormValues>({
     defaultValues: {
-      participationId: '',
+      participationId: queryStringParticipationId || '',
       documentTemplateId: '',
-      documentType: 'docx',
+      documentType: 'pdf',
     },
   })
 
@@ -51,6 +57,13 @@ export default function UserParticipationCertificate(): JSX.Element {
     () => fetchUserParticipations({ client }),
     {
       select: (data) => data.filter((participation) => participation.status === 'approved'),
+      onSuccess: (data) => {
+        if (!data.find((participation) => participation.id === queryStringParticipationId)) {
+          setValue('participationId', '')
+          searchParams.delete('participationId')
+          setSearchParams(searchParams)
+        }
+      },
     }
   )
 
@@ -122,25 +135,27 @@ export default function UserParticipationCertificate(): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography variant='h1' sx={{ mb: 2 }}>
-        Generate Participation Certificate
+        {t('pages.userParticipationCertificate.title')}
       </Typography>
 
       <Divider />
 
       <Box sx={{ my: 4 }}>
-        <Typography>This tool allows you to generate participation certificate in DOCX or PDF format.</Typography>
+        <Typography>{t('pages.userParticipationCertificate.pageDescription')}</Typography>
       </Box>
 
       {generateDocumentMutation.isError && (
         <Container maxWidth='sm'>
           <Alert severity='error'>
-            <AlertTitle>Document generation failed</AlertTitle>
-            <p>Please try one of the following:</p>
-            <ul>
-              <li>Select different file type</li>
-              <li>Select different document template</li>
-            </ul>
-            <p>If this issue persists, please contact service support or system administrator</p>
+            <AlertTitle>{t('pages.userParticipationCertificate.errorAlertTitle')}</AlertTitle>
+            <Trans i18nKey='pages.userParticipationCertificate.errorAlertDescription'>
+              <p>Please try one of the following:</p>
+              <ul>
+                <li>Select different file type</li>
+                <li>Select different document template</li>
+              </ul>
+              <p>If this issue persists, please contact service support or system administrator</p>
+            </Trans>
           </Alert>
         </Container>
       )}
@@ -148,11 +163,8 @@ export default function UserParticipationCertificate(): JSX.Element {
       {generateDocumentMutation.isSuccess && (
         <Container maxWidth='sm'>
           <Alert severity='success'>
-            <AlertTitle>Document was generated successfuly</AlertTitle>
-            <p>
-              The download will begin shortly. Once it is done, please find generated document in Downloads folder on
-              your computer.
-            </p>
+            <AlertTitle>{t('pages.userParticipationCertificate.successAlertTitle')}</AlertTitle>
+            <p>{t('pages.userParticipationCertificate.successAlertDescription')}</p>
           </Alert>
         </Container>
       )}
@@ -162,12 +174,12 @@ export default function UserParticipationCertificate(): JSX.Element {
       ) : userParticipationsQuery.isSuccess ? (
         <>
           {userParticipationsQuery.data.length === 0 ? (
-            <>This tool is only available when you have at least one approved participation</>
+            <p>{t('pages.userParticipationCertificate.noParticipations')}</p>
           ) : (
             <>
               <Container maxWidth='sm' sx={{ mt: 4, mb: 4 }}>
                 <FormControl fullWidth size='small'>
-                  <InputLabel id='event-select-label'>Conference</InputLabel>
+                  <InputLabel id='event-select-label'>{t('common.conference')}</InputLabel>
                   <Controller
                     name='participationId'
                     control={control}
@@ -176,10 +188,11 @@ export default function UserParticipationCertificate(): JSX.Element {
                         {...field}
                         onChange={(value): void => {
                           setValue('documentTemplateId', '')
+                          setSearchParams({ participationId: value.target.value })
                           field.onChange(value)
                         }}
                         labelId='event-select-label'
-                        label='Conference'
+                        label={t('common.conference')}
                         fullWidth
                         size='small'
                         required
@@ -201,12 +214,14 @@ export default function UserParticipationCertificate(): JSX.Element {
                 </Container>
               ) : documentTemplatesQuery.isSuccess && documentTemplatesQuery.data.length === 0 ? (
                 <Container maxWidth='sm' sx={{ mt: 4, mb: 4 }}>
-                  <Alert severity='warning'>Participation Certificate is not available for this conference</Alert>
+                  <Alert severity='warning'>
+                    {t('pages.userParticipationCertificate.certificateUnavailableForThisConference')}
+                  </Alert>
                 </Container>
               ) : (
                 <Container maxWidth='sm' sx={{ mt: 4, mb: 4 }}>
                   <FormControl fullWidth size='small'>
-                    <InputLabel id='document-template-select-label'>Template</InputLabel>
+                    <InputLabel id='document-template-select-label'>{t('common.template')}</InputLabel>
                     <Controller
                       name='documentTemplateId'
                       control={control}
@@ -214,7 +229,7 @@ export default function UserParticipationCertificate(): JSX.Element {
                         <Select
                           {...field}
                           labelId='document-template-select-label'
-                          label='Template'
+                          label={t('common.template')}
                           fullWidth
                           size='small'
                           required
@@ -235,7 +250,7 @@ export default function UserParticipationCertificate(): JSX.Element {
 
               <Container maxWidth='sm' sx={{ mt: 4, mb: 4 }}>
                 <FormControl fullWidth size='small'>
-                  <InputLabel id='document-type-select-label'>File Type</InputLabel>
+                  <InputLabel id='document-type-select-label'>{t('common.fileType')}</InputLabel>
                   <Controller
                     name='documentType'
                     control={control}
@@ -243,7 +258,7 @@ export default function UserParticipationCertificate(): JSX.Element {
                       <Select
                         {...field}
                         labelId='document-type-select-label'
-                        label='File Type'
+                        label={t('common.fileType')}
                         fullWidth
                         size='small'
                         required
@@ -266,7 +281,7 @@ export default function UserParticipationCertificate(): JSX.Element {
                   onClick={onSubmit}
                   loading={generateDocumentMutation.isLoading}
                 >
-                  Generate
+                  {t('pages.userParticipationCertificate.submitButtonLabel')}
                 </LoadingButton>
               </Box>
             </>
