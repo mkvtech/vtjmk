@@ -75,5 +75,11 @@ Rails.application.routes.draw do
   get '/debug/database', to: 'debug#database'
 
   # Everything else goes to React App
-  get '/*path', to: 'application#react_app'
+  get '/*path', to: 'application#react_app', constraints: lambda { |req|
+    # ...except for ActiveStorage routes.
+    req.path.exclude? 'rails/active_storage'
+    # See here:
+    # https://github.com/rails/rails/issues/31228#issuecomment-352900551
+    # https://stackoverflow.com/questions/54990363/rails-activestorage-url-for-returns-an-url-which-is-not-valid/55450163
+  }
 end
