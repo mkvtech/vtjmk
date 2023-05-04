@@ -1,14 +1,17 @@
 import { Close, Done } from '@mui/icons-material'
 import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material'
 import { SyntheticEvent, useMemo, useState } from 'react'
-import { useMutation, useQueryClient } from 'react-query'
-import { useQueryParticipationAvailableReviewers } from '../../hooks/api/queries'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { fetchParticipationAvailableReviewers } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
 
-interface Reviewer {
-  id: string
-  fullName: string
-  email: string
+interface InputValue {
+  reviewerId: string
+  reviewer: {
+    id: string
+    fullName: string
+    email: string
+  }
 }
 
 export default function ReviewerForm({
@@ -16,16 +19,23 @@ export default function ReviewerForm({
   onEditDone,
   participationId,
 }: {
-  initialValue: Reviewer | null
+  initialValue: InputValue | null
   onEditDone: () => void
   participationId: string
 }): JSX.Element {
   const { client } = useApi()
   const queryClient = useQueryClient()
 
-  const availableReviewersQuery = useQueryParticipationAvailableReviewers({ participationId })
+  const availableReviewersQuery = useQuery({
+    queryKey: ['participations', participationId, 'availableReviewers'],
+    queryFn: () => fetchParticipationAvailableReviewers({ client, params: { participationId } }),
+    onError: () => {
+      onEditDone()
+      // TODO: Show toast
+    },
+  })
 
-  const [value, setValue] = useState<Reviewer | null>(initialValue)
+  const [value, setValue] = useState<InputValue | null>(initialValue)
 
   const updateReviewerMutation = useMutation((data: { reviewerId: string | null }) =>
     client.patch(`/participations/${participationId}/update_reviewer`, data)
@@ -37,7 +47,7 @@ export default function ReviewerForm({
     if (
       value &&
       availableReviewersQuery.data &&
-      !availableReviewersQuery.data.find((availableReviewer) => availableReviewer.id === value.id)
+      !availableReviewersQuery.data.find((availableReviewer) => availableReviewer.reviewerId === value.reviewerId)
     ) {
       setValue(null)
     }
@@ -47,7 +57,7 @@ export default function ReviewerForm({
     event.preventDefault()
 
     updateReviewerMutation.mutate(
-      { reviewerId: value ? value.id : null },
+      { reviewerId: value ? value.reviewerId : null },
       {
         onSuccess: () => {
           onEditDone()
@@ -63,9 +73,9 @@ export default function ReviewerForm({
     <form onSubmit={onSubmit}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Autocomplete
-          getOptionLabel={(option): string => option.fullName}
+          getOptionLabel={(option): string => option.reviewer.fullName}
           loading={availableReviewersQuery.isLoading}
-          isOptionEqualToValue={(option, value): boolean => option.id === value.id}
+          isOptionEqualToValue={(option, value): boolean => option.reviewerId === value.reviewerId}
           value={value}
           onChange={(event, newValue): void => {
             setValue(newValue)
@@ -75,10 +85,10 @@ export default function ReviewerForm({
           renderOption={(props, option): JSX.Element => (
             <li {...props}>
               <Box>
-                {option.fullName}
+                {option.reviewer.fullName}
                 <br />
                 <Typography component='span' color='textSecondary'>
-                  {option.email}
+                  {option.reviewer.email}
                 </Typography>
               </Box>
             </li>

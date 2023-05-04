@@ -17,4 +17,17 @@ class User < ApplicationRecord
   validates :full_name, presence: true
 
   enum privilege_level: { default: 'default', admin: 'admin' }
+
+  def to_builder_simple
+    Jbuilder.new do |json|
+      json.id id.to_s
+      json.avatar_url avatar_full_url
+      json.email email
+      json.full_name full_name
+    end
+  end
+
+  def avatar_full_url
+    GenerateAvatarUrl.call(username: full_name)
+  end
 end

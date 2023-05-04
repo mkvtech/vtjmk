@@ -15,6 +15,11 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
 
   const [edit, setEdit] = useState(false)
 
+  const initialValue =
+    participationQuery.isSuccess && participationQuery.data.reviewer && participationQuery.data.reviewerId
+      ? { reviewerId: participationQuery.data.reviewerId, reviewer: participationQuery.data.reviewer }
+      : null
+
   return (
     <>
       <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
@@ -27,7 +32,7 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
         </Typography>
       ) : edit ? (
         <ReviewerForm
-          initialValue={participationQuery.data.reviewer}
+          initialValue={initialValue}
           participationId={participationId}
           onEditDone={(): void => setEdit(false)}
         />

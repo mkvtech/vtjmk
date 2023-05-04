@@ -140,8 +140,15 @@ export type Participation = z.infer<typeof participationSchema>
 
 export const participationAvailableReviewerSchema = z.object({
   id: z.string(),
-  email: z.string(),
-  fullName: z.string(),
+  reviewerId: z.string(),
+  reviewer: z.object({
+    id: z.string(),
+    email: z.string(),
+    fullName: z.string(),
+    avatarUrl: z.string(),
+  }),
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
 })
 
 export const eventParticipationSchema = z.object({

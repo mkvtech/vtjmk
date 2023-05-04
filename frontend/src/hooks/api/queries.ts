@@ -138,12 +138,22 @@ export function useQueryParticipation({ participationId }: { participationId: st
 }
 
 const participationAvailableReviewersSchema = z.array(participationAvailableReviewerSchema)
+export function fetchParticipationAvailableReviewers({
+  client,
+  params,
+}: {
+  client: AxiosInstance
+  params: { participationId: string }
+}) {
+  return client
+    .get(`/participations/${params.participationId}/available_reviewers`)
+    .then((response) => participationAvailableReviewersSchema.parse(response.data))
+}
+
 export function useQueryParticipationAvailableReviewers({ participationId }: { participationId: string }) {
   const { client } = useApi()
   return useQuery(['participations', participationId, 'availableReviewers'], () =>
-    client
-      .get(`/participations/${participationId}/available_reviewers`)
-      .then((response) => participationAvailableReviewersSchema.parse(response.data))
+    fetchParticipationAvailableReviewers({ client, params: { participationId } })
   )
 }
 
