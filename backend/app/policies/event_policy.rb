@@ -44,6 +44,6 @@ class EventPolicy < ApplicationPolicy
   private
 
   def current_date
-    Time.zone.today
+    @current_date ||= Time.zone.today
   end
 end

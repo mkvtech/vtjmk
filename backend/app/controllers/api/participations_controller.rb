@@ -10,7 +10,7 @@ module Api
 
     def create
       event = Event.find(params[:event_id])
-      authorize! event, to: :participate, with: EventPolicy
+      authorize! event, to: :participate?, with: EventPolicy
       @participation = create_participation
 
       if @participation.save
