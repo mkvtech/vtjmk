@@ -35,7 +35,7 @@ module Api
       Participation.transaction do
         @event.participations.each do |participation|
           participation_input = participations_input.fetch(participation.id.to_s, {})
-          participation.update(participation_input.permit(:order, :time))
+          participation.update(order: participation_input[:order], time: participation_input[:time])
         end
       end
 
