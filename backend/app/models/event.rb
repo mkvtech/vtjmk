@@ -4,6 +4,7 @@ class Event < ApplicationRecord
 
   belongs_to :conference
   has_many :event_reviewers, dependent: :destroy
+  has_many :participations, dependent: :restrict_with_exception
   has_many :reviewers, through: :event_reviewers
 
   enum status: { open: 'open', hidden: 'hidden' }

@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     post '/documents/generate_participation_certificate', to: 'documents#generate_participation_certificate'
 
     resources :events, only: %i[index show update] do
+      member do
+        patch 'update_participations_order'
+      end
+
       scope module: :events do
         resources :reviewers, only: %i[index create destroy]
 
