@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import 'dayjs/locale/lt'
+import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { I18nextProvider } from 'react-i18next'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -11,6 +12,7 @@ import i18n from './i18n'
 import router from './router'
 
 dayjs.extend(relativeTime)
+dayjs.extend(duration)
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +32,8 @@ declare global {
 
 if (!import.meta.env.PROD) {
   window.vtjmk = {}
+
+  window.vtjmk.dayjs = dayjs
 
   console.log('React QueryClient is accessible from this console with `vtjmk.queryClient`')
   window.vtjmk.queryClient = queryClient

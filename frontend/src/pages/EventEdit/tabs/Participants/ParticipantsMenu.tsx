@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab'
 import { Box, Typography } from '@mui/material'
+import dayjs from 'dayjs'
 import { produce } from 'immer'
 import { useState } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
@@ -9,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { reorderItemMap } from '../../../../components/rbd/utils'
 import { EventParticipation } from '../../../../hooks/api/schemas'
 import { useApi } from '../../../../hooks/useApi'
+import { durationToSentence, i18nLanguageToIntlLocale } from '../../../../share'
 import { OthersTable } from './OthersTable'
 import ParticipantsTable from './ParticipantsTable'
 
@@ -20,7 +22,7 @@ export default function ParticipantsMenu({
   participations: readonly EventParticipation[]
 }): JSX.Element {
   const { eventId } = useParams() as { eventId: string }
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { client } = useApi()
 
   const [items, setItems] = useState<Record<string, readonly EventParticipation[]>>({
@@ -85,7 +87,13 @@ export default function ParticipantsMenu({
     )
   }
 
-  const totalTime = items['include'].reduce((prev, current) => prev + (current.time || 0), 0)
+  const totalTimeMinutes = items['include'].reduce((prev, current) => prev + (current.time || 0), 0)
+  const totalTimeText = durationToSentence({
+    duration: dayjs.duration({ minutes: totalTimeMinutes }),
+    parts: ['hour', 'minute'],
+    t,
+    intlLocale: i18nLanguageToIntlLocale(i18n.language),
+  })
 
   return (
     <>
@@ -97,17 +105,17 @@ export default function ParticipantsMenu({
 
       <DragDropContext onDragEnd={handleDragEnd}>
         <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
-          Participants
+          {t('common.participants')}
         </Typography>
 
         <ParticipantsTable items={items['include']} onItemUpdate={handleTimeUpdate} />
 
         <Typography sx={{ my: 2 }} align='right'>
-          Total time: {totalTime} minutes
+          {t('common.totalTimeX', { totalTimeText })}
         </Typography>
 
         <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
-          Others
+          {t('common.others')}
         </Typography>
 
         <OthersTable items={items['exclude']} />
