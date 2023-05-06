@@ -7,6 +7,7 @@ import { useQueryEvent } from '../../hooks/api/queries'
 import Description from './tabs/Description'
 import General from './tabs/General'
 import Participants from './tabs/Participants'
+import ParticipationRequests from './tabs/ParticipationRequests'
 import Reviewers from './tabs/Reviewers'
 
 export default function EventEdit(): JSX.Element {
@@ -15,7 +16,7 @@ export default function EventEdit(): JSX.Element {
   return eventId === undefined ? <Navigate to='/conferences' replace /> : <Page eventId={eventId} />
 }
 
-const tabRoutes = ['general', 'description', 'reviewers', 'participants']
+const tabRoutes = ['general', 'description', 'reviewers', 'participants', 'participationRequests']
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
   const { t } = useTranslation()
@@ -54,6 +55,12 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
               <Tab label={t('common.description')} value='description' to='description' component={RouterLink} />
               <Tab label={t('common.reviewers')} value='reviewers' to='reviewers' component={RouterLink} />
               <Tab label={t('common.participants')} value='participants' to='participants' component={RouterLink} />
+              <Tab
+                label={t('common.participationRequests')}
+                value='participationRequests'
+                to='participationRequests'
+                component={RouterLink}
+              />
             </Tabs>
           </Box>
 
@@ -62,6 +69,7 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
             <Route path='description' element={<Description />} />
             <Route path='reviewers' element={<Reviewers />} />
             <Route path='participants' element={<Participants />} />
+            <Route path='participationRequests' element={<ParticipationRequests />} />
           </Routes>
         </>
       )}

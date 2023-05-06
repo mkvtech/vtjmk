@@ -136,7 +136,11 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
                 {isAllowed('participationsIndex') && (
                   <Box display='flex'>
                     <Badge badgeContent={participationsQuery.isSuccess ? participationsQuery.data : 0} color='warning'>
-                      <Button component={RouterLink} to={`/events/${eventId}/edit/participants`} variant='outlined'>
+                      <Button
+                        component={RouterLink}
+                        to={`/events/${eventId}/edit/participationRequests`}
+                        variant='outlined'
+                      >
                         {t('common.viewParticipants')}
                       </Button>
                     </Badge>

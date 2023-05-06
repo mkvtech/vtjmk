@@ -167,7 +167,7 @@ export function useQueryParticipationComments({ participationId }: { participati
   )
 }
 
-const eventsParticipationsResponseSchema = z.array(eventParticipationSchema)
+const eventsParticipationsSchema = z.array(eventParticipationSchema)
 export async function fetchEventsParticipations({
   client,
   params,
@@ -181,7 +181,13 @@ export async function fetchEventsParticipations({
 }) {
   const queryParams = { status: params.status, order: params.order }
   const response = await client.get(`/events/${params.eventId}/participations${addParams(queryParams)}`)
-  return eventsParticipationsResponseSchema.parse(response.data)
+  return eventsParticipationsSchema.parse(response.data)
+}
+export function useQueryEventParticipations({ eventId }: { eventId: string }) {
+  const { client } = useApi()
+  return useQuery(['events', eventId, 'participations'], () =>
+    fetchEventsParticipations({ client, params: { eventId } })
+  )
 }
 
 const usersSchema = z.array(userSchema)
