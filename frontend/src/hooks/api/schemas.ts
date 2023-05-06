@@ -157,6 +157,7 @@ export const eventParticipationSchema = z.object({
   user: userSchemaSimple,
   eventId: z.string(),
   order: z.number().nullable(),
+  time: z.number().nullable(),
   status: participationStatusSchema,
   submissionTitle: z.string().nullable(),
   comment: z.string().optional(),

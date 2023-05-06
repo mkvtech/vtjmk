@@ -15,15 +15,17 @@ export function reorderItemMap<T>({
   itemMap,
   source,
   destination,
+  transformItem,
 }: {
   itemMap: Record<string, readonly T[]>
   source: DraggableLocation
   destination: DraggableLocation
+  transformItem?: (item: T) => T
 }): Record<string, readonly T[]> {
   // Note: this function does not check if itemMap[droppableId] !== undefined
   const current = [...itemMap[source.droppableId]]
   const next = [...itemMap[destination.droppableId]]
-  const target = current[source.index]
+  const target = transformItem ? transformItem(current[source.index]) : current[source.index]
 
   if (source.droppableId === destination.droppableId) {
     // moving within the same list

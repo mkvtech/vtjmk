@@ -8,5 +8,5 @@ json.array! @participations do |participation|
     json.partial! 'api/users/user', user: participation.user
   end
 
-  json.extract! participation, *%i[order status submission_title created_at updated_at]
+  json.extract! participation, *%i[order time status submission_title created_at updated_at]
 end

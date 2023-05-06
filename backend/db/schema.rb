@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_06_192229) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_06_210006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -139,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_192229) do
     t.text "submission_description"
     t.bigint "reviewer_id"
     t.integer "order"
+    t.integer "time"
     t.index ["event_id", "user_id"], name: "index_participations_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_participations_on_event_id"
     t.index ["reviewer_id"], name: "index_participations_on_reviewer_id"
