@@ -144,6 +144,10 @@ RSpec.describe '/events' do
     let(:conference) { create(:conference) }
     let(:event) { create(:event, title: 'Title', conference:) }
 
+    before do
+      create(:permission, user:, target: event, action: :manage)
+    end
+
     context 'with valid parameters' do
       let(:params) { { title: 'Updated' } }
 
