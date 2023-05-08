@@ -1,7 +1,6 @@
 # Handles authentication process for inside
 class Authentication
-  # TODO: Use different secret for JWT encoding
-  SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
+  SECRET_KEY = Rails.application.secret_key_base.to_s
   JWT_EXPIRATION_LENGTH = Rails.env.development? ? 1.year : 2.hours
   JWT_ALGORITHM = 'HS256'.freeze
 
