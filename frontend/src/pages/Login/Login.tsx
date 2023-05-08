@@ -7,6 +7,10 @@ import { useMutation } from 'react-query'
 import { Navigate, Link as RouterLink, useNavigate } from 'react-router-dom'
 import LocaleSwitch from '../../components/LocaleSwitch'
 import { ApiResponseError, useApi } from '../../hooks/useApi'
+import DevUi from './DevUi'
+
+// const showDevUi = import.meta.env.DEV
+const showDevUi = false
 
 export default function Login(): JSX.Element {
   const { t } = useTranslation()
@@ -128,34 +132,7 @@ export default function Login(): JSX.Element {
           </Link>
         </Box>
 
-        <Box
-          sx={{ bgcolor: 'black', color: '#55ff55', p: 2, mt: 4, border: '4px solid #55ff55', fontFamily: 'monospace' }}
-        >
-          <p>
-            DEV UI
-            <br /> Click to fill form with data
-          </p>
-          <ul>
-            <li>
-              <Link onClick={(): void => handleFillForm({ email: 'admin@example.com' })}>Admin, admin@example.com</Link>
-            </li>
-            <li>
-              <Link onClick={(): void => handleFillForm({ email: 'agne.reynolds@example.com' })}>
-                Event Manager, agne.reynolds@example.com
-              </Link>
-            </li>
-            <li>
-              <Link onClick={(): void => handleFillForm({ email: 'karolis.corkery@example.com' })}>
-                Reviewer, karolis.corkery@example.com
-              </Link>
-            </li>
-            <li>
-              <Link onClick={(): void => handleFillForm({ email: 'vaidas.mcclure@example.com' })}>
-                Participant, vaidas.mcclure@example.com
-              </Link>
-            </li>
-          </ul>
-        </Box>
+        {showDevUi ? <DevUi onFormFill={handleFillForm} /> : null}
       </Box>
     </Box>
   )
