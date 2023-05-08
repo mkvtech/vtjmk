@@ -28,7 +28,6 @@ import { belongsToArray } from '../../utils'
 
 interface IFormInput {
   title: string
-  participantsLimit: number | null | undefined
   date: Dayjs
   registrationFrom: Dayjs
   registrationTo: Dayjs
@@ -37,14 +36,13 @@ interface IFormInput {
 
 interface UpdateEventMutationInput {
   title: string
-  participantsLimit: number | null | undefined
   date: string
   registrationFrom: string
   registrationTo: string
   status: string
 }
 
-const fieldNames = ['title', 'participantsLimit', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
+const fieldNames = ['title', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
 
 export default function Form({ event }: { event: Event }): JSX.Element {
   const { t } = useTranslation()
@@ -55,7 +53,6 @@ export default function Form({ event }: { event: Event }): JSX.Element {
   const { control, handleSubmit, setError } = useForm({
     defaultValues: {
       title: event.title,
-      participantsLimit: event.participantsLimit,
       date: dayjs(event.date),
       registrationFrom: dayjs(event.registrationFrom),
       registrationTo: dayjs(event.registrationTo),
@@ -70,7 +67,6 @@ export default function Form({ event }: { event: Event }): JSX.Element {
     updateEventMutation.mutate(
       {
         title: data.title,
-        participantsLimit: data.participantsLimit,
         date: data.date.toISOString(),
         registrationFrom: data.registrationFrom.toISOString(),
         registrationTo: data.registrationTo.toISOString(),
@@ -134,24 +130,6 @@ export default function Form({ event }: { event: Event }): JSX.Element {
         </Grid>
 
         <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
-          <Grid item xs={6}>
-            <Controller
-              name='participantsLimit'
-              control={control}
-              render={({ field }): JSX.Element => (
-                <TextField
-                  {...field}
-                  onChange={(event): void => field.onChange(+event.target.value)}
-                  value={field.value || ''}
-                  size='small'
-                  label={t('common.participantsLimit')}
-                  type='number'
-                  fullWidth
-                />
-              )}
-            />
-          </Grid>
-
           <Grid item xs={6}>
             <Controller
               name='date'

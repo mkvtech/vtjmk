@@ -18,7 +18,7 @@ module Api
       authorize! @event
 
       event_params = params.permit(
-        :title, :description, :date, :participants_limit, :registration_from, :registration_to, :status
+        :title, :description, :date, :registration_from, :registration_to, :status
       )
 
       if @event.update(event_params)

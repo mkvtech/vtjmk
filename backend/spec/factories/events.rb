@@ -3,7 +3,6 @@ FactoryBot.define do
     title { 'Title' }
     description { 'Description' }
     date { 10.days.from_now }
-    participants_limit { 10 }
     attendees_limit { 50 }
     conference { nil }
     registration_from { 5.days.ago }

@@ -59,7 +59,6 @@ export const eventSchema = z.object({
   registrationFrom: z.string().transform(isoToDate),
   registrationTo: z.string().transform(isoToDate),
   status: eventStatusSchema,
-  participantsLimit: z.number().optional().nullable(),
 })
 export type Event = z.infer<typeof eventSchema>
 

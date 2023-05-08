@@ -118,10 +118,7 @@ RSpec.describe '/events' do
       make_request
       expect(response).to be_successful
       expect(json_response.keys).to match_array(
-        %i[
-          id title description participantsLimit date conferenceId createdAt updatedAt url registrationFrom
-          registrationTo status
-        ]
+        %i[id title description date conferenceId createdAt updatedAt url registrationFrom registrationTo status]
       )
     end
 
@@ -132,8 +129,7 @@ RSpec.describe '/events' do
         {
           id: event.id.to_s,
           title: event.title,
-          description: event.description,
-          participantsLimit: event.participants_limit
+          description: event.description
         }
       )
     end
