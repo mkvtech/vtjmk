@@ -4,7 +4,7 @@ module Api
     before_action :set_conference, only: %i[show update destroy]
 
     def index
-      @conferences = Conference.all
+      @conferences = Conference.i18n.order(:title).all
     end
 
     def show; end
