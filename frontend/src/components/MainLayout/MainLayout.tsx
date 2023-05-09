@@ -1,15 +1,15 @@
-import { AccountCircle, Help, Menu as MenuIcon } from '@mui/icons-material'
-import { AppBar, Badge, Box, Button, Container, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import { Help, Menu as MenuIcon } from '@mui/icons-material'
+import { AppBar, Avatar, Box, Button, Container, Divider, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import { useApi } from '../../hooks/useApi'
 import LocaleSwitch from '../LocaleSwitch'
+import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch'
 import AppBarTabs from './AppBarTabs'
 import Footer from './Footer'
-import { DRAWER_WIDTH } from './share'
 import SideMenu from './SideMenu'
-import ThemeModeSwitch from '../ThemeModeSwitch/ThemeModeSwitch'
+import { DRAWER_WIDTH } from './share'
 
 export default function MainLayout({ children }: PropsWithChildren): JSX.Element {
   const { session } = useApi()
@@ -62,10 +62,8 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
                       {t('hello')}, {session.currentUser.fullName}
                     </Typography>
 
-                    <IconButton>
-                      <Badge badgeContent={9} color='primary'>
-                        <AccountCircle />
-                      </Badge>
+                    <IconButton sx={{ ml: 1 }}>
+                      <Avatar sx={{ width: '24px', height: '24px' }} src={session.currentUser.avatarUrl} />
                     </IconButton>
                   </Box>
                 ) : (
