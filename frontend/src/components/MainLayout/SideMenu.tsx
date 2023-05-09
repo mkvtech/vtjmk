@@ -34,8 +34,7 @@ const sideMenuStructure = [
     id: 'management',
     displayNameTranslationKey: 'components.mainLayout.sideMenuLabelManagement',
     icon: <Create />,
-    isVisible: (policies: SideMenuPolicies): boolean =>
-      policies.policies.user.general.manageEvents || policies.policies.user.general.reviewParticipations,
+    isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewParticipations,
     items: [
       {
         id: 'reviewParticipations',
