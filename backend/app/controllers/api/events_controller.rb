@@ -31,7 +31,7 @@ module Api
     def update_participations_order
       authorize! @event
 
-      participations_input = params.require(:participations_order)
+      participations_input = params[:participations_order] || []
       Participation.transaction do
         @event.participations.each do |participation|
           participation_input = participations_input.fetch(participation.id.to_s, {})

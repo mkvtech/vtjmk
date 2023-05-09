@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import PageError from '../../../../components/PageError'
 import NoDataText from '../../../../components/Typography/NoDataText'
 import { useQueryEventParticipations } from '../../../../hooks/api/queries'
-import ParticipantsTable from './ParticipantsMenu'
+import ParticipantsMenu from './ParticipantsMenu'
 
 export default function Participants(): JSX.Element {
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ export default function Participants(): JSX.Element {
           <Skeleton />
         </>
       ) : participationsQuery.isSuccess && participationsQuery.data.length > 0 ? (
-        <ParticipantsTable participations={participationsQuery.data} />
+        <ParticipantsMenu participations={participationsQuery.data} />
       ) : participationsQuery.isSuccess ? (
         <>
           <NoDataText>{t('common.noData')}</NoDataText>

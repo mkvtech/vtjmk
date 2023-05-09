@@ -5,7 +5,7 @@ import { produce } from 'immer'
 import { useState } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { useTranslation } from 'react-i18next'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { reorderItemMap } from '../../../../components/rbd/utils'
 import { EventParticipation } from '../../../../hooks/api/schemas'
@@ -23,6 +23,7 @@ export default function ParticipantsMenu({
 }): JSX.Element {
   const { eventId } = useParams() as { eventId: string }
   const { t, i18n } = useTranslation()
+  const queryClient = useQueryClient()
   const { client } = useApi()
 
   const [items, setItems] = useState<Record<string, readonly EventParticipation[]>>({
@@ -63,12 +64,19 @@ export default function ParticipantsMenu({
   }
 
   const handleSave = (): void => {
-    updateParticipantsOrderMutation.mutate({
-      participationsOrder: items['include'].reduce<UpdateParticipationsOrderMutationInput>((prev, current, index) => {
-        prev[current.id] = { order: index, time: current.time }
-        return prev
-      }, {}),
-    })
+    updateParticipantsOrderMutation.mutate(
+      {
+        participationsOrder: items['include'].reduce<UpdateParticipationsOrderMutationInput>((prev, current, index) => {
+          prev[current.id] = { order: index, time: current.time }
+          return prev
+        }, {}),
+      },
+      {
+        onSettled: () => {
+          queryClient.invalidateQueries(['events', eventId, 'participations'])
+        },
+      }
+    )
   }
 
   // TODO: This function (and some related) produces a noticeable lag as it causes all components to re-render.
@@ -110,9 +118,11 @@ export default function ParticipantsMenu({
 
         <ParticipantsTable items={items['include']} onItemUpdate={handleTimeUpdate} />
 
-        <Typography sx={{ my: 2 }} align='right'>
-          {t('common.totalTimeX', { totalTimeText })}
-        </Typography>
+        {items['include'].length > 0 ? (
+          <Typography sx={{ my: 2 }} align='right'>
+            {t('common.totalTimeX', { totalTimeText })}
+          </Typography>
+        ) : null}
 
         <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
           {t('common.others')}
