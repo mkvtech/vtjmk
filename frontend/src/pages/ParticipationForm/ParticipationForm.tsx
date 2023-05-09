@@ -1,6 +1,7 @@
 import { ArrowBack } from '@mui/icons-material'
 import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Link from '../../components/Link'
@@ -26,6 +27,7 @@ interface CreateParticipationMutationData {
 }
 
 function Page({ eventId }: { eventId: string }): JSX.Element {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { client } = useApi()
   const { control, handleSubmit } = useForm<IFormInput>({
@@ -72,43 +74,37 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Box sx={{ my: 2 }}>
-        <Typography variant='h1'>Participation Form</Typography>
-
         <Typography>
           <Link href={`/events/${eventId}`}>
             <ArrowBack fontSize='small' />
-            Back to {eventId}
+            {t('common.backToEventPage')}
           </Link>
         </Typography>
 
-        <Typography sx={{ my: 1 }}>
-          You are registering to participate in {eventId} with presentation. If you want to attend an event without
-          presenting, please fill <Link href={`/events/${eventId}/attend`}>attendance form</Link> instead.
-        </Typography>
+        <Typography variant='h1'>{t('pages.participationForm.title')}</Typography>
       </Box>
 
       <Divider />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ my: 2 }}>
-          <Typography variant='h2'>Submission</Typography>
-
-          <Typography>This event requires a submission.</Typography>
+          <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
+            {t('pages.participationForm.submission')}
+          </Typography>
 
           <Controller
             name='submissionTitle'
             control={control}
             render={({ field }): JSX.Element => (
-              <TextField {...field} label='Title' required fullWidth margin='normal' />
+              <TextField {...field} label={t('common.title')} required fullWidth margin='normal' />
             )}
           />
 
-          <Typography variant='h2'>Files</Typography>
-
-          <Typography>
-            You can upload files like paper document (DOCX, PDF), presentation slides (PPTX) or any other relevant
-            document
+          <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
+            {t('common.files')}
           </Typography>
+
+          <Typography sx={{ my: 2 }}>{t('pages.participationForm.youCanUploadFilesLike')}</Typography>
 
           <Controller
             name='submissionFiles'
@@ -122,11 +118,12 @@ function Page({ eventId }: { eventId: string }): JSX.Element {
         <Divider />
 
         <Box sx={{ my: 2 }}>
-          <Typography>After you submit this form, it will be reviewed by event management.</Typography>
+          <Typography>{t('pages.participationForm.afterYouSubmitThisForm')}</Typography>
+
           <Box display='flex' flexDirection='row-reverse'>
             <Box>
               <Button type='submit' variant='contained'>
-                Submit
+                {t('common.submit')}
               </Button>
             </Box>
           </Box>

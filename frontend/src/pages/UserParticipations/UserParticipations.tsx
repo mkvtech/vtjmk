@@ -21,7 +21,7 @@ export default function UserParticipations(): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ my: 8 }}>
       <Typography variant='h1' sx={{ mb: 2 }}>
-        Participated Conferences
+        {t('common.participatedConferences')}
       </Typography>
 
       {userParticipationsQuery.isLoading ? (
@@ -38,12 +38,12 @@ export default function UserParticipations(): JSX.Element {
 
               <Typography>
                 {dayjs(participation.event.date).isBefore(dayjs())
-                  ? `Conference took place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`
-                  : `Conference will take place ${dayjs(participation.event.date).format('DD/MM/YYYY')}`}
+                  ? t('common.tookPlace', { date: participation.event.date })
+                  : t('common.willTakePlace', { date: participation.event.date })}
               </Typography>
 
               <Typography>
-                <Link href={`/events/${participation.eventId}`}>Event page</Link>
+                <Link href={`/events/${participation.eventId}`}>{t('common.eventPage')}</Link>
               </Typography>
             </Box>
 
@@ -55,10 +55,10 @@ export default function UserParticipations(): JSX.Element {
                   component={RouterLink}
                   to={`/user/documents/participationCertificate?participationId=${participation.id}`}
                 >
-                  Get Certificate
+                  {t('common.getCertificate')}
                 </Button>
                 <Button component={RouterLink} to={`/participations/${participation.id}`}>
-                  View
+                  {t('common.view')}
                 </Button>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -68,7 +68,8 @@ export default function UserParticipations(): JSX.Element {
                     {/* {Intl.DateTimeFormat(i18n.language).format(participation.createdAt)} */}
                   </Typography>
                 </Typography>
-                <ParticipationStatusChip status={participation.status} sx={{ ml: 2 }} />
+
+                <ParticipationStatusChip status={participation.status} sx={{ ml: 2, mr: 1 }} />
               </Box>
             </Box>
           </Paper>

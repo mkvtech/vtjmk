@@ -2,6 +2,7 @@ import { Add, AttachFile, Download, Remove } from '@mui/icons-material'
 import { Box, IconButton, Paper, Typography, styled, useTheme } from '@mui/material'
 import { produce } from 'immer'
 import { useDropzone } from 'react-dropzone'
+import { useTranslation } from 'react-i18next'
 import { useApi } from '../../hooks/useApi'
 
 export interface FileEntry {
@@ -53,6 +54,7 @@ const MultipleFilesUpload = ({
   value?: MultipleFilesUploadValue
   onChange: (value: MultipleFilesUploadValue) => void
 }): JSX.Element => {
+  const { t } = useTranslation()
   const { apiServerUrl } = useApi()
   const theme = useTheme()
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
@@ -103,19 +105,19 @@ const MultipleFilesUpload = ({
     <>
       <StyledDropzoneBox {...getRootProps()} focused={isFocused} accept={isDragAccept} reject={isDragReject}>
         <input {...getInputProps()} />
-        <Typography>Drop files into this box or click to add files</Typography>
+        <Typography>{t('components.multipleFilesUpload.dropFilesIntoThisBoxOrClickToAddFiles')}</Typography>
       </StyledDropzoneBox>
 
       <Typography sx={{ mt: 1 }}>
-        {filesCount} file(s) attached
+        {t('components.multipleFilesUpload.xFilesAttached', { count: filesCount })}
         {newFilesCount ? (
           <Typography color='textSecondary' component='span'>
-            , {newFilesCount} new files will be attached
+            , {t('components.multipleFilesUpload.xNewFilesWillBeAttached', { count: newFilesCount })}
           </Typography>
         ) : null}
         {removedFilesCount ? (
           <Typography color='textSecondary' component='span'>
-            , {removedFilesCount} files will be removed
+            , {t('components.multipleFilesUpload.xFilesWillBeRemoved', { count: removedFilesCount })}
           </Typography>
         ) : null}
       </Typography>

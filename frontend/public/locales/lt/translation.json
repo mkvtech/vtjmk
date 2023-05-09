@@ -3,6 +3,7 @@
 
   "common": {
     "about": "Apie",
+    "action": "Veiksmas",
     "add": "Pridėti",
     "addNewDocumentTemplate": "Pridėti naują dokumentų šabloną",
     "addReviewer": "Pridėti recenzentą",
@@ -11,6 +12,7 @@
     "approved": "Patvirtinta",
     "attachments": "Prisiegti failai",
     "back": "Atgal",
+    "backToConferencePage": "Atgal į konferencijos puslapį",
     "backToEventPage": "Atgal į konferencijos puslapį",
     "backToTheMainWebsite": "Grįžti į pagrindinį puslapį",
     "byName": "{{name}}",
@@ -23,6 +25,7 @@
     "conference": "Konferencija",
     "conferences": "Konferencijos",
     "contacts": "Kontaktai",
+    "create": "Sukurti",
     "createdAt": "Sukurta",
     "createdAtDate": "Sukurta {{date, datetime}}",
     "createEvent": "Sukūrti naują įvykį",
@@ -34,9 +37,12 @@
     "edit": "Redaguoti",
     "editingSomethingQuoted": "Redaguoti „{{something}}“",
     "email": "El. paštas",
+    "event": "Įvykis",
     "eventCard": "Konferencijos kortėlė",
+    "eventPage": "Konferencijos puslapis",
     "events": "Įvykiai",
     "file": "Failas",
+    "files": "Failai",
     "fileType": "Failo tipas",
     "from": "Nuo",
     "fullName": "Vardas ir pavardė",
@@ -61,12 +67,16 @@
     "participantsLimit": "Dalyvių limitas",
     "participantsRegistration": "Dalyvių registracija",
     "participate": "Dalyvauti",
+    "participatedConferences": "Dalyvavimai",
     "participationCertificate": "Dalyvavimo sertifikatas",
     "participationRequest": "Dalyvavimo prašymas",
     "participationRequests": "Dalyvavymo prašymai",
     "participationRequestStatus": "Dalyvavimo prašymo statusas",
     "password": "Slaptažodis",
     "pending": "Laukiama",
+    "permissionManage": "Valdyti",
+    "permissionRead": "Skaityti",
+    "permissions": "Leidimai",
     "postfix": "Postfiksas",
     "prefix": "Prefiksas",
     "profile": "Profilis",
@@ -86,6 +96,8 @@
     "submissionDescription": "Aprašymas",
     "submissionTitle": "Pavadinimas",
     "submit": "Siųsti",
+    "target": "Objektas",
+    "targetType": "Objekto tipas",
     "template": "Šablonas",
     "theDataWasNotUpdated": "Duomenys nebuvo atnaujinti",
     "time": "Laikas",
@@ -98,6 +110,7 @@
     "unknown": "Nežinoma",
     "update": "Atnaujinti",
     "upload": "Įkelti",
+    "user": "Vartotojas",
     "view": "Žiūrėti",
     "viewParticipants": "Dalyviai",
     "websiteName": "VilniusTECH JMK",
@@ -142,6 +155,18 @@
       "sideMenuLabelProfile": "Profilis",
       "sideMenuLabelReviewParticipations": "Recenzavimas",
       "sideMenuLabelSystemStatus": "Sistemos statusas"
+    },
+    "multipleFilesUpload": {
+      "dropFilesIntoThisBoxOrClickToAddFiles": "Įmeskite failus į šį laukelį arba spustelėkite, kad pridėtumėte failus",
+      "xFilesAttached_one": "{{count}} prisegtas failas",
+      "xFilesAttached_few": "{{count}} prisegti failai",
+      "xFilesAttached_other": "{{count}} prisegtų failų",
+      "xNewFilesWillBeAttached_one": "{{count}} failas bus prisegtas",
+      "xNewFilesWillBeAttached_few": "{{count}} failai bus prisegti",
+      "xNewFilesWillBeAttached_other": "{{count}} failų bus prisegta",
+      "xFilesWillBeRemoved_one": "{{count}} failas bus panaikintas",
+      "xFilesWillBeRemoved_few": "{{count}} failai bus panaikinti",
+      "xFilesWillBeRemoved_other": "{{count}} failų bus panaikinta"
     }
   },
 
@@ -205,6 +230,21 @@
       "noParticipations": "Šis įrankis gali būti panaudotas tik tada, kai turite bent vieną patvirtintą dalyvavimą",
       "certificateUnavailableForThisConference" : "Sertifikatų generavimas yra negalimas šiai konferencijai",
       "submitButtonLabel": "Generuoti"
+    },
+    "permissions": {
+      "title": "Leidimai",
+      "description": "Šiame puslapyje jus galite išduoti leidimus vartotojams",
+      "createNewPermission": "Sukurti leidimą",
+      "permissionItemDescription": "<0>Veiksmas:</0> <2>{{action}}</2>, <5>objektas:</5> <7>{{targetTitle}}</7>"
+    },
+    "permissionCreate": {
+      "title": "Išduoti leidimą"
+    },
+    "participationForm": {
+      "title": "Dalyvavimo prašymas",
+      "submission": "Pranešimas",
+      "youCanUploadFilesLike": "Čia galite įkelti pranešimo failus (DOCX, PDF), pristatymo skaidres (PPTX) arba bet kurį kitą reikalingą dokumentą.",
+      "afterYouSubmitThisForm": "Kai pateiksite šią formą, ją peržiūrės konferencijos organizatorius arba recenzentas"
     }
   }
 }

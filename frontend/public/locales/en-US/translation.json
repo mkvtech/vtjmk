@@ -3,6 +3,7 @@
 
   "common": {
     "about": "About",
+    "action": "Action",
     "add": "Add",
     "addNewDocumentTemplate": "Add Document Template",
     "addReviewer": "Add a Reviewer",
@@ -11,6 +12,7 @@
     "approved": "Approved",
     "attachments": "Attachments",
     "back": "Back",
+    "backToConferencePage": "Atgal į konferencijos puslapį",
     "backToEventPage": "Back to event page",
     "backToTheMainWebsite": "Back to the main website",
     "byName": "by {{name}}",
@@ -22,6 +24,7 @@
     "conference": "Conference",
     "conferences": "Conferences",
     "contacts": "Contacts",
+    "create": "Create",
     "createdAt": "Created at",
     "createdAtDate": "Created at {{date, datetime}}",
     "createEvent": "Create New Event",
@@ -33,9 +36,12 @@
     "edit": "Edit",
     "editingSomethingQuoted": "Editing \"{{something}}\"",
     "email": "Email",
+    "event": "Event",
     "eventCard": "Conference Card",
+    "eventPage": "Event page",
     "events": "Events",
     "file": "File",
+    "files": "Files",
     "fileType": "File type",
     "from": "From",
     "fullName": "Full Name",
@@ -60,12 +66,16 @@
     "participantsLimit": "Participants Limit",
     "participantsRegistration": "Participants Registration",
     "participate": "Participate",
+    "participatedConferences": "Participated Conferences",
     "participationCertificate": "Participation Certificate",
     "participationRequest": "Participation Request",
     "participationRequests": "Participation Requests",
     "participationRequestStatus": "Participation request status",
     "password": "Password",
     "pending": "Pending",
+    "permissionManage": "Manage",
+    "permissionRead": "Read",
+    "permissions": "Permissions",
     "postfix": "Postfix",
     "prefix": "Prefix",
     "profile": "Profile",
@@ -85,6 +95,8 @@
     "submissionDescription": "Submission Description",
     "submissionTitle": "Submission Title",
     "submit": "Submit",
+    "target": "Target",
+    "targetType": "Target Type",
     "template": "Template",
     "theDataWasNotUpdated": "The data was not updated",
     "time": "Time",
@@ -97,6 +109,7 @@
     "unknown": "Unknown",
     "update": "Update",
     "upload": "Upload",
+    "user": "User",
     "view": "View",
     "viewParticipants": "View Participants",
     "websiteName": "VilniusTECH JMK",
@@ -137,6 +150,15 @@
       "sideMenuLabelProfile": "Profile",
       "sideMenuLabelReviewParticipations": "Assigned papers",
       "sideMenuLabelSystemStatus": "System Status"
+    },
+    "multipleFilesUpload": {
+      "dropFilesIntoThisBoxOrClickToAddFiles": "Drop files into this box or click to add files",
+      "xFilesAttached_one": "{{count}} attached file",
+      "xFilesAttached_other": "{{count}} attached files",
+      "xNewFilesWillBeAttached_one": "{{count}} new file will be attached",
+      "xNewFilesWillBeAttached_other": "{{count}} new files will be attached",
+      "xFilesWillBeRemoved_one": "{{count}} file will be removed",
+      "xFilesWillBeRemoved_other": "{{count}} files will be removed"
     }
   },
 
@@ -200,6 +222,21 @@
       "noParticipations": "This tool is only available when you have at least one approved participation",
       "certificateUnavailableForThisConference" : "Participation Certificate is not available for this conference",
       "submitButtonLabel": "Generate"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "description": "This page allows you to assign permissions to users",
+      "createNewPermission": "Add Permission",
+      "permissionItemDescription": "<0>Action:</0> <2>{{action}}</2>, <5>Target:</5> <7>{{targetTitle}}</7>"
+    },
+    "permissionCreate": {
+      "title": "Create new Permission"
+    },
+    "participationForm": {
+      "title": "Participation Form",
+      "submission": "Submission",
+      "youCanUploadFilesLike": "You can upload files like paper document (DOCX, PDF), presentation slides (PPTX) or any other relevant document.",
+      "afterYouSubmitThisForm": "After you submit this form, it will be reviewed by event management."
     }
   }
 }

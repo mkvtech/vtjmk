@@ -1,5 +1,5 @@
 import { Edit } from '@mui/icons-material'
-import { Box, Button, Container, Divider, List, ListItem, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, List, ListItem, Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Navigate, Link as RouterLink, useParams } from 'react-router-dom'
 import { z } from 'zod'
@@ -52,7 +52,14 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
       {conferenceQuery.isError ? (
         <Typography component='p'>/!\ There was an error while loading a query</Typography>
       ) : conferenceQuery.isLoading || conferenceQuery.isIdle ? (
-        <Typography component='p'>We are loading conference...</Typography>
+        <>
+          <Typography variant='h1'>
+            <Skeleton />
+          </Typography>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </>
       ) : (
         <div>
           <Typography variant='h1' sx={{ my: 4 }}>

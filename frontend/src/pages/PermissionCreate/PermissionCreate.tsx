@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import Link from '../../components/Link/Link'
@@ -26,6 +27,7 @@ interface IFormInput {
 }
 
 export default function PermissionCreate(): JSX.Element {
+  const { t } = useTranslation()
   const { client } = useApi()
   const navigate = useNavigate()
 
@@ -57,11 +59,11 @@ export default function PermissionCreate(): JSX.Element {
   return (
     <Container maxWidth='lg' sx={{ pt: 8 }}>
       <Typography>
-        <Link href={'/permissions'}>Permissions</Link>
+        <Link href={'/permissions'}>{t('common.permissions')}</Link>
       </Typography>
 
       <Typography variant='h1' sx={{ mb: 2 }}>
-        Create new Permission
+        {t('pages.permissionCreate.title')}
       </Typography>
 
       <Divider />
@@ -70,7 +72,7 @@ export default function PermissionCreate(): JSX.Element {
         <Container maxWidth='md' sx={{ mb: 4 }}>
           <Box sx={{ mt: 4 }}>
             <FormControl fullWidth size='small'>
-              <InputLabel id='user-id-label'>User</InputLabel>
+              <InputLabel id='user-id-label'>{t('common.user')}</InputLabel>
               <Controller
                 name='userId'
                 control={control}
@@ -78,7 +80,7 @@ export default function PermissionCreate(): JSX.Element {
                   <Select
                     {...field}
                     labelId='user-id-label'
-                    label='User'
+                    label={t('common.user')}
                     fullWidth
                     size='small'
                     required
@@ -99,7 +101,7 @@ export default function PermissionCreate(): JSX.Element {
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={6}>
               <FormControl fullWidth size='small'>
-                <InputLabel id='target-type-label'>Target Type</InputLabel>
+                <InputLabel id='target-type-label'>{t('common.targetType')}</InputLabel>
                 <Controller
                   name='targetType'
                   control={control}
@@ -111,13 +113,13 @@ export default function PermissionCreate(): JSX.Element {
                         field.onChange(event)
                       }}
                       labelId='target-type-label'
-                      label='Target Type'
+                      label={t('common.targetType')}
                       fullWidth
                       size='small'
                       required
                     >
-                      <MenuItem value='Conference'>Conference</MenuItem>
-                      <MenuItem value='Event'>Event</MenuItem>
+                      <MenuItem value='Conference'>{t('common.conference')}</MenuItem>
+                      <MenuItem value='Event'>{t('common.event')}</MenuItem>
                     </Select>
                   )}
                 />
@@ -126,7 +128,7 @@ export default function PermissionCreate(): JSX.Element {
 
             <Grid item xs={6}>
               <FormControl fullWidth size='small'>
-                <InputLabel id='target-id-label'>Target</InputLabel>
+                <InputLabel id='target-id-label'>{t('common.target')}</InputLabel>
                 <Controller
                   name='targetId'
                   control={control}
@@ -134,7 +136,7 @@ export default function PermissionCreate(): JSX.Element {
                     <Select
                       {...field}
                       labelId='target-id-label'
-                      label='Target'
+                      label={t('common.target')}
                       fullWidth
                       size='small'
                       required
@@ -167,14 +169,21 @@ export default function PermissionCreate(): JSX.Element {
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid item xs={6}>
               <FormControl fullWidth size='small'>
-                <InputLabel id='action-label'>Action</InputLabel>
+                <InputLabel id='action-label'>{t('common.action')}</InputLabel>
                 <Controller
                   name='action'
                   control={control}
                   render={({ field }): JSX.Element => (
-                    <Select {...field} labelId='action-label' label='Action' fullWidth size='small' required>
-                      <MenuItem value='manage'>Manage</MenuItem>
-                      <MenuItem value='read'>Read</MenuItem>
+                    <Select
+                      {...field}
+                      labelId='action-label'
+                      label={t('common.action')}
+                      fullWidth
+                      size='small'
+                      required
+                    >
+                      <MenuItem value='manage'>{t('common.permissionManage')}</MenuItem>
+                      <MenuItem value='read'>{t('common.permissionRead')}</MenuItem>
                     </Select>
                   )}
                 />
@@ -187,7 +196,7 @@ export default function PermissionCreate(): JSX.Element {
 
         <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 4 }}>
           <LoadingButton variant='contained' type='submit'>
-            Create
+            {t('common.create')}
           </LoadingButton>
         </Box>
       </form>

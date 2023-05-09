@@ -35,7 +35,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
       ) : (
         <>
           <Typography>
-            <Link href={`/conferences/${conferenceId}`}>Back to conference page</Link>
+            <Link href={`/conferences/${conferenceId}`}>{t('common.backToConferencePage')}</Link>
           </Typography>
 
           <Typography variant='h1' sx={{ mb: 2 }}>

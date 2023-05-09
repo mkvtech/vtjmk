@@ -69,3 +69,8 @@ export function durationToSentence({
 
   return listFormat.format(sentenceParts)
 }
+
+// Used in react-i18next's <Trans /> component ONLY
+// https://github.com/i18next/react-i18next/issues/1483#issuecomment-1268455602
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TI = any
