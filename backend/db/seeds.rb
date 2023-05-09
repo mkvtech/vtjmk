@@ -100,7 +100,7 @@ DocumentTemplate.import!(
 Event.import!(
   [
     { id: 1, conference_id: 1, date: Date.new(2022, 2,  5), registration_from: Date.new(2022, 1, 1), registration_to: Date.new(2022, 1, 31), status: 'open'   },
-    { id: 2, conference_id: 1, date: Date.new(2023, 5,  5), registration_from: Date.new(2023, 2, 1), registration_to: Date.new(2023, 4, 30), status: 'open'   },
+    { id: 2, conference_id: 1, date: Date.new(2023, 7,  1), registration_from: Date.new(2023, 2, 1), registration_to: Date.new(2023, 6, 30), status: 'open'   },
     { id: 3, conference_id: 1, date: Date.new(2024, 2,  1), registration_from: Date.new(2024, 1, 1), registration_to: Date.new(2024, 1, 20), status: 'open'   },
     { id: 4, conference_id: 2, date: Date.new(2022, 10, 1), registration_from: Date.new(2022, 9, 1), registration_to: Date.new(2022, 9, 30), status: 'open'   },
     { id: 5, conference_id: 2, date: Date.new(2023, 10, 1), registration_from: Date.new(2023, 9, 1), registration_to: Date.new(2023, 9, 30), status: 'open'   },
@@ -303,9 +303,9 @@ User.import!(
     { id:  94, full_name:          'Nomeda Jonaitė', email:        'nomeda.jonaite@example.com', password_digest:, privilege_level: :default },
     { id:  95, full_name:           'Saulė Jonaitė', email:         'saule.jonaite@example.com', password_digest:, privilege_level: :default },
     { id:  96, full_name:         'Justas Jonaitis', email:       'justas.jonaitis@example.com', password_digest:, privilege_level: :default },
-    { id:  97, full_name:         'Živilė Petraitė', email:       'zivile.petraite@example.com', password_digest:, privilege_level: :default },
+    { id:  97, full_name:          'Vaida Petraitė', email:       'vaida.petraite@example.com', password_digest:, privilege_level: :default },
     { id:  98, full_name:          'Domas Jonaitis', email:        'domas.jonaitis@example.com', password_digest:, privilege_level: :default },
-    { id:  99, full_name:          'Živilė Jonaitė', email:        'zivile.jonaite@example.com', password_digest:, privilege_level: :default }
+    { id:  99, full_name:           'Vaida Jonaitė', email:        'vaida.jonaite@example.com', password_digest:, privilege_level: :default }
   ]
 )
 
