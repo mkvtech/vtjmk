@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab'
 import { Alert, Box, Container, Skeleton } from '@mui/material'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
 import LexicalEditor, { LexicalEditorHandle } from '../../../../components/Lexical/LexicalEditor'
@@ -8,6 +9,7 @@ import { useQueryConference } from '../../../../hooks/api/queries'
 import { useApi } from '../../../../hooks/useApi'
 
 export default function Description(): JSX.Element {
+  const { t } = useTranslation()
   const { conferenceId } = useParams() as { conferenceId: string }
   const { client } = useApi()
   const queryClient = useQueryClient()
@@ -40,7 +42,7 @@ export default function Description(): JSX.Element {
     <Container maxWidth='lg' sx={{ mt: 4, mb: 8 }}>
       {updateConferenceDescriptionMutation.isSuccess && (
         <Alert severity='success' sx={{ my: 2 }}>
-          Description was updated successfully
+          {t('pages.eventEdit.descriptionTab.descriptionWasUpdatedSuccessfully')}
         </Alert>
       )}
 
@@ -60,7 +62,7 @@ export default function Description(): JSX.Element {
                 loading={updateConferenceDescriptionMutation.isLoading}
                 disabled={!conferenceQuery.isSuccess}
               >
-                Save
+                {t('common.save')}
               </LoadingButton>
             </Box>
           }
