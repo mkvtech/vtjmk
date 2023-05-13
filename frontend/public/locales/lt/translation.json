@@ -133,6 +133,7 @@
     "xSecondsWithCount_few": "{{count}} sekundės",
     "xSecondsWithCount_one": "{{count}} sekundė",
     "xSecondsWithCount_other": "{{count}} sekundžių",
+    "language": "Kalba",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 

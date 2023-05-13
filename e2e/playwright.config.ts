@@ -1,4 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
+import 'dotenv/config'
 
 /**
  * Read environment variables from file.
@@ -24,7 +25,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: process.env.FRONTEND_URL || process.env.APP_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -34,17 +35,26 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        locale: 'lt',
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        ...devices['Desktop Firefox'],
+        locale: 'lt',
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        locale: 'lt',
+      },
     },
 
     /* Test against mobile viewports. */
@@ -70,18 +80,17 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: [
-    // Backend Rails Server
+    /* Backend Rails Server */
     // {
     //   command: 'cd ../backend && bundle exec rails server',
     //   url: 'http://127.0.0.1:3000',
     //   reuseExistingServer: !process.env.CI,
     // },
-
-    // Frontend Development Server
+    /* Frontend Development Server */
     // {
     //   command: 'yarn --cwd ../frontend dev',
     //   url: 'http://127.0.0.1:5173',
     //   reuseExistingServer: !process.env.CI,
     // },
   ],
-});
+})

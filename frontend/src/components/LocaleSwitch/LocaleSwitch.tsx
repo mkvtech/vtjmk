@@ -6,7 +6,7 @@ import { useApi } from '../../hooks/useApi'
 import { VtjmkLocale } from '../../share'
 
 export default function LocaleSwitch(): JSX.Element {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const { setLocale } = useApi()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -22,13 +22,13 @@ export default function LocaleSwitch(): JSX.Element {
 
   return (
     <>
-      <IconButton onClick={handleLanguageMenuOpen}>
+      <IconButton onClick={handleLanguageMenuOpen} aria-label={t('common.language') || 'Language'}>
         <Translate />
       </IconButton>
 
       <Menu id='languages-menu' anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={(): void => setAnchorEl(null)}>
         <MenuItem onClick={(): void => handleLanguageMenuSetLocale('en-US')}>English</MenuItem>
-        <MenuItem onClick={(): void => handleLanguageMenuSetLocale('lt')}>Lithuanian</MenuItem>
+        <MenuItem onClick={(): void => handleLanguageMenuSetLocale('lt')}>Lietuvių</MenuItem>
       </Menu>
     </>
   )
