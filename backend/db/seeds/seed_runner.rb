@@ -1,0 +1,43 @@
+# Does stuff before and after inserting new records into DB
+class SeedRunner
+  ALLOWED_SEEDS = %i[development test].freeze
+
+  method_object %i[seed_name!]
+
+  def call
+    raise "Unknown seed_name: #{seed_name}" if ALLOWED_SEEDS.exclude?(seed_name)
+
+    before_seed
+    run_seeder
+    reset_sequences
+  end
+
+  def run_seeder
+    filename = Rails.root.join('db', 'seeds', "#{seed_name}.rb")
+    load(filename)
+  end
+
+  def before_seed
+    # Fix RSG (random stuff generator)
+    Faker::Config.random = Random.new(2023)
+
+    # Enable queries logging to console
+    ActiveRecord::Base.logger = Logger.new($stdout)
+  end
+
+  def reset_sequences
+    tables_for_sequence_reset.each do |table|
+      sequence = "#{table}_id_seq"
+
+      ActiveRecord::Base.connection.execute(
+        <<-SQL.squish
+          SELECT SETVAL('#{sequence}', (SELECT MAX(id) FROM #{table}));
+        SQL
+      )
+    end
+  end
+
+  def tables_for_sequence_reset
+    ActiveRecord::Base.connection.tables
+  end
+end
