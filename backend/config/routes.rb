@@ -73,10 +73,18 @@ Rails.application.routes.draw do
 
     # Other
     post '/policies', to: 'policies#index'
-  end
 
-  # Debug
-  get '/debug/database', to: 'debug#database'
+    unless Rails.env.production?
+      # Debug
+      get '/debug/database', to: 'debug#database'
+      get '/debug/time', to: 'debug#time'
+
+      # E2E
+      post '/e2e/db_reset', to: 'e2e#db_reset'
+      post '/e2e/time_travel', to: 'e2e#time_travel'
+      post '/e2e/time_return', to: 'e2e#time_return'
+    end
+  end
 
   # Everything else goes to React App
   get '/*path', to: 'application#react_app', constraints: lambda { |req|

@@ -54,6 +54,12 @@ class ApplicationController < ActionController::Base
     head :forbidden
   end
 
+  def forbid_production_env
+    return unless Rails.env.production?
+
+    head :forbidden
+  end
+
   private
 
   # https://guides.rubyonrails.org/i18n.html#inferring-locale-from-the-language-header
