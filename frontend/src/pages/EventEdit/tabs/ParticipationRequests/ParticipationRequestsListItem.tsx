@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Button, ListItem, Typography } from '@mui/material'
 import { t } from 'i18next'
 import { Link as RouterLink } from 'react-router-dom'
 import ParticipationStatusChip from '../../../../components/ParticipationStatusChip'
@@ -7,7 +7,7 @@ import UserButton from '../../../Participation/UserButton'
 
 export default function ParticipantsListItem({ participation }: { participation: EventParticipation }): JSX.Element {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
+    <ListItem sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
       <UserButton user={participation.user} withEmail />
 
       <Typography sx={{ ml: 'auto' }} component='span' color='textSecondary'>
@@ -20,6 +20,6 @@ export default function ParticipantsListItem({ participation }: { participation:
       <Button sx={{ ml: 1 }} component={RouterLink} to={`/participations/${participation.id}`}>
         {t('common.view')}
       </Button>
-    </Box>
+    </ListItem>
   )
 }

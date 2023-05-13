@@ -40,7 +40,7 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <NoDataText>{t('common.noReviewerAssigned')}</NoDataText>
           {editable && (
-            <IconButton onClick={(): void => setEdit(true)}>
+            <IconButton onClick={(): void => setEdit(true)} aria-label={t('common.assignReviewer') || undefined}>
               <Edit />
             </IconButton>
           )}
@@ -50,7 +50,11 @@ export default function Reviewer({ editable }: { editable: boolean }): JSX.Eleme
           <UserButton user={participationQuery.data.reviewer} withEmail sx={{ flexGrow: 1, minWidth: 0 }} />
 
           {editable && (
-            <IconButton onClick={(): void => setEdit(true)} sx={{ ml: 1 }}>
+            <IconButton
+              onClick={(): void => setEdit(true)}
+              sx={{ ml: 1 }}
+              aria-label={t('common.assignReviewer') || undefined}
+            >
               <Edit />
             </IconButton>
           )}

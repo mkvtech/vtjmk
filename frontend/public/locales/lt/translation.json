@@ -10,6 +10,7 @@
     "administration": "Administravimas",
     "all": "Visi",
     "approved": "Patvirtinta",
+    "assignReviewer": "Priskirti recenzentą",
     "attachments": "Prisiegti failai",
     "back": "Atgal",
     "backToConferencePage": "Atgal į konferencijos puslapį",
@@ -50,6 +51,7 @@
     "getCertificate": "Gauti sertifikatą",
     "github": "GitHub",
     "hidden": "Paslėpta",
+    "language": "Kalba",
     "lastUpdate": "Paskutinis pakeitimas",
     "login": "Prisijungti",
     "logout": "Atsijungti",
@@ -133,7 +135,6 @@
     "xSecondsWithCount_few": "{{count}} sekundės",
     "xSecondsWithCount_one": "{{count}} sekundė",
     "xSecondsWithCount_other": "{{count}} sekundžių",
-    "language": "Kalba",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 

@@ -10,6 +10,7 @@
     "administration": "Administration",
     "all": "All",
     "approved": "Approved",
+    "assignReviewer": "Assign reviewer",
     "attachments": "Attachments",
     "back": "Back",
     "backToConferencePage": "Atgal į konferencijos puslapį",
@@ -49,6 +50,7 @@
     "getCertificate": "Get a certificate",
     "github": "GitHub",
     "hidden": "Hidden",
+    "language": "Language",
     "lastUpdate": "Last Update",
     "login": "Login",
     "logout": "Logout",
@@ -128,7 +130,6 @@
     "xSecondsWithCount_other": "{{count}} seconds",
     "xYearsWithCount_one": "{{count}} year",
     "xYearsWithCount_other": "{{count}} years",
-    "language": "Language",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 

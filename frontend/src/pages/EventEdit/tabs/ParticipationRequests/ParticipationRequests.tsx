@@ -1,4 +1,14 @@
-import { Box, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Skeleton } from '@mui/material'
+import {
+  Box,
+  Container,
+  FormControl,
+  InputLabel,
+  List,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Skeleton,
+} from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
@@ -88,11 +98,11 @@ export default function Participants(): JSX.Element {
           <Skeleton />
         </>
       ) : participationsQuery.isSuccess && participationsQuery.data.length > 0 ? (
-        <>
+        <List>
           {participationsQuery.data.map((participation) => (
             <ParticipationRequestsListItem key={participation.id} participation={participation} />
           ))}
-        </>
+        </List>
       ) : participationsQuery.isSuccess ? (
         <>
           <NoDataText>{t('common.noData')}</NoDataText>

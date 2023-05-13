@@ -112,7 +112,11 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
         <>
           <Grid container columnSpacing={{ xs: 0, md: 4 }}>
             <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
-              <Paper variant='outlined' sx={{ position: 'sticky', top: '150px', mt: 4, p: 2 }}>
+              <Paper
+                variant='outlined'
+                sx={{ position: 'sticky', top: '150px', mt: 4, p: 2 }}
+                data-test-id='participation-side-bar'
+              >
                 <Status editable={isAllowed('updateStatus')} />
 
                 <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>

@@ -1,4 +1,4 @@
-import { Container, Skeleton, Typography } from '@mui/material'
+import { Container, List, Skeleton, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
@@ -52,9 +52,11 @@ export default function ReviewParticipations(): JSX.Element {
         <>
           <Typography>{t('pages.reviewedParticipations.thesePapersAreAwaitingReview')}</Typography>
 
-          {pendingParticipations.map((participation) => (
-            <ParticipationListItem key={participation.id} participation={participation} />
-          ))}
+          <List>
+            {pendingParticipations.map((participation) => (
+              <ParticipationListItem key={participation.id} participation={participation} />
+            ))}
+          </List>
         </>
       ) : (
         'Error'

@@ -1,6 +1,7 @@
 import { Close, Done } from '@mui/icons-material'
 import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material'
 import { SyntheticEvent, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { fetchParticipationAvailableReviewers } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
@@ -23,6 +24,7 @@ export default function ReviewerForm({
   onEditDone: () => void
   participationId: string
 }): JSX.Element {
+  const { t } = useTranslation()
   const { client } = useApi()
   const queryClient = useQueryClient()
 
@@ -97,11 +99,16 @@ export default function ReviewerForm({
           sx={{ flexGrow: 1 }}
         />
 
-        <IconButton size='small' sx={{ ml: 1 }} type='submit'>
+        <IconButton size='small' sx={{ ml: 1 }} type='submit' aria-label={t('common.submit') || undefined}>
           <Done />
         </IconButton>
 
-        <IconButton size='small' sx={{ ml: 1 }} onClick={(): void => onEditDone()}>
+        <IconButton
+          size='small'
+          sx={{ ml: 1 }}
+          onClick={(): void => onEditDone()}
+          aria-label={t('common.cancel') || undefined}
+        >
           <Close />
         </IconButton>
       </Box>

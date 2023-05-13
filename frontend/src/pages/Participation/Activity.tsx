@@ -1,4 +1,4 @@
-import { Avatar, Box, Skeleton, Typography } from '@mui/material'
+import { Avatar, Box, List, ListItem, Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import PageError from '../../components/PageError/PageError'
@@ -33,19 +33,21 @@ export default function Activity({ showForm }: { showForm: boolean }): JSX.Eleme
             <>
               <Typography>{t('common.commentsWithCount', { count: commentsQuery.data.length })}</Typography>
 
-              {commentsQuery.data.map((comment) => (
-                <Box key={comment.id} sx={{ mt: 4, display: 'flex' }}>
-                  <Avatar src={comment.user.avatarUrl} />
+              <List data-test-id='participation-activity'>
+                {commentsQuery.data.map((comment) => (
+                  <ListItem key={comment.id} sx={{ mt: 4, display: 'flex' }}>
+                    <Avatar src={comment.user.avatarUrl} />
 
-                  <Box sx={{ ml: 2 }}>
-                    <Typography>
-                      <b>{comment.user.fullName}</b> <SpanCreatedAt date={comment.createdAt} />
-                    </Typography>
+                    <Box sx={{ ml: 2 }}>
+                      <Typography>
+                        <b>{comment.user.fullName}</b> <SpanCreatedAt date={comment.createdAt} />
+                      </Typography>
 
-                    <Typography sx={{ whiteSpace: 'pre-wrap' }}>{comment.text}</Typography>
-                  </Box>
-                </Box>
-              ))}
+                      <Typography sx={{ whiteSpace: 'pre-wrap' }}>{comment.text}</Typography>
+                    </Box>
+                  </ListItem>
+                ))}
+              </List>
             </>
           ) : (
             <NoDataText>{t('pages.participation.noComments')}</NoDataText>
