@@ -1,30 +1,31 @@
 version: '3.9'
 
-# This file builds and runs project for testing
+# This file builds and runs project for E2E tests
 
 services:
-  postgres_test:
+  postgres_e2e:
     image: postgres:15.2
-    container_name: vtjmk_postgres_test
+    container_name: vtjmk_postgres_e2e
     ports:
       - '5433:5432'
     environment:
       POSTGRES_PASSWORD: password
 
-  app_test:
+  app_e2e:
     build:
       context: .
       args:
-        RAILS_ENV: test
+        RAILS_ENV: e2e
         VITE_VTJMK_BACKEND_URL: "http://localhost:3001"
-    image: vtjmk_test:latest
-    container_name: vtjmk_test
+    image: vtjmk_e2e:latest
+    container_name: vtjmk_e2e
     depends_on:
-      - postgres_test
+      - postgres_e2e
     ports:
       - '3001:3000'
     environment:
-      PSQL_HOST: postgres_test
+      PSQL_HOST: postgres_e2e
       PSQL_PORT: 5432
       PSQL_USERNAME: postgres
       PSQL_PASSWORD: password
+      SECRET_KEY_BASE: e2e
