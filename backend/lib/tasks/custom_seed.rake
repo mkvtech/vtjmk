@@ -2,12 +2,13 @@ require './db/seeds/seed_runner'
 
 namespace :db do
   namespace :seed do
-    task development: :environment do
-      SeedRunner.call(seed_name: :development)
-    end
+    %i[development e2e].each do |task_name|
+      task task_name => :environment do
+        # Enable queries logging to console
+        ActiveRecord::Base.logger = Logger.new($stdout)
 
-    task e2e: :environment do
-      SeedRunner.call(seed_name: :e2e)
+        SeedRunner.call(seed_name: task_name)
+      end
     end
   end
 end

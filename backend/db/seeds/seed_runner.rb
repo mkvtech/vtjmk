@@ -21,9 +21,6 @@ class SeedRunner
   def before_seed
     # Fix RSG (random stuff generator)
     # Faker::Config.random = Random.new(2023)
-
-    # Enable queries logging to console
-    ActiveRecord::Base.logger = Logger.new($stdout)
   end
 
   def reset_sequences

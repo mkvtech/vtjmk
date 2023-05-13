@@ -8,4 +8,7 @@
 
 require_relative 'seeds/seed_runner'
 
+# Enable queries logging to console
+ActiveRecord::Base.logger = Logger.new($stdout)
+
 SeedRunner.call(seed_name: Rails.env)
