@@ -30,3 +30,7 @@
 
 # SimpleCov, code coverage
 coverage
+
+# Secrets & Configuration
+.env*
+!.env.example

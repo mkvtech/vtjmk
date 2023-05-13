@@ -1,0 +1,30 @@
+version: '3.9'
+
+# This file builds and runs project for testing
+
+services:
+  postgres_test:
+    image: postgres:15.2
+    container_name: vtjmk_postgres_test
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: password
+
+  app_test:
+    build:
+      context: .
+      args:
+        RAILS_ENV: test
+        VITE_VTJMK_BACKEND_URL: "http://localhost:3001"
+    image: vtjmk_test:latest
+    container_name: vtjmk_test
+    depends_on:
+      - postgres_test
+    ports:
+      - '3001:3000'
+    environment:
+      PSQL_HOST: postgres_test
+      PSQL_PORT: 5432
+      PSQL_USERNAME: postgres
+      PSQL_PASSWORD: password

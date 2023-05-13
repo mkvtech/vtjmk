@@ -31,7 +31,7 @@ declare global {
 }
 
 if (!import.meta.env.PROD) {
-  console.log('import.meta.env: ', import.meta.env)
+  // console.log('import.meta.env: ', import.meta.env)
 
   window.vtjmk = {}
 

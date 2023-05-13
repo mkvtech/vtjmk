@@ -1,0 +1,64 @@
+# Note: see ./frontend/.dockerignore
+# Logs
+/frontend/logs
+/frontend/*.log
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+/frontend/lerna-debug.log*
+
+/frontend/node_modules
+/frontend/dist
+/frontend/dist-ssr
+/frontend/*.local
+
+# Editor directories and files
+/frontend/.vscode/*
+!/frontend/.vscode/extensions.json
+/frontend/.idea
+/frontend/.DS_Store
+/frontend/*.suo
+/frontend/*.ntvs*
+/frontend/*.njsproj
+/frontend/*.sln
+/frontend/*.sw?
+
+
+# Note: see ./backend/.dockerignore
+# Ignore bundler config.
+/backend/.bundle
+
+# Ignore all logfiles and tempfiles.
+/backend/log/*
+/backend/tmp/*
+!/backend/log/.keep
+!/backend/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/backend/tmp/pids/*
+!/backend/tmp/pids/
+!/backend/tmp/pids/.keep
+
+# Ignore uploaded files in development.
+/backend/storage/*
+!/backend/storage/.keep
+/backend/tmp/storage/*
+!/backend/tmp/storage/
+!/backend/tmp/storage/.keep
+
+/backend/public/assets
+
+# Ignore master key for decrypting credentials and more.
+/backend/config/master.key
+
+# Ignore LetterAvatars cache files
+/backend/public/system/letter_avatars/*
+!/backend/public/system/letter_avatars/.keep
+
+# SimpleCov, code coverage
+/backend/coverage
+
+# Secrets & Configuration
+/backend/.env*
+!/backend/.env.example
