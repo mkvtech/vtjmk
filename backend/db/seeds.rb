@@ -8,4 +8,4 @@
 
 require_relative 'seeds/seed_runner'
 
-SeedRunner.call(seed_name: Rails.env.test? ? :test : :development)
+SeedRunner.call(seed_name: Rails.env)

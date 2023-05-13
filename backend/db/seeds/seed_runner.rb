@@ -1,11 +1,12 @@
 # Does stuff before and after inserting new records into DB
 class SeedRunner
-  ALLOWED_SEEDS = %i[development test].freeze
+  ALLOWED_SEEDS = %w[development e2e].freeze
+  IGNORED_TABLES_ON_SEQUENCE_RESET = %w[schema_migrations ar_internal_metadata].freeze
 
   method_object %i[seed_name!]
 
   def call
-    raise "Unknown seed_name: #{seed_name}" if ALLOWED_SEEDS.exclude?(seed_name)
+    raise "Unknown seed_name: #{seed_name}" if ALLOWED_SEEDS.exclude?(seed_name.to_s)
 
     before_seed
     run_seeder
@@ -19,7 +20,7 @@ class SeedRunner
 
   def before_seed
     # Fix RSG (random stuff generator)
-    Faker::Config.random = Random.new(2023)
+    # Faker::Config.random = Random.new(2023)
 
     # Enable queries logging to console
     ActiveRecord::Base.logger = Logger.new($stdout)
@@ -38,6 +39,6 @@ class SeedRunner
   end
 
   def tables_for_sequence_reset
-    ActiveRecord::Base.connection.tables
+    ActiveRecord::Base.connection.tables.without(IGNORED_TABLES_ON_SEQUENCE_RESET)
   end
 end

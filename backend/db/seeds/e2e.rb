@@ -119,13 +119,13 @@ Permission.import!(
 # EventReviewers
 EventReviewer.import!(
   [
-    { id:  1, event_id: 1, reviewer_id: 4 },
-    { id:  2, event_id: 2, reviewer_id: 4 },
-    { id:  3, event_id: 3, reviewer_id: 4 },
+    { id: 1, event_id: 1, reviewer_id: 4 },
+    { id: 2, event_id: 2, reviewer_id: 4 },
+    { id: 3, event_id: 3, reviewer_id: 4 },
 
-    { id:  4, event_id: 4, reviewer_id: 5 },
-    { id:  5, event_id: 5, reviewer_id: 5 },
-    { id:  6, event_id: 6, reviewer_id: 5 },
+    { id: 4, event_id: 4, reviewer_id: 5 },
+    { id: 5, event_id: 5, reviewer_id: 5 },
+    { id: 6, event_id: 6, reviewer_id: 5 },
   ]
 )
 

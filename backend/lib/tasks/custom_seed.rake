@@ -1,11 +1,13 @@
+require './db/seeds/seed_runner'
+
 namespace :db do
   namespace :seed do
-    task :development do
-      SeedRunner.call(:development)
+    task development: :environment do
+      SeedRunner.call(seed_name: :development)
     end
 
-    task :test do
-      SeedRunner.call(:test)
+    task e2e: :environment do
+      SeedRunner.call(seed_name: :e2e)
     end
   end
 end
