@@ -1,7 +1,7 @@
-import { Box, Container, Divider, Grid, Link, Paper, Skeleton, Typography } from '@mui/material'
+import { Box, Container, Divider, Grid, Link, Paper, Skeleton, Tab, Tabs, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, Route, Link as RouterLink, Routes, useMatch, useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import PageError from '../../components/PageError/PageError'
 import SpanCreatedAt from '../../components/Typography/SpanCreatedAt'
@@ -9,8 +9,10 @@ import { useQueryParticipation, useQueryPolicies } from '../../hooks/api/queries
 import { useIsAllowed } from '../../hooks/api/share'
 import Activity from './Activity'
 import General from './General'
+import Reviews from './MainColumn/Tabs/Reviews/Reviews'
 import OptionsButton from './OptionsButton'
 import Reviewer from './Reviewer'
+import Reviewers from './SideColumn/Reviewers/Reviewers'
 import Status from './Status'
 import UserButton from './UserButton'
 
@@ -28,6 +30,7 @@ const policiesSchema = z.object({
           comment: z.boolean(),
           destroy: z.boolean(),
           generateCertificate: z.boolean(),
+          reviewsCreate: z.boolean(),
           update: z.boolean(),
           updateReviewer: z.boolean(),
           updateStatus: z.boolean(),
@@ -36,6 +39,8 @@ const policiesSchema = z.object({
     }),
   }),
 })
+
+const tabRoutes = ['activity', 'reviews']
 
 function Page({ participationId }: { participationId: string }): JSX.Element {
   const { t } = useTranslation()
@@ -52,6 +57,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               'comment',
               'destroy',
               'generateCertificate',
+              'reviewsCreate',
               'update',
               'updateReviewer',
               'updateStatus',
@@ -69,6 +75,12 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
   const generateCertificateAllowed = isAllowed('generateCertificate')
 
   const showOptions = updateAllowed || destroyAllowed || generateCertificateAllowed
+
+  const match = useMatch('/participations/:id/:tab')
+  const currentTab = match?.params.tab
+  if (!currentTab || !tabRoutes.includes(currentTab)) {
+    return <Navigate to={tabRoutes[0]} replace />
+  }
 
   return participationQuery.isError ? (
     <PageError withTitle error={participationQuery.error} />
@@ -127,6 +139,10 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
 
                 <Reviewer editable={isAllowed('updateReviewer')} />
 
+                {participationQuery.data.reviews !== null ? (
+                  <Reviewers reviews={participationQuery.data.reviews} />
+                ) : null}
+
                 <Typography component='h2' variant='h4' sx={{ mt: 4, mb: 2 }}>
                   {t('common.createdAt')}
                 </Typography>
@@ -150,7 +166,32 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
 
               <Divider />
 
-              <Activity showForm={isAllowed('comment')} />
+              {participationQuery.data.reviews !== null ? (
+                <>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={currentTab} aria-label='Tabs'>
+                      <Tab label={t('common.activity')} value='activity' to='activity' component={RouterLink} />
+                      <Tab label={t('common.reviews')} value='reviews' to='reviews' component={RouterLink} />
+                    </Tabs>
+                  </Box>
+
+                  <Routes>
+                    <Route path='activity' element={<Activity showForm={isAllowed('comment')} />} />
+                    <Route
+                      path='reviews'
+                      element={
+                        <Reviews reviews={participationQuery.data.reviews} showForm={isAllowed('reviewsCreate')} />
+                      }
+                    />
+                  </Routes>
+                </>
+              ) : (
+                <>
+                  <Typography variant='h2'>{t('common.activity')}</Typography>
+
+                  <Activity showForm={isAllowed('comment')} />
+                </>
+              )}
             </Grid>
           </Grid>
         </>

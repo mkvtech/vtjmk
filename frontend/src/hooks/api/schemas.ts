@@ -83,6 +83,7 @@ const userSchemaSimple = z.object({
   fullName: z.string(),
   avatarUrl: z.string(),
 })
+export type UserSimple = z.infer<typeof userSchemaSimple>
 
 export const userSchema = z.object({
   id: z.string(),
@@ -97,30 +98,36 @@ export type User = z.infer<typeof userSchema>
 export const participationStatusSchema = z.union([z.literal('pending'), z.literal('approved'), z.literal('rejected')])
 export type ParticipationStatus = z.infer<typeof participationStatusSchema>
 
+export const reviewStatusSchema = z.union([z.literal('pending'), z.literal('approved'), z.literal('rejected')])
+export type ReviewStatus = z.infer<typeof reviewStatusSchema>
+
+export const participationReviewSchema = z.object({
+  id: z.string(),
+  status: reviewStatusSchema,
+  comment: z.string().nullable(),
+  userId: z.string(),
+  user: userSchemaSimple,
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export type ParticipationReview = z.infer<typeof participationReviewSchema>
+
 export const participationSchema = z.object({
   id: z.string(),
+
   userId: z.string(),
-  user: z.object({
-    id: z.string(),
-    email: z.string(),
-    fullName: z.string(),
-    avatarUrl: z.string(),
-  }),
+  user: userSchemaSimple,
+
   eventId: z.string(),
   event: z.object({
     id: z.string(),
     title: z.string(),
     date: z.string().transform(isoToDate),
   }),
+
   reviewerId: z.string().nullable(),
-  reviewer: z
-    .object({
-      id: z.string(),
-      email: z.string(),
-      fullName: z.string(),
-      avatarUrl: z.string(),
-    })
-    .nullable(),
+  reviewer: userSchemaSimple.nullable(),
+
   status: participationStatusSchema,
   submissionTitle: z.string().nullable(),
   submissionDescription: z.string().nullable(),
@@ -132,6 +139,9 @@ export const participationSchema = z.object({
       downloadUrl: z.string(),
     })
   ),
+
+  reviews: z.array(participationReviewSchema).nullable(),
+
   createdAt: z.string().transform(isoToDate),
   updatedAt: z.string().transform(isoToDate),
 })

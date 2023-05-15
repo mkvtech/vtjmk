@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: '/events/:eventId/edit/*', element: <EventEdit /> },
       { path: '/events/:eventId/participate', element: <ParticipationForm /> },
       { path: '/home', element: <Home /> },
-      { path: '/participations/:participationId', element: <Participation /> },
+      { path: '/participations/:participationId/*', element: <Participation /> },
       { path: '/permissions', element: <Permissions /> },
       { path: '/permissions/create', element: <PermissionCreate /> },
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
