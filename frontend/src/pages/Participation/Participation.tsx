@@ -123,8 +123,8 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
         </>
       ) : (
         <>
-          <Grid container columnSpacing={{ xs: 0, md: 4 }}>
-            <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+          <Grid container columnSpacing={{ xs: 0, lg: 4 }}>
+            <Grid item xs={12} lg={4} order={{ xs: 1, lg: 2 }}>
               <Paper
                 variant='outlined'
                 sx={{ position: 'sticky', top: '150px', mt: 4, p: 2 }}
@@ -160,7 +160,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+            <Grid item xs={12} lg={8} order={{ xs: 2, lg: 1 }}>
               <General edit={editGeneral} onEditDone={(): void => setEditGeneral(false)} />
 
               <Divider />

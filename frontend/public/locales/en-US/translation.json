@@ -191,7 +191,12 @@
       "reviewsTabTitle": "Reviews",
       "yourReviewHeading": "Your Review",
       "otherReviewsHeading": "Other Reviews",
-      "noReviewerAssigned": "No reviewers assigned"
+      "noReviewerAssigned": "No reviewers assigned",
+      "requestReviewHeading": "Request a review",
+      "reviewsHeading": "Reviews",
+      "noReviews": "No reviews",
+      "xReviews_one": "{{count}} review",
+      "xReviews_other": "{{count}} reviews"
     },
     "reviewedParticipations": {
       "papersAssignedForReview": "Papers Assigned to You for Review",

@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import NoDataText from '../../../../../components/Typography/NoDataText'
 import { ParticipationReview } from '../../../../../hooks/api/schemas'
 import { useApi } from '../../../../../hooks/useApi'
 import CurrentUserReview from './CurrentUserReview'
@@ -45,13 +46,17 @@ export default function Reviews({
 
           <CurrentUserReview review={currentUserReview} showDelete={showDelete} />
 
-          <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
-            {t('pages.participation.otherReviewsHeading')}
-          </Typography>
+          {otherReviews.length > 0 ? (
+            <>
+              <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
+                {t('pages.participation.otherReviewsHeading')}
+              </Typography>
 
-          {sortReviews(otherReviews).map((review) => (
-            <ReviewCard key={review.id} review={review} showDelete={showDelete} />
-          ))}
+              {sortReviews(otherReviews).map((review) => (
+                <ReviewCard key={review.id} review={review} showDelete={showDelete} />
+              ))}
+            </>
+          ) : null}
         </>
       ) : (
         <>
@@ -59,11 +64,17 @@ export default function Reviews({
             {t('pages.participation.reviewsHeading')}
           </Typography>
 
-          <Typography sx={{ my: 2 }}>{t('pages.participation.xReviews', { count: reviews.length })}</Typography>
+          {reviews.length > 0 ? (
+            <>
+              <Typography sx={{ my: 2 }}>{t('pages.participation.xReviews', { count: reviews.length })}</Typography>
 
-          {sortReviews(reviews).map((review) => (
-            <ReviewCard key={review.id} review={review} showDelete={showDelete} />
-          ))}
+              {sortReviews(reviews).map((review) => (
+                <ReviewCard key={review.id} review={review} showDelete={showDelete} />
+              ))}
+            </>
+          ) : (
+            <NoDataText>{t('pages.participation.noReviews')}</NoDataText>
+          )}
         </>
       )}
     </>

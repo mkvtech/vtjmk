@@ -199,7 +199,13 @@
       "reviewsTabTitle": "Recenzavimas",
       "yourReviewHeading": "Jūsų recenzija",
       "otherReviewsHeading": "Kitos recenzijos",
-      "noReviewerAssigned": "Nėra priskirtų recenzentų"
+      "noReviewerAssigned": "Nėra priskirtų recenzentų",
+      "requestReviewHeading": "Priskirti darbą recenzentui",
+      "reviewsHeading": "Recenzijos",
+      "noReviews": "Nėra recenzijų",
+      "xReviews_one": "{{count}} recenzija",
+      "xReviews_few": "{{count}} recenzijos",
+      "xReviews_other": "{{count}} recenzijų"
     },
     "reviewedParticipations": {
       "papersAssignedForReview": "Recenzavimo moksliniai straipsniai",
