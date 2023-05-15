@@ -19,9 +19,11 @@ function sortReviews(reviews: readonly ParticipationReview[]): ParticipationRevi
 
 export default function Reviews({
   reviews,
+  showDelete,
   showForm,
 }: {
   reviews: readonly ParticipationReview[]
+  showDelete: boolean
   showForm: boolean
 }): JSX.Element {
   const { t } = useTranslation()
@@ -57,7 +59,7 @@ export default function Reviews({
           <Typography sx={{ my: 2 }}>{t('pages.participation.xReviews', { count: reviews.length })}</Typography>
 
           {sortReviews(reviews).map((review) => (
-            <ReviewCard key={review.id} review={review} />
+            <ReviewCard key={review.id} review={review} showDelete={showDelete} />
           ))}
         </>
       )}

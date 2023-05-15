@@ -31,6 +31,7 @@ const policiesSchema = z.object({
           destroy: z.boolean(),
           generateCertificate: z.boolean(),
           reviewsCreate: z.boolean(),
+          reviewsDestroy: z.boolean(),
           update: z.boolean(),
           updateReviewer: z.boolean(),
           updateStatus: z.boolean(),
@@ -58,6 +59,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
               'destroy',
               'generateCertificate',
               'reviewsCreate',
+              'reviewsDestroy',
               'update',
               'updateReviewer',
               'updateStatus',
@@ -180,7 +182,11 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
                     <Route
                       path='reviews'
                       element={
-                        <Reviews reviews={participationQuery.data.reviews} showForm={isAllowed('reviewsCreate')} />
+                        <Reviews
+                          reviews={participationQuery.data.reviews}
+                          showDelete={isAllowed('reviewsDestroy')}
+                          showForm={isAllowed('reviewsCreate')}
+                        />
                       }
                     />
                   </Routes>

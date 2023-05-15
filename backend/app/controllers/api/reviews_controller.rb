@@ -10,14 +10,14 @@ module Api
     end
 
     def destroy
-      authorize! @review
+      authorize! @review.participation, to: :reviews_destroy?, with: ParticipationPolicy
       @review.destroy
     end
 
     private
 
     def set_review
-      @review = Review.includes(:user, participation: :event ).find(params[:id])
+      @review = Review.includes(:user, participation: :event).find(params[:id])
     end
   end
 end

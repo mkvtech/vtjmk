@@ -20,7 +20,9 @@ class TestPolicies
     participations: {
       policy_class: ParticipationPolicy,
       resource_class: Participation,
-      items: %w[comment destroy generate_certificate reviews_create update update_reviewer update_status]
+      items: %w[
+        comment destroy generate_certificate reviews_create reviews_destroy update update_reviewer update_status
+      ]
     }
   }.freeze
 

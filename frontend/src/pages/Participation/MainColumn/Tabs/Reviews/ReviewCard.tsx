@@ -22,7 +22,13 @@ const StyledPaper = styled(Paper, {
       : 'transparent',
 }))
 
-export default function ReviewCard({ review }: { review: ParticipationReview }): JSX.Element {
+export default function ReviewCard({
+  review,
+  showDelete,
+}: {
+  review: ParticipationReview
+  showDelete: boolean
+}): JSX.Element {
   const { t } = useTranslation()
   const { client } = useApi()
   const queryClient = useQueryClient()
@@ -66,13 +72,15 @@ export default function ReviewCard({ review }: { review: ParticipationReview }):
               sx={{ mr: 1 }}
             />
 
-            <LoadingIconButton
-              icon={<Delete />}
-              label={t('common.delete')}
-              loading={deleteMutation.isLoading}
-              onClick={handleDelete}
-              size='small'
-            />
+            {showDelete ? (
+              <LoadingIconButton
+                icon={<Delete />}
+                label={t('common.delete')}
+                loading={deleteMutation.isLoading}
+                onClick={handleDelete}
+                size='small'
+              />
+            ) : null}
           </Box>
         </Box>
 
