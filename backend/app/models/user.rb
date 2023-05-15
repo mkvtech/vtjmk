@@ -11,6 +11,7 @@ class User < ApplicationRecord
   )
   has_many(:event_reviewers, dependent: :destroy, foreign_key: :reviewer_id, inverse_of: :reviewer)
   has_many(:reviewing_events, through: :event_reviewers, source: :event)
+  has_many :reviews, dependent: :restrict_with_exception
 
   validates :email, uniqueness: true, presence: true
   validates :password, length: { minimum: 8 }, allow_nil: true

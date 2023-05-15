@@ -30,6 +30,14 @@ class ParticipationPolicy < ApplicationPolicy
     manage_conference?
   end
 
+  def reviews_index?
+    reviewer? || manage_conference?
+  end
+
+  def reviews_create?
+    manage_conference?
+  end
+
   private
 
   def participant?

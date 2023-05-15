@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_08_192831) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_14_092215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -156,6 +156,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_192831) do
     t.index ["user_id"], name: "index_permissions_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "status", default: "pending"
+    t.text "comment"
+    t.bigint "participation_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participation_id"], name: "index_reviews_on_participation_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -179,4 +190,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_08_192831) do
   add_foreign_key "participations", "users"
   add_foreign_key "participations", "users", column: "reviewer_id"
   add_foreign_key "permissions", "users"
+  add_foreign_key "reviews", "participations"
+  add_foreign_key "reviews", "users"
 end

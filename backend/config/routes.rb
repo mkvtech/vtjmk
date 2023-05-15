@@ -45,12 +45,14 @@ Rails.application.routes.draw do
       end
 
       scope module: :participations do
-        resources :comments, only: %i[create index]
+        resources :comments, only: %i[index create]
+        resources :reviews, only: %i[index create]
 
         get '/available_reviewers', to: 'users#available_reviewers_index'
       end
     end
 
+    resources :reviews, only: %i[update]
     resources :users, only: %i[index]
 
     # Authenticated User
@@ -60,6 +62,8 @@ Rails.application.routes.draw do
           resources :document_templates, only: %i[index]
         end
       end
+
+      resources :reviews, only: %i[index]
     end
 
     # Admin

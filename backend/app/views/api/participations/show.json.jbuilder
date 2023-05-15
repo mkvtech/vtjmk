@@ -25,6 +25,21 @@ else
   json.reviewer nil
 end
 
+if allowed_to? :reviews_index?, @participation
+  json.reviews do
+    json.array! @participation.reviews do |review|
+      json.id review.id.to_s
+
+      json.user_id review.user_id.to_s
+      json.user review.user.to_builder_simple
+
+      json.extract! review, *%i[status comment created_at updated_at]
+    end
+  end
+else
+  json.reviews nil
+end
+
 json.submission_files do
   json.array! @participation.submission_files_attachments do |attachment|
     json.id attachment.id.to_s
