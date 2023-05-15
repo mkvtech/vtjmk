@@ -18,8 +18,10 @@ import {
   participationAvailableReviewerSchema,
   participationSchema,
   permissionsSchema,
+  ReviewStatus,
   userParticipationsDocumentTemplatesSchema,
   userParticipationsSchema,
+  userReviewSchema,
   userSchema,
 } from './schemas'
 
@@ -224,6 +226,19 @@ export function useQueryUserParticipation(params: {
     const response = await client.get('/user/participations')
     const parsedResponse = userParticipationsSchema.parse(response.data)
     return parsedResponse.find((participation) => participation.eventId === params.eventId)
+  })
+}
+
+const userReviewsSchema = z.array(userReviewSchema)
+export function fetchUserReviews({ client }: { client: AxiosInstance }) {
+  return client.get('/user/reviews').then((response) => userReviewsSchema.parse(response.data))
+}
+
+export const userReviewsQueryKey = ['user', 'reviews']
+export function useQueryUserReviews({ status }: { status?: readonly ReviewStatus[] }) {
+  const { client } = useApi()
+  return useQuery(userReviewsQueryKey, () => fetchUserReviews({ client }), {
+    select: (data) => (status ? data.filter((review) => status.includes(review.status)) : data),
   })
 }
 

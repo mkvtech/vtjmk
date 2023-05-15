@@ -204,6 +204,39 @@ export const userParticipationsDocumentTemplateSchema = z.object({
 })
 export const userParticipationsDocumentTemplatesSchema = z.array(userParticipationsDocumentTemplateSchema)
 
+export const userReviewSchema = z.object({
+  id: z.string(),
+  status: reviewStatusSchema,
+  comment: z.string().nullable(),
+
+  userId: z.string(),
+  user: userSchemaSimple,
+
+  participationId: z.string(),
+  participation: z.object({
+    id: z.string(),
+
+    submissionTitle: z.string().nullable(),
+
+    userId: z.string(),
+    user: userSchemaSimple,
+
+    eventId: z.string(),
+    event: z.object({
+      id: z.string(),
+      title: z.string(),
+      date: z.string().transform(isoToDate),
+    }),
+
+    createdAt: z.string().transform(isoToDate),
+    updatedAt: z.string().transform(isoToDate),
+  }),
+
+  createdAt: z.string().transform(isoToDate),
+  updatedAt: z.string().transform(isoToDate),
+})
+export type UserReview = z.infer<typeof userReviewSchema>
+
 export const conferenceDocumentTemplateSchema = z.object({
   id: z.string(),
   name: z.string(),

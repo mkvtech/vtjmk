@@ -130,6 +130,7 @@
     "xSecondsWithCount_other": "{{count}} seconds",
     "xYearsWithCount_one": "{{count}} year",
     "xYearsWithCount_other": "{{count}} years",
+    "untitled": "Untitled",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 
@@ -239,6 +240,11 @@
       "submission": "Submission",
       "youCanUploadFilesLike": "You can upload files like paper document (DOCX, PDF), presentation slides (PPTX) or any other relevant document.",
       "afterYouSubmitThisForm": "After you submit this form, it will be reviewed by event management."
+    },
+    "userReviews": {
+      "title": "Reviews",
+      "pendingReviews": "Pending Reviews",
+      "previouslyReviewedPapers": "Previously Reviewed Papers"
     }
   }
 }

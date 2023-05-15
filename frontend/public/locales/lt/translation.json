@@ -135,6 +135,7 @@
     "xSecondsWithCount_few": "{{count}} sekundės",
     "xSecondsWithCount_one": "{{count}} sekundė",
     "xSecondsWithCount_other": "{{count}} sekundžių",
+    "untitled": "Be pavadinimo",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 
@@ -247,6 +248,11 @@
       "submission": "Pranešimas",
       "youCanUploadFilesLike": "Čia galite įkelti pranešimo failus (DOCX, PDF), pristatymo skaidres (PPTX) arba bet kurį kitą reikalingą dokumentą.",
       "afterYouSubmitThisForm": "Kai pateiksite šią formą, ją peržiūrės konferencijos organizatorius arba recenzentas"
+    },
+    "userReviews": {
+      "title": "Recenzavimas",
+      "pendingReviews": "Darbai kurie laukia peržiūros",
+      "previouslyReviewedPapers": "Anksčiau peržiūrėti darbai"
     }
   }
 }

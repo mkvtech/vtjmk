@@ -19,6 +19,7 @@ import Permissions from './pages/Permissions'
 import ReviewParticipations from './pages/ReviewedParticipations/ReviewedParticipations'
 import UserParticipationCertificate from './pages/UserParticipationCertificate'
 import UserParticipations from './pages/UserParticipations'
+import UserReviews from './pages/UserReviews'
 
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       { path: '/user/documents/participationCertificate', element: <UserParticipationCertificate /> },
       { path: '/user/participations', element: <UserParticipations /> },
       { path: '/user/reviewParticipations', element: <ReviewParticipations /> },
+      { path: '/user/reviews', element: <UserReviews /> },
       { path: '*', element: <Page404 /> },
     ],
   },
