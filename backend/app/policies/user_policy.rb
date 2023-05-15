@@ -10,7 +10,7 @@ class UserPolicy < ApplicationPolicy
     Permission.exists?(user:, action: %i[read manage])
   end
 
-  def review_participations?
-    Participation.exists?(reviewer: user)
+  def reviews_index?
+    Review.exists?(user:)
   end
 end

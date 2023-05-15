@@ -9,7 +9,7 @@ export const sideMenuPoliciesSchema = z.object({
       general: z.object({
         admin: z.boolean(),
         manageEvents: z.boolean(),
-        reviewParticipations: z.boolean(),
+        reviewsIndex: z.boolean(),
       }),
     }),
   }),

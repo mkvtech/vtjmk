@@ -34,14 +34,14 @@ const sideMenuStructure = [
     id: 'management',
     displayNameTranslationKey: 'components.mainLayout.sideMenuLabelManagement',
     icon: <Create />,
-    isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewParticipations,
+    isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewsIndex,
     items: [
       {
-        id: 'reviewParticipations',
-        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelReviewParticipations',
+        id: 'reviews',
+        displayNameTranslationKey: 'components.mainLayout.sideMenuLabelReviews',
         icon: <Visibility />,
-        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewParticipations,
-        path: '/user/reviewParticipations',
+        isVisible: (policies: SideMenuPolicies): boolean => policies.policies.user.general.reviewsIndex,
+        path: '/user/reviews',
       },
     ],
   },
@@ -76,7 +76,7 @@ export default function SideMenu({ open, session }: { open: boolean; session: Se
     params: {
       policies: {
         user: {
-          general: ['admin', 'manageEvents', 'reviewParticipations'],
+          general: ['admin', 'manageEvents', 'reviewsIndex'],
         },
       },
     },
