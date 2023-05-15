@@ -31,7 +31,7 @@ class ParticipationPolicy < ApplicationPolicy
   end
 
   def reviews_index?
-    reviewer? || manage_conference?
+    participant? || reviewer? || manage_conference?
   end
 
   def reviews_create?

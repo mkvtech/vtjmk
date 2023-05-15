@@ -11,9 +11,11 @@ module Api
     def create
       event = Event.find(params[:event_id])
       authorize! event, to: :participate?, with: EventPolicy
-      @participation = create_participation
+      @participation = build_participation
 
       if @participation.save
+        AutoAssignReviewers.call(participation: @participation)
+
         render :show, status: :created, location: api_participation_url(@participation)
       else
         render json: @participation.errors, status: :unprocessable_entity
@@ -65,7 +67,7 @@ module Api
       @participation = Participation.find(params[:id])
     end
 
-    def create_participation
+    def build_participation
       Participation.new(
         status: 'pending', user: current_user,
         **params.permit(:event_id, :submission_title, :submission_description, submission_files: [])
