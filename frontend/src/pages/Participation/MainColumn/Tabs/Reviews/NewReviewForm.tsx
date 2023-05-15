@@ -32,7 +32,7 @@ export default function NewReviewForm(): JSX.Element {
     client.post(`/participations/${participationId}/reviews`, data)
   )
 
-  const { control, handleSubmit } = useForm<FormInput>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormInput>({
     defaultValues: {
       user: null,
     },
@@ -51,9 +51,14 @@ export default function NewReviewForm(): JSX.Element {
           queryClient.invalidateQueries(['participations', participationId])
           queryClient.invalidateQueries(['participations', participationId, 'availableReviewers'])
         },
+        onSuccess: () => {
+          setValue('user', null)
+        },
       }
     )
   }
+
+  const userWatch = watch('user')
 
   return (
     <>
@@ -71,7 +76,13 @@ export default function NewReviewForm(): JSX.Element {
             renderInput={(params): JSX.Element => <TextField {...params} label={t('common.reviewer')} required />}
           />
 
-          <LoadingButton variant='contained' sx={{ ml: 2 }} type='submit' loading={createReviewMutation.isLoading}>
+          <LoadingButton
+            variant='contained'
+            sx={{ ml: 2 }}
+            type='submit'
+            loading={createReviewMutation.isLoading}
+            disabled={!userWatch}
+          >
             {t('common.add')}
           </LoadingButton>
         </Box>
