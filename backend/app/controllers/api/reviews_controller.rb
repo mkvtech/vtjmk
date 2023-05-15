@@ -7,6 +7,8 @@ module Api
       authorize! @review
 
       if @review.update(params.permit(:status, :comment))
+        AutoUpdateParticipationStatus.call(participation: @review.participation.reload)
+
         render :show, status: :ok, location: api_review_url(@review)
       else
         render json: { errors: serialize_errors(@review.errors) }, status: :unprocessable_entity
@@ -21,7 +23,7 @@ module Api
     private
 
     def set_review
-      @review = Review.includes(:user, participation: :event).find(params[:id])
+      @review = Review.includes(:user, participation: %i[event reviews]).find(params[:id])
     end
   end
 end

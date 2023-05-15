@@ -19,7 +19,7 @@ class ParticipationPolicy < ApplicationPolicy
   end
 
   def update_status?
-    reviewer? || manage_conference?
+    manage_conference?
   end
 
   def update_reviewer?
