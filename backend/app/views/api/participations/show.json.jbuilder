@@ -2,11 +2,7 @@ json.id @participation.id.to_s
 json.extract! @participation, :status, :submission_title, :submission_description, :created_at, :updated_at
 
 json.user_id @participation.user_id.to_s
-json.user do
-  json.id @participation.user.id.to_s
-  json.avatar_url user_avatar_full_url(@participation.user)
-  json.extract! @participation.user, *%i[email full_name]
-end
+json.user @participation.user.to_builder_simple
 
 json.event_id @participation.event_id.to_s
 json.event do

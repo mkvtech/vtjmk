@@ -6,7 +6,11 @@ module Api
     def update
       authorize! @review
 
-      @review.update(params.permit(:status, :comment))
+      if @review.update(params.permit(:status, :comment))
+        render :show, status: :ok, location: api_review_url(@review)
+      else
+        render json: { errors: serialize_errors(@review.errors) }, status: :unprocessable_entity
+      end
     end
 
     def destroy

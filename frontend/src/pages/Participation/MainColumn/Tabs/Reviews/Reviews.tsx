@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { ParticipationReview } from '../../../../../hooks/api/schemas'
 import { useApi } from '../../../../../hooks/useApi'
+import CurrentUserReview from './CurrentUserReview'
 import NewReviewForm from './NewReviewForm'
 import ReviewCard from './ReviewCard'
 
@@ -42,13 +43,15 @@ export default function Reviews({
             {t('pages.participation.yourReviewHeading')}
           </Typography>
 
-          {currentUserReview.id}
+          <CurrentUserReview review={currentUserReview} showDelete={showDelete} />
 
           <Typography variant='h2' sx={{ mt: 4, mb: 2 }}>
             {t('pages.participation.otherReviewsHeading')}
           </Typography>
 
-          {otherReviews?.length}
+          {sortReviews(otherReviews).map((review) => (
+            <ReviewCard key={review.id} review={review} showDelete={showDelete} />
+          ))}
         </>
       ) : (
         <>
