@@ -194,7 +194,12 @@
       "submissionHasNoTitle": "Be pavadinimo",
       "submissionHasNoDescription": "Be aprašymo",
       "submissionHasNoAttachments": "Be failų",
-      "noComments": "Nėra komentarų"
+      "noComments": "Nėra komentarų",
+      "activityTabTitle": "Komentarai",
+      "reviewsTabTitle": "Recenzavimas",
+      "yourReviewHeading": "Jūsų recenzija",
+      "otherReviewsHeading": "Kitos recenzijos",
+      "noReviewerAssigned": "Nėra priskirtų recenzentų"
     },
     "reviewedParticipations": {
       "papersAssignedForReview": "Recenzavimo moksliniai straipsniai",

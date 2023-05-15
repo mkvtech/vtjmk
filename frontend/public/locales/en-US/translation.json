@@ -186,7 +186,12 @@
       "submissionHasNoTitle": "No title",
       "submissionHasNoDescription": "No description",
       "submissionHasNoAttachments": "No attachments",
-      "noComments": "No comments"
+      "noComments": "No comments",
+      "activityTabTitle": "Activity",
+      "reviewsTabTitle": "Reviews",
+      "yourReviewHeading": "Your Review",
+      "otherReviewsHeading": "Other Reviews",
+      "noReviewerAssigned": "No reviewers assigned"
     },
     "reviewedParticipations": {
       "papersAssignedForReview": "Papers Assigned to You for Review",

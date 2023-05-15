@@ -11,7 +11,6 @@ import Activity from './Activity'
 import General from './General'
 import Reviews from './MainColumn/Tabs/Reviews/Reviews'
 import OptionsButton from './OptionsButton'
-import Reviewer from './Reviewer'
 import Reviewers from './SideColumn/Reviewers/Reviewers'
 import Status from './Status'
 import UserButton from './UserButton'
@@ -139,8 +138,6 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
 
                 <UserButton user={participationQuery.data.user} withEmail />
 
-                <Reviewer editable={isAllowed('updateReviewer')} />
-
                 {participationQuery.data.reviews !== null ? (
                   <Reviewers reviews={participationQuery.data.reviews} />
                 ) : null}
@@ -172,8 +169,18 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
                 <>
                   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={currentTab} aria-label='Tabs'>
-                      <Tab label={t('common.activity')} value='activity' to='activity' component={RouterLink} />
-                      <Tab label={t('common.reviews')} value='reviews' to='reviews' component={RouterLink} />
+                      <Tab
+                        label={t('pages.participation.activityTabTitle')}
+                        value='activity'
+                        to='activity'
+                        component={RouterLink}
+                      />
+                      <Tab
+                        label={t('pages.participation.reviewsTabTitle')}
+                        value='reviews'
+                        to='reviews'
+                        component={RouterLink}
+                      />
                     </Tabs>
                   </Box>
 
@@ -193,7 +200,7 @@ function Page({ participationId }: { participationId: string }): JSX.Element {
                 </>
               ) : (
                 <>
-                  <Typography variant='h2'>{t('common.activity')}</Typography>
+                  <Typography variant='h2'>{t('pages.participation.activityTabTitle')}</Typography>
 
                   <Activity showForm={isAllowed('comment')} />
                 </>
