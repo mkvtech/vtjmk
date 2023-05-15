@@ -1,5 +1,7 @@
 # Review model authorization
 class ReviewPolicy < ApplicationPolicy
+  pre_check :require_user, :allow_admin
+
   def update?
     reviewer?
   end

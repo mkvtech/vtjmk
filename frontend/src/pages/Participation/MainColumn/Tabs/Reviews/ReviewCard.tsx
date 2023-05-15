@@ -1,8 +1,12 @@
 import { Delete } from '@mui/icons-material'
-import { Avatar, Box, Chip, IconButton, Paper, Typography, styled } from '@mui/material'
+import { Avatar, Box, Chip, Paper, Typography, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { useMutation, useQueryClient } from 'react-query'
+import { useParams } from 'react-router-dom'
+import LoadingIconButton from '../../../../../components/LoadingIconButton/LoadingIconButton'
 import SpanCreatedAt from '../../../../../components/Typography/SpanCreatedAt'
 import { ParticipationReview, ReviewStatus } from '../../../../../hooks/api/schemas'
+import { useApi } from '../../../../../hooks/useApi'
 import { statusToColorMap, statusToI18nKeyMap } from './ReviewStatusChip'
 
 const StyledPaper = styled(Paper, {
@@ -20,12 +24,25 @@ const StyledPaper = styled(Paper, {
 
 export default function ReviewCard({ review }: { review: ParticipationReview }): JSX.Element {
   const { t } = useTranslation()
+  const { client } = useApi()
+  const queryClient = useQueryClient()
+  const { participationId } = useParams() as { participationId: string }
 
-  // TODO: delete mutation
   // TODO: list item
+
+  const deleteMutation = useMutation(({ reviewId }: { reviewId: string }) => client.delete(`/reviews/${reviewId}`))
 
   const handleDelete = (): void => {
     console.log('clicked delete')
+    deleteMutation.mutate(
+      { reviewId: review.id },
+      {
+        onSettled: () => {
+          queryClient.invalidateQueries(['participations', participationId])
+          queryClient.invalidateQueries(['participations', participationId, 'availableReviewers'])
+        },
+      }
+    )
   }
 
   return (
@@ -49,9 +66,13 @@ export default function ReviewCard({ review }: { review: ParticipationReview }):
               sx={{ mr: 1 }}
             />
 
-            <IconButton onClick={handleDelete} aria-label={t('common.delete') || undefined} size='small'>
-              <Delete />
-            </IconButton>
+            <LoadingIconButton
+              icon={<Delete />}
+              label={t('common.delete')}
+              loading={deleteMutation.isLoading}
+              onClick={handleDelete}
+              size='small'
+            />
           </Box>
         </Box>
 

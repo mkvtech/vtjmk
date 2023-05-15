@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :reviews, only: %i[update]
+    resources :reviews, only: %i[update destroy]
     resources :users, only: %i[index]
 
     # Authenticated User
