@@ -1,5 +1,5 @@
 import { Delete } from '@mui/icons-material'
-import { Avatar, Box, Chip, Paper, Typography, styled } from '@mui/material'
+import { Box, Chip, Paper, Typography, styled } from '@mui/material'
 import { PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
@@ -8,6 +8,7 @@ import LoadingIconButton from '../../../../../components/LoadingIconButton/Loadi
 import SpanCreatedAt from '../../../../../components/Typography/SpanCreatedAt'
 import { ParticipationReview, ReviewStatus } from '../../../../../hooks/api/schemas'
 import { useApi } from '../../../../../hooks/useApi'
+import UserButton from '../../../UserButton'
 
 export const statusToI18nKeyMap = {
   approved: 'common.approved',
@@ -65,19 +66,12 @@ export function ReviewCardBase({
   }
 
   return (
-    <StyledReviewCard status={review.status} sx={{ display: 'flex', p: 1, my: 2 }}>
-      <Box sx={{ mr: 2 }}>
-        <Avatar src={review.user.avatarUrl} />
-      </Box>
+    <StyledReviewCard status={review.status} sx={{ p: 1, my: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <UserButton user={review.user} withEmail variant='withoutBorder' disablePadding />
 
-      <Box sx={{ flexGrow: 1 }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography>{review.user.fullName}</Typography>
-            <Typography color='textSecondary'>{review.user.email}</Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
             <Chip
               color={statusToColorMap[review.status]}
               label={t(statusToI18nKeyMap[review.status])}
@@ -95,16 +89,16 @@ export function ReviewCardBase({
               />
             ) : null}
           </Box>
+
+          {review.status !== 'pending' ? (
+            <Typography textAlign='right' sx={{ mr: 1 }}>
+              <SpanCreatedAt date={review.updatedAt} />
+            </Typography>
+          ) : null}
         </Box>
-
-        {review.status !== 'pending' ? (
-          <Typography>
-            <SpanCreatedAt date={review.updatedAt} />
-          </Typography>
-        ) : null}
-
-        {children}
       </Box>
+
+      {children}
     </StyledReviewCard>
   )
 }

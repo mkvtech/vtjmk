@@ -11,7 +11,7 @@ export default function ReviewCard({
 }): JSX.Element {
   return (
     <ReviewCardBase review={review} showDelete={showDelete}>
-      {review.comment ? <Typography sx={{ my: 2 }}>{review.comment}</Typography> : null}
+      {review.comment ? <Typography sx={{ mt: 1, mx: 1 }}>{review.comment}</Typography> : null}
     </ReviewCardBase>
   )
 }

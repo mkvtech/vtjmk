@@ -11,11 +11,13 @@ interface User {
 export default function UserButton({
   user,
   withEmail,
+  disablePadding,
   variant,
   sx,
 }: {
   user: User
   withEmail?: boolean
+  disablePadding?: boolean
   variant?: 'elevated' | 'outlined' | 'withoutBorder'
   sx?: SxProps<Theme>
 }): JSX.Element {
@@ -24,7 +26,7 @@ export default function UserButton({
       <Box sx={sx}>
         <Link href={`/users/${user.id}`} sx={{ textDecoration: 'none' }}>
           <Paper
-            sx={{ pt: 1, pr: 2, pb: 1, pl: 1, display: 'flex', alignItems: 'center' }}
+            sx={[{ display: 'flex', alignItems: 'center' }, disablePadding || { pt: 1, pr: 2, pb: 1, pl: 1 }]}
             elevation={variant === 'withoutBorder' ? 0 : undefined}
             variant={variant === 'outlined' ? 'outlined' : undefined}
           >
@@ -45,7 +47,7 @@ export default function UserButton({
     <Box sx={sx}>
       <Link href={`/users/${user.id}`} sx={{ textDecoration: 'none' }}>
         <Paper
-          sx={{ pt: 1, pr: 2, pb: 1, pl: 1, display: 'flex', alignItems: 'center' }}
+          sx={[{ display: 'flex', alignItems: 'center' }, disablePadding || { pt: 1, pr: 2, pb: 1, pl: 1 }]}
           elevation={variant === 'withoutBorder' ? 0 : undefined}
           variant={variant === 'outlined' ? 'outlined' : undefined}
         >
