@@ -228,7 +228,9 @@
     "eventEdit": {
       "generalTab": {
         "eventIsVisibleForAllUsers": "Konferencija yra visiems vartotojams",
-        "eventIsVisibleOnlyForConferenceManagement": "Konferencija yra matoma tik organizatoriams"
+        "eventIsVisibleOnlyForConferenceManagement": "Konferencija yra matoma tik organizatoriams",
+        "autoAssignReviewers": "Automatiškai priskirti recenzentus prie naujų dalyvavimo prašymų",
+        "autoAssignReviewersCount": "Recenzentų skaičius"
       },
       "descriptionTab": {
         "descriptionWasUpdatedSuccessfully": "Aprašymas buvo išsaugotas"

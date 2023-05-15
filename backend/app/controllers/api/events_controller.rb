@@ -18,7 +18,7 @@ module Api
       authorize! @event
 
       event_params = params.permit(
-        :title, :description, :date, :registration_from, :registration_to, :status
+        %i[title description date registration_from registration_to status auto_assign_reviewers_count]
       )
 
       if @event.update(event_params)

@@ -219,7 +219,9 @@
     "eventEdit": {
       "generalTab": {
         "eventIsVisibleForAllUsers": "Event is visible for all users",
-        "eventIsVisibleOnlyForConferenceManagement": "Event is visible only for conference management"
+        "eventIsVisibleOnlyForConferenceManagement": "Event is visible only for conference management",
+        "autoAssignReviewers": "Automatically assign reviewers to new participation requests",
+        "autoAssignReviewersCount": "Reviewers count"
       },
       "descriptionTab": {
         "descriptionWasUpdatedSuccessfully": "Description was updated successfully"

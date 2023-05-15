@@ -3,9 +3,11 @@ import { LoadingButton } from '@mui/lab'
 import {
   Alert,
   Box,
+  Checkbox,
   Container,
   Divider,
   FormControl,
+  FormControlLabel,
   Grid,
   InputLabel,
   ListItemIcon,
@@ -21,17 +23,19 @@ import { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
-import { eventStatusToI18nKeyMap } from '../../components/EventStatusChip/EventStatusChip'
-import { Event } from '../../hooks/api/schemas'
-import { ApiResponseError, useApi } from '../../hooks/useApi'
-import { belongsToArray } from '../../utils'
+import { eventStatusToI18nKeyMap } from '../../../../components/EventStatusChip/EventStatusChip'
+import { Event, EventStatus } from '../../../../hooks/api/schemas'
+import { ApiResponseError, useApi } from '../../../../hooks/useApi'
+import { belongsToArray } from '../../../../utils'
 
-interface IFormInput {
+interface FormValues {
   title: string
   date: Dayjs
   registrationFrom: Dayjs
   registrationTo: Dayjs
   status: string
+  autoAssignReviewers: boolean
+  autoAssignReviewersCount: number
 }
 
 interface UpdateEventMutationInput {
@@ -40,6 +44,7 @@ interface UpdateEventMutationInput {
   registrationFrom: string
   registrationTo: string
   status: string
+  autoAssignReviewersCount: number | null
 }
 
 const fieldNames = ['title', 'date', 'registrationFrom', 'registrationTo', 'status'] as const
@@ -50,20 +55,22 @@ export default function Form({ event }: { event: Event }): JSX.Element {
 
   const { client } = useApi()
 
-  const { control, handleSubmit, setError } = useForm({
+  const { control, handleSubmit, register, setError, watch } = useForm<FormValues>({
     defaultValues: {
       title: event.title,
       date: dayjs(event.date),
       registrationFrom: dayjs(event.registrationFrom),
       registrationTo: dayjs(event.registrationTo),
       status: event.status,
+      autoAssignReviewers: !!event.autoAssignReviewersCount,
+      autoAssignReviewersCount: event.autoAssignReviewersCount || 0,
     },
   })
 
   const queryClient = useQueryClient()
   const updateEventMutation = useMutation((data: UpdateEventMutationInput) => client.patch(`/events/${event.id}`, data))
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     updateEventMutation.mutate(
       {
         title: data.title,
@@ -71,6 +78,8 @@ export default function Form({ event }: { event: Event }): JSX.Element {
         registrationFrom: data.registrationFrom.toISOString(),
         registrationTo: data.registrationTo.toISOString(),
         status: data.status,
+        autoAssignReviewersCount:
+          data.autoAssignReviewers && data.autoAssignReviewersCount ? data.autoAssignReviewersCount : null,
       },
       {
         onSuccess: (_response) => {
@@ -90,6 +99,8 @@ export default function Form({ event }: { event: Event }): JSX.Element {
       }
     )
   }
+
+  const autoAssignReviewersWatch = watch('autoAssignReviewers')
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -217,7 +228,7 @@ export default function Form({ event }: { event: Event }): JSX.Element {
                     fullWidth
                     size='small'
                     required
-                    renderValue={(selected): string => t(eventStatusToI18nKeyMap[selected])}
+                    renderValue={(selected): string => t(eventStatusToI18nKeyMap[selected as EventStatus])}
                   >
                     <MenuItem value='open'>
                       <ListItemIcon>
@@ -243,11 +254,41 @@ export default function Form({ event }: { event: Event }): JSX.Element {
             </FormControl>
           </Grid>
         </Grid>
+
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={9}>
+            <FormControlLabel
+              label={t('pages.eventEdit.generalTab.autoAssignReviewers')}
+              control={
+                <Checkbox {...register('autoAssignReviewers')} defaultChecked={!!event.autoAssignReviewersCount} />
+              }
+            />
+          </Grid>
+
+          <Grid item xs={3}>
+            {autoAssignReviewersWatch && (
+              <Controller
+                name='autoAssignReviewersCount'
+                control={control}
+                render={({ field }): JSX.Element => (
+                  <TextField
+                    {...field}
+                    label={t('pages.eventEdit.generalTab.autoAssignReviewersCount')}
+                    type='number'
+                    fullWidth
+                    required
+                    size='small'
+                  />
+                )}
+              />
+            )}
+          </Grid>
+        </Grid>
       </Container>
 
       <Divider />
 
-      <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 4 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row-reverse', my: 2 }}>
         <LoadingButton variant='contained' type='submit' loading={updateEventMutation.isLoading}>
           {t('common.update')}
         </LoadingButton>

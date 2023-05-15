@@ -1,8 +1,8 @@
 import { Container, Skeleton, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import PageError from '../../../components/PageError/PageError'
-import { useQueryEvent } from '../../../hooks/api/queries'
-import Form from '../Form'
+import PageError from '../../../../components/PageError/PageError'
+import { useQueryEvent } from '../../../../hooks/api/queries'
+import Form from './Form'
 
 export default function General(): JSX.Element {
   const { eventId } = useParams() as { eventId: string }
