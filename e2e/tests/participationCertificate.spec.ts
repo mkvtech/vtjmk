@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { AppHelper } from './appHelper'
+import { readPdf } from './share'
 
 test('Generate Participation Certificate', async ({ page, baseURL, request }) => {
   page.setDefaultTimeout(3000)
@@ -92,6 +93,11 @@ test('Generate Participation Certificate', async ({ page, baseURL, request }) =>
   await page.getByRole('button', { name: 'Generuoti' }).click()
   const download = await downloadPromise
   await download.saveAs('downloads/participation_certificate.pdf')
+  await expect(page.getByText('Dokumentas sėkmingai sugeneruotas')).toBeVisible()
 
-  console.log('done')
+  // Validate generated PDF file
+  const pdf = await readPdf('./downloads/participation_certificate.pdf')
+  expect(pdf.numpages).toEqual(1)
+  expect(pdf.text).toContain('„Informacinių technologijų sauga ir Informacinės sistemos 2023“')
+  expect(pdf.text).toContain('Maksim Kulagin')
 })
