@@ -86,7 +86,9 @@ export default function MainLayout({ children }: PropsWithChildren): JSX.Element
           <AppBarTabs />
         </AppBar>
 
-        <Box sx={{ flex: 1 }}>{children}</Box>
+        <Box sx={{ flex: 1 }} data-test-id='page-content'>
+          {children}
+        </Box>
 
         <Footer />
       </Box>
