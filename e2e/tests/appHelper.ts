@@ -41,4 +41,13 @@ export class AppHelper {
   get appUrl() {
     return process.env.APP_URL || this.testOptions.baseURL
   }
+
+  async login({ email, password }: { email: string; password?: string }) {
+    await this.testOptions.page.getByRole('link', { name: 'Prisijungti' }).click()
+
+    await this.testOptions.page.getByLabel('El. paštas').fill(email)
+    await this.testOptions.page.getByLabel('Slaptažodis').fill(password || 'password')
+
+    await this.testOptions.page.getByRole('button', { name: 'Prisijungti' }).click()
+  }
 }

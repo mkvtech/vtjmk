@@ -9,8 +9,7 @@ import LocaleSwitch from '../../components/LocaleSwitch'
 import { ApiResponseError, useApi } from '../../hooks/useApi'
 import DevUi from './DevUi'
 
-// const showDevUi = import.meta.env.DEV
-const showDevUi = false
+const showDevUi = import.meta.env.VITE_DEV_UI
 
 export default function Login(): JSX.Element {
   const { t } = useTranslation()

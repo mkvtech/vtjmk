@@ -1,6 +1,8 @@
 import { Box, Container, Divider, Skeleton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Link from '../../components/Link/Link'
+import UnstyledList from '../../components/UnstyledList/UnstyledList'
+import UnstyledListItem from '../../components/UnstyledList/UnstyledListItem'
 import { useQueryPermissions } from '../../hooks/api/queries'
 import PermissionsItem from './PermissionsItem'
 
@@ -32,11 +34,13 @@ export default function Permissions(): JSX.Element {
           <Skeleton variant='rounded' />
         </>
       ) : permissionsQuery.isSuccess ? (
-        <Box>
+        <UnstyledList>
           {permissionsQuery.data.map((permission) => (
-            <PermissionsItem key={permission.id} permission={permission} />
+            <UnstyledListItem key={permission.id}>
+              <PermissionsItem permission={permission} />
+            </UnstyledListItem>
           ))}
-        </Box>
+        </UnstyledList>
       ) : (
         <>Error</>
       )}
