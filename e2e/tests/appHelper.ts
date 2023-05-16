@@ -50,4 +50,17 @@ export class AppHelper {
 
     await this.testOptions.page.getByRole('button', { name: 'Prisijungti' }).click()
   }
+
+  // Fills MUI DatePicker with given date, located by given label, uses LT locale
+  async fillMuiDatePickerLt({ label, date }: { label: string; date: string }) {
+    const { page } = this.testOptions
+    const { keyboard } = page
+
+    await page.getByLabel(label).click()
+    await keyboard.press('ArrowLeft')
+    await keyboard.press('ArrowLeft')
+    await keyboard.type(date)
+
+    await expect(page.getByLabel(label).inputValue()).resolves.toBe(date)
+  }
 }

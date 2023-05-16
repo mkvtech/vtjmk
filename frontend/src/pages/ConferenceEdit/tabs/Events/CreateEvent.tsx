@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -69,7 +69,7 @@ export default function CreateEvent({
       },
       {
         onSuccess: (data) => {
-          navigate(`/events/${data.id}`)
+          navigate(`/events/${data.id}/edit/general`)
         },
         onSettled: () => {
           queryClient.invalidateQueries(['events'])
@@ -112,7 +112,7 @@ export default function CreateEvent({
               name='date'
               control={control}
               render={({ field }): JSX.Element => (
-                <DatePicker
+                <DesktopDatePicker
                   {...field}
                   label={t('common.date')}
                   slotProps={{ textField: { size: 'small', required: true } }}
@@ -132,7 +132,7 @@ export default function CreateEvent({
               name='registrationFrom'
               control={control}
               render={({ field }): JSX.Element => (
-                <DatePicker
+                <DesktopDatePicker
                   {...field}
                   label={t('common.from')}
                   slotProps={{ textField: { size: 'small', required: true } }}
@@ -146,7 +146,7 @@ export default function CreateEvent({
               name='registrationTo'
               control={control}
               render={({ field }): JSX.Element => (
-                <DatePicker
+                <DesktopDatePicker
                   {...field}
                   label={t('common.to')}
                   slotProps={{ textField: { size: 'small', required: true } }}
