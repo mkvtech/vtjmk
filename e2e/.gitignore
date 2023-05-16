@@ -14,5 +14,8 @@ node_modules/
 *.sln
 *.sw?
 
+# Some Playwright tests will save downloaded files into `downloads` directory
+downloads
+
 # Secrets & Configuration
 .env

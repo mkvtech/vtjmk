@@ -74,7 +74,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     createDocumentTemplateMutation.mutate(data, {
       onSuccess: (_response) => {
-        navigate(`/conferences/${conferenceId}/documentTemplates`)
+        navigate(`/conferences/${conferenceId}/edit/documentTemplates`)
       },
     })
   }
