@@ -5,11 +5,30 @@ import { AppHelper } from './appHelper'
 test('Participation', async ({ page, baseURL, request }) => {
   page.setDefaultTimeout(3000)
 
-  await AppHelper.resetApp({ page, baseURL, request })
+  const appHelper = await AppHelper.resetApp({ page, baseURL, request })
 
   await page.goto('/')
 
+  // Disable autoAssignReviewers
+  await appHelper.login({ email: 'jonas.jonaitis@example.com' })
+
+  await page.getByRole('link', { name: 'Artėjančios konferencijos' }).hover()
+
+  await page.getByRole('menuitem', { name: 'Informacinių technologijų sauga ir Informacinės sistemos 2023' }).click()
+
+  await page.getByRole('link', { name: 'Redaguoti' }).click()
+
+  await page.getByLabel('Automatiškai priskirti recenzentus prie naujų dalyvavimo prašymų').uncheck()
+
+  await expect(
+    page.getByLabel('Automatiškai priskirti recenzentus prie naujų dalyvavimo prašymų').isChecked()
+  ).resolves.toBeFalsy()
+
+  await page.getByRole('button', { name: 'Atnaujinti' }).click()
+
   // Create Account
+  await page.getByRole('button', { name: 'Atsijungti' }).click()
+
   await page.getByRole('link', { name: 'Prisijungti' }).click()
 
   await expect(page).toHaveURL('/login')

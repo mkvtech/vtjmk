@@ -23,7 +23,9 @@ module Api
 
       def create_event
         event_params = params.permit(:title, :description, :date, :registration_from, :registration_to)
-        @event = Event.new(conference_id: params[:conference_id], **event_params)
+        @event = Event.new(
+          conference_id: params[:conference_id], status: :hidden, auto_assign_reviewers_count: 1, **event_params
+        )
       end
 
       def copy_title_from_conference
