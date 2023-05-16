@@ -58,8 +58,6 @@ test('Participation', async ({ page, baseURL, request }) => {
 
   await page.getByRole('button', { name: 'Siųsti' }).click()
 
-  await page.getByText('Noriu dalyvauti konferencijoje')
-
   await expect(page.getByText('Noriu dalyvauti konferencijoje')).toBeVisible()
 
   // Login as manager
@@ -86,14 +84,15 @@ test('Participation', async ({ page, baseURL, request }) => {
   await participationListItem.getByRole('link', { name: 'Žiūrėti' }).click()
 
   // Assign a reviewer
-  const sideBar = page.locator('[data-test-id="participation-side-bar"]')
-  await sideBar.getByRole('button', { name: 'Priskirti recenzentą' }).click()
+  await page.getByRole('tab', { name: 'Recenzavimas' }).click()
 
-  await sideBar.getByRole('button', { name: 'Atidaryti' }).click()
+  await page.getByRole('button', { name: 'Atidaryti' }).click()
 
   await page.getByRole('option', { name: 'Petras Petraitis' }).click()
 
-  await sideBar.getByRole('button', { name: 'Siųsti' }).click()
+  await page.getByRole('button', { name: 'Pridėti' }).click()
+
+  await expect(page.getByRole('link', { name: 'Petras Petraitis petras.petraitis@example.com' })).toBeVisible()
 
   // Login as reviewer
   await page.getByRole('button', { name: 'Atsijungti' }).click()
@@ -115,28 +114,29 @@ test('Participation', async ({ page, baseURL, request }) => {
   // TODO: Download file
 
   // Approve
-  await page.getByRole('button', { name: 'Laukiama' }).click()
+  await page.getByRole('button', { name: 'Būsena' }).click()
 
-  await page.getByRole('menuitem', { name: 'Patvirtinta' }).click()
+  await page.getByRole('option', { name: 'Patvirtinta' }).click()
 
-  await expect(page.getByRole('button', { name: 'Patvirtinta' })).toBeVisible()
+  await page.getByLabel('Komentaras').fill('Patvirtinau')
+
+  await page.getByRole('button', { name: 'Siųsti' }).click()
+
+  await expect(page.getByText('Patvirtinta').nth(1)).toBeVisible()
+  await expect(page.locator('[data-test-id="participation-side-bar"]').getByText('Patvirtinta')).toBeVisible()
 
   // Add comment
+  await page.getByRole('tab', { name: 'Komentarai' }).click()
+
   await page.getByLabel('Komentaras').fill('Patvirtinau')
 
   await page.getByRole('button', { name: 'Siųsti' }).click()
 
   await expect(
-    page
-      .locator('[data-test-id="participation-activity"]')
-      .filter({ hasText: 'Maksim Kulagin' })
-      .getByText('Noriu dalyvauti konferencijoje')
+    page.getByRole('listitem').filter({ hasText: 'Maksim Kulagin' }).getByText('Noriu dalyvauti konferencijoje')
   ).toBeVisible()
 
   await expect(
-    page
-      .locator('[data-test-id="participation-activity"]')
-      .filter({ hasText: 'Petras Petraitis' })
-      .getByText('Patvirtinau')
+    page.getByRole('listitem').filter({ hasText: 'Petras Petraitis' }).getByText('Patvirtinau')
   ).toBeVisible()
 })
