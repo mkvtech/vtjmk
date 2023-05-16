@@ -4,7 +4,7 @@ import { AppHelper } from './appHelper'
 test('Permissions', async ({ page, baseURL, request }) => {
   page.setDefaultTimeout(3000)
 
-  const appHelper = AppHelper.resetApp({ page, baseURL, request })
+  const appHelper = await AppHelper.resetApp({ page, baseURL, request })
 
   await page.goto('/')
 
@@ -77,7 +77,7 @@ test('Permissions', async ({ page, baseURL, request }) => {
   await expect(page.getByText('Duomenys buvo atnaujinti')).toBeVisible()
 
   // Reload
-  await page.goto('http://localhost:5173/events/2/edit/general')
+  await page.goto('/events/2/edit/general')
 
   // Ensure data was updated
   await expect(page.getByRole('heading', { name: 'Redaguoti „Informacinių technologijų sauga 2023' })).toBeVisible()

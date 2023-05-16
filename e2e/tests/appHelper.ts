@@ -8,11 +8,11 @@ interface AppHelperOptions {
 
 // Helper functions specific to the App
 export class AppHelper {
-  static resetApp(testOptions: AppHelperOptions) {
+  static async resetApp(testOptions: AppHelperOptions) {
     const appHelper = new AppHelper(testOptions)
 
-    appHelper.resetDb()
-    appHelper.timeTravelTo2023_04_01()
+    await appHelper.timeTravelTo2023_04_01()
+    await appHelper.resetDb()
 
     return appHelper
   }

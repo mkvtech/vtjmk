@@ -5,7 +5,7 @@ import { AppHelper } from './appHelper'
 test('Participation', async ({ page, baseURL, request }) => {
   page.setDefaultTimeout(3000)
 
-  AppHelper.resetApp({ page, baseURL, request })
+  await AppHelper.resetApp({ page, baseURL, request })
 
   await page.goto('/')
 

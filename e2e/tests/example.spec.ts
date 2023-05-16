@@ -4,7 +4,7 @@ import { AppHelper } from './appHelper'
 test('Login', async ({ page, baseURL, request }) => {
   page.setDefaultTimeout(10000)
 
-  AppHelper.resetApp({ page, baseURL, request })
+  await AppHelper.resetApp({ page, baseURL, request })
 
   await page.goto('/')
 
