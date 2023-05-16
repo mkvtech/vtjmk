@@ -95,7 +95,7 @@ RSpec.describe ParticipationPolicy do
     context 'when user is reviewer' do
       let(:participation) { create(:participation, event:, user:, reviewer: current_user) }
 
-      it { is_expected.to be_truthy }
+      it { is_expected.to be_falsey }
     end
 
     context 'when user is conference manager' do

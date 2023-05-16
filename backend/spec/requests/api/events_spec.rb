@@ -118,7 +118,10 @@ RSpec.describe '/events' do
       make_request
       expect(response).to be_successful
       expect(json_response.keys).to match_array(
-        %i[id title description date conferenceId createdAt updatedAt url registrationFrom registrationTo status]
+        %i[
+          id title description date conferenceId createdAt updatedAt url registrationFrom registrationTo status
+          autoAssignReviewersCount
+        ]
       )
     end
 

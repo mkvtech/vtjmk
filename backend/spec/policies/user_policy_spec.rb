@@ -33,16 +33,18 @@ RSpec.describe UserPolicy do
     end
   end
 
-  describe 'review_participations?' do
-    subject(:review_participations?) { policy.apply(:review_participations?) }
+  describe 'reviews_index?' do
+    subject(:reviews_index?) { policy.apply(:reviews_index?) }
 
     it { is_expected.to be_falsey }
 
     context 'when user is assigned to review any participation request' do
       let(:event) { create(:event, :with_conference) }
+      let(:participant) { create(:user) }
+      let(:participation) { create(:participation, user: participant, event:) }
 
       before do
-        create(:participation, user:, event:, reviewer: user)
+        create(:review, participation:, user:)
       end
 
       it { is_expected.to be_truthy }
