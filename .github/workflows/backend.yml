@@ -8,6 +8,9 @@ on:
 
 jobs:
   lint:
+    # TODO: Enable when CI integration is completed
+    if: ${{ false }}
+
     name: Linters
     timeout-minutes: 5
     runs-on: ubuntu-latest
@@ -17,14 +20,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
+
+      - name: Setup & cache Ruby and gems
+        uses: ruby/setup-ruby@v1
         with:
           working-directory: backend
           bundler-cache: true
-      - name: Rubocop
+
+      - name: Run Rubocop
         run: bundle exec rubocop
 
   test:
+    # TODO: Enable when CI integration is completed
+    if: ${{ false }}
+
     name: Tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -61,7 +70,7 @@ jobs:
           RAILS_ENV: test
         run: bundle exec rails db:create db:schema:load
 
-      - name: Run unit tests
+      - name: Run RSpec
         run: bundle exec rspec
 
       # Note: GitHub Actions currently does not allow to read HTML artifacts without downloading them
