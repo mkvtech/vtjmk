@@ -1,6 +1,6 @@
 # Seeds for `test` environment
 
-# rubocop:disable Lint/RedundantCopDisableDirective, Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength, Style/TrailingCommaInArrayLiteral
+# rubocop:disable Lint/RedundantCopDisableDirective, Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength, Style/TrailingCommaInArrayLiteral, Layout/SpaceBeforeComma
 
 # Conferences
 Conference.import!(
@@ -129,4 +129,4 @@ EventReviewer.import!(
   ]
 )
 
-# rubocop:enable Lint/RedundantCopDisableDirective, Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength, Style/TrailingCommaInArrayLiteral
+# rubocop:enable Lint/RedundantCopDisableDirective, Layout/HashAlignment, Layout/ExtraSpacing, Layout/LineLength, Style/TrailingCommaInArrayLiteral, Layout/SpaceBeforeComma
