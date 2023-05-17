@@ -8,7 +8,8 @@ on:
 
 jobs:
   lint:
-    timeout-minutes: 10
+    name: Linters
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,3 +23,54 @@ jobs:
           bundler-cache: true
       - name: Rubocop
         run: bundle exec rubocop
+
+  test:
+    name: Tests
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    env:
+      # These are used by backend server to connect to Postgres
+      PSQL_HOST: localhost
+      PSQL_USERNAME: postgres
+      PSQL_PASSWORD: password
+
+    services:
+      postgres:
+        image: postgres:15.2
+        env:
+          POSTGRES_PASSWORD: password
+        ports: ['5432:5432']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install system dependencies
+        run: sudo apt-get install -yqq libreoffice
+
+      - name: Setup & cache Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          working-directory: backend
+          bundler-cache: true
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+        run: bundle exec rails db:create db:schema:load
+
+      - name: Run unit tests
+        run: bundle exec rspec
+
+      # Note: GitHub Actions currently does not allow to read HTML artifacts without downloading them
+      # https://github.com/actions/upload-artifact/issues/14
+
+      # Enable if u need extended code coverage report
+      # It is possible to get code coverage stats from job output anyway
+      # - name: Save code coverage artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: code-coverage
+      #     path: backend/coverage/
