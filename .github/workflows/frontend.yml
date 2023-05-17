@@ -8,9 +8,6 @@ on:
 
 jobs:
   lint:
-    # TODO: Enable when CI integration is completed
-    if: ${{ false }}
-
     name: Linters
     timeout-minutes: 10
     runs-on: ubuntu-latest
