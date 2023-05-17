@@ -1,0 +1,24 @@
+# Tests related to backend
+
+name: Backend CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: backend
+          bundler-cache: true
+      - name: Rubocop
+        run: bundle exec rubocop

@@ -61,3 +61,6 @@ AllCops:
     - db/migrate/20230221075044_add_registration_dates_to_events.rb
     - db/migrate/20230305152140_update_attendance_status_type.rb
     - db/migrate/20230305165221_add_full_name_to_user.rb
+
+    # Github Actions fix
+    - 'vendor/bundle/**/*'
