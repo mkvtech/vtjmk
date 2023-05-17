@@ -4,7 +4,7 @@ WORKDIR /vtjmk_backend
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y postgresql-client libreoffice
+    apt-get install -y libreoffice
 
 COPY Gemfile /vtjmk_backend/Gemfile
 COPY Gemfile.lock /vtjmk_backend/Gemfile.lock
