@@ -40,7 +40,7 @@ test('Conference Description', async ({ page, baseURL, request, browserName }) =
 
   // See public page
   await page.getByRole('button', { name: 'Atsijungti' }).click()
-  await page.locator('[contenteditable="true"]').blur()
+  await page.waitForTimeout(500)
   await page.getByRole('link', { name: 'Konferencijos', exact: true }).hover()
   await page.getByRole('menuitem', { name: 'Informacinių technologijų sauga ir Informacinės sistemos' }).click()
 

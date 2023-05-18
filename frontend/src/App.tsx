@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RouterProvider } from 'react-router-dom'
 
 import AppThemeProvider from './components/AppTheme/AppTheme'
-import { ApiProvider } from './hooks/useApi'
 import i18n from './i18n'
 import router from './router'
 
@@ -46,9 +45,7 @@ function App(): JSX.Element {
     <I18nextProvider i18n={i18n}>
       <AppThemeProvider>
         <QueryClientProvider client={queryClient}>
-          <ApiProvider>
-            <RouterProvider router={router} />
-          </ApiProvider>
+          <RouterProvider router={router} />
         </QueryClientProvider>
       </AppThemeProvider>
     </I18nextProvider>

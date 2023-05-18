@@ -2,6 +2,7 @@ import axios, { AxiosInstance, isAxiosError } from 'axios'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import { VtjmkLocale } from '../share'
 import { CurrentUser } from './api/schemas'
 
@@ -81,6 +82,7 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
   const [session, setSession] = React.useState<SessionData | undefined>(undefined)
   const [loading, setLoading] = React.useState<boolean>(false)
 
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { i18n } = useTranslation()
 
@@ -98,6 +100,9 @@ export function ApiProvider({ children }: React.PropsWithChildren): JSX.Element 
     // queryClient.invalidateQueries({ refetchActive: false })
     // Clears cache, queries will be refetched when components render
     queryClient.removeQueries()
+
+    // Redirect to root url
+    navigate('/')
 
     setSession(undefined)
   }
