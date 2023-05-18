@@ -110,6 +110,9 @@ group :development, :test, :e2e do
   # A gem providing "time travel", "time freezing", and "time acceleration" capabilities, making it simple to test
   # time-dependent code. It provides a unified method to mock Time.now, Date.today, and DateTime.now in a single call.
   gem 'timecop'
+
+  # A Ruby gem to load environment variables from `.env`.
+  gem 'dotenv-rails'
 end
 
 group :development do
