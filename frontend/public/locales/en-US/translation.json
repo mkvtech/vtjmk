@@ -131,6 +131,8 @@
     "xYearsWithCount_one": "{{count}} year",
     "xYearsWithCount_other": "{{count}} years",
     "untitled": "Untitled",
+    "conferenceStartTime": "Start time",
+    "conferenceProgramme": "Programme",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 

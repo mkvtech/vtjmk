@@ -136,6 +136,8 @@
     "xSecondsWithCount_one": "{{count}} sekundė",
     "xSecondsWithCount_other": "{{count}} sekundžių",
     "untitled": "Be pavadinimo",
+    "conferenceStartTime": "Konferencijos pradžia",
+    "conferenceProgramme": "Konferencijos programa",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 

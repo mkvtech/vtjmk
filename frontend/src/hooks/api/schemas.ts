@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 const isoToDate = (isoDate: string): Date => new Date(isoDate)
+const isoToDateNullable = (isoDate: string | null): Date | null => (isoDate ? new Date(isoDate) : null)
 
 export const attendanceStatusSchema = z.union([z.literal('pending'), z.literal('approved'), z.literal('rejected')])
 export type AttendanceStatus = z.infer<typeof attendanceStatusSchema>
@@ -60,6 +61,7 @@ export const eventSchema = z.object({
   registrationTo: z.string().transform(isoToDate),
   autoAssignReviewersCount: z.number().optional().nullable(),
   status: eventStatusSchema,
+  time: z.string().nullable().transform(isoToDateNullable),
 })
 export type Event = z.infer<typeof eventSchema>
 

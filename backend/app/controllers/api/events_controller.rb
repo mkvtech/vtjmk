@@ -18,7 +18,7 @@ module Api
       authorize! @event
 
       event_params = params.permit(
-        %i[title description date registration_from registration_to status auto_assign_reviewers_count]
+        %i[title description date registration_from registration_to status auto_assign_reviewers_count time]
       )
 
       if @event.update(event_params)
@@ -31,12 +31,10 @@ module Api
     def update_participations_order
       authorize! @event
 
-      participations_input = params[:participations_order] || []
-      Participation.transaction do
-        @event.participations.each do |participation|
-          participation_input = participations_input.fetch(participation.id.to_s, {})
-          participation.update(order: participation_input[:order], time: participation_input[:time])
-        end
+      ActiveRecord::Base.transaction do
+        @event.update!(time: params[:time])
+
+        update_participations
       end
 
       render :show, status: :ok, location: api_event_url(@event)
@@ -46,6 +44,17 @@ module Api
 
     def set_event
       @event = Event.includes(participations: :user).find(params[:id])
+    end
+
+    def update_participations
+      return unless params.key?(:participations_order) && params[:participations_order].is_a?(Array)
+
+      participations_input = params[:participations_order]
+
+      @event.participations.each do |participation|
+        participation_input = participations_input.fetch(participation.id.to_s, {})
+        participation.update!(order: participation_input[:order], time: participation_input[:time])
+      end
     end
   end
 end

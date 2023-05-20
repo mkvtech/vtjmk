@@ -11,17 +11,24 @@ export function reorder<T>(list: readonly T[], startIndex: number, endIndex: num
   return result
 }
 
-export function reorderItemMap<T>({
+export function isCorrectDraggableLocation<Key extends string>(
+  location: DraggableLocation,
+  validDroppableIds: readonly Key[]
+): location is DraggableLocation & { droppableId: Key } {
+  return validDroppableIds.some((id) => id === location.droppableId)
+}
+
+export function reorderItemMap<T, K extends string, IDraggableLocation extends DraggableLocation & { droppableId: K }>({
   itemMap,
   source,
   destination,
   transformItem,
 }: {
-  itemMap: Record<string, readonly T[]>
-  source: DraggableLocation
-  destination: DraggableLocation
+  itemMap: Record<K, readonly T[]>
+  source: IDraggableLocation
+  destination: IDraggableLocation
   transformItem?: (item: T) => T
-}): Record<string, readonly T[]> {
+}): Record<K, readonly T[]> {
   // Note: this function does not check if itemMap[droppableId] !== undefined
   const current = [...itemMap[source.droppableId]]
   const next = [...itemMap[destination.droppableId]]

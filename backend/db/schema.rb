@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_16_065633) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_20_115817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,6 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_065633) do
     t.date "registration_to", null: false
     t.string "status", default: "open", null: false
     t.integer "auto_assign_reviewers_count"
+    t.time "time"
     t.index ["conference_id"], name: "index_events_on_conference_id"
   end
 
