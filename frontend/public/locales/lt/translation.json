@@ -138,6 +138,10 @@
     "untitled": "Be pavadinimo",
     "conferenceStartTime": "Konferencijos pradžia",
     "conferenceProgramme": "Konferencijos programa",
+    "generateFile": "Sugeneruoti failą",
+    "documentTemplate": "Dokumento šablonas",
+    "generate": "Sugeneruoti",
+    "participantsList": "Dalyvių sąrašas",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },
 
@@ -236,6 +240,10 @@
       },
       "descriptionTab": {
         "descriptionWasUpdatedSuccessfully": "Aprašymas buvo išsaugotas"
+      },
+      "participantsTab": {
+        "noDocumentTemplateAvailableNotice": "Šiai konferencijai nėra dokumentų šablonų. Jųs galite pridėti naują dokumentų šabloną konferencijos <2>dokumentų šablonų puslapyje</2>.",
+        "documentTemplatesNotice": "Jūs galite pridėti naują dokumentų šabloną konferencijos <2>dokumentų šablonų puslapyje</2>."
       }
     },
     "userParticipationCertificate": {

@@ -80,6 +80,12 @@ export const eventReviewerSchema = z.object({
 })
 export type EventReviewer = z.infer<typeof eventReviewerSchema>
 
+export const eventDocumentTemplateSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+})
+export type EventDocumentTemplate = z.infer<typeof eventDocumentTemplateSchema>
+
 const userSchemaSimple = z.object({
   id: z.string(),
   email: z.string(),

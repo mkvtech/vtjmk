@@ -133,6 +133,10 @@
     "untitled": "Untitled",
     "conferenceStartTime": "Start time",
     "conferenceProgramme": "Programme",
+    "generateFile": "Generate File",
+    "documentTemplate": "Document Template",
+    "Generate": "Generate",
+    "participantsList": "Participants List",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },
 
@@ -227,6 +231,10 @@
       },
       "descriptionTab": {
         "descriptionWasUpdatedSuccessfully": "Description was updated successfully"
+      },
+      "participantsTab": {
+        "noDocumentTemplateAvailableNotice": "There is no document templates for participants list. You can upload a document template at <2>document templates page</2>.",
+        "documentTemplatesNotice": "You can manage document templates at conference <2>document templates page</2>"
       }
     },
     "userParticipationCertificate": {

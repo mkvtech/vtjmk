@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
       scope module: :events do
         resources :reviewers, only: %i[index create destroy]
+        resources :document_templates, only: %i[index]
 
         get '/users/available_as_reviewers', to: 'users#available_as_reviewers_index'
       end

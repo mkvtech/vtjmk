@@ -5,6 +5,7 @@ import PageError from '../../../../components/PageError'
 import NoDataText from '../../../../components/Typography/NoDataText'
 import { useQueryEvent, useQueryEventParticipations } from '../../../../hooks/api/queries'
 import Form from './Form'
+import GenerateFileMenu from './GenerateFileMenu'
 
 export default function Participants(): JSX.Element {
   const { t } = useTranslation()
@@ -21,7 +22,11 @@ export default function Participants(): JSX.Element {
           <Skeleton />
         </>
       ) : eventQuery.isSuccess && participationsQuery.isSuccess && participationsQuery.data.length > 0 ? (
-        <Form initialData={{ time: eventQuery.data.time, participations: participationsQuery.data }} />
+        <>
+          <GenerateFileMenu event={eventQuery.data} />
+
+          <Form initialData={{ time: eventQuery.data.time, participations: participationsQuery.data }} />
+        </>
       ) : participationsQuery.isSuccess ? (
         <>
           <NoDataText>{t('common.noData')}</NoDataText>

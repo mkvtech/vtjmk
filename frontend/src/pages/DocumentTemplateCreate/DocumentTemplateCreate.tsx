@@ -29,7 +29,7 @@ export default function DocumentTemplateCreate(): JSX.Element {
 interface FormValues {
   name: string
   docx?: FileList
-  documentType: 'participationCertificate' | 'eventCard'
+  documentType: 'participationCertificate' | 'eventCard' | 'participantsList'
   placeholderPrefix: string
   placeholderPostfix: string
 }
@@ -118,6 +118,7 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
                     <Select {...field} labelId='document-type-label' label='Type' fullWidth size='small' required>
                       <MenuItem value='participationCertificate'>{t('common.participationCertificate')}</MenuItem>
                       <MenuItem value='eventCard'>{t('common.eventCard')}</MenuItem>
+                      <MenuItem value='participantsList'>{t('common.participantsList')}</MenuItem>
                     </Select>
                   )}
                 />

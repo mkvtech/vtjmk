@@ -11,6 +11,7 @@ import {
   conferenceDocumentTemplatesSchema,
   conferenceSchema,
   Event,
+  eventDocumentTemplateSchema,
   EventParticipation,
   eventParticipationSchema,
   eventReviewerSchema,
@@ -130,6 +131,19 @@ export function useQueryEventReviewers({ eventId }: { eventId: string }) {
   return useQuery(['events', eventId, 'reviewers'], () =>
     client.get(`/events/${eventId}/reviewers`).then((response) => eventReviewersSchema.parse(response.data))
   )
+}
+
+const eventDocumentTemplatesSchema = z.array(eventDocumentTemplateSchema)
+export function fetchEventDocumentTemplates({
+  client,
+  params: { eventId },
+}: {
+  client: AxiosInstance
+  params: { eventId: string }
+}) {
+  return client
+    .get(`/events/${eventId}/document_templates`)
+    .then((response) => eventDocumentTemplatesSchema.parse(response.data))
 }
 
 export function useQueryParticipation({ participationId }: { participationId: string }) {
