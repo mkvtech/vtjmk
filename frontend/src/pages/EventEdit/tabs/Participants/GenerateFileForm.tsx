@@ -2,13 +2,20 @@ import { LoadingButton } from '@mui/lab'
 import { Autocomplete, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { UseQueryResult } from 'react-query'
+import { UseQueryResult, useMutation } from 'react-query'
 import { Event, EventDocumentTemplate } from '../../../../hooks/api/schemas'
 import { useApi } from '../../../../hooks/useApi'
+import { downloadFromResponse } from '../../../../share'
 
 interface FieldValues {
   documentTemplate: { id: string; label: string } | null
   fileType: 'pdf' | 'docx'
+}
+
+interface GenerateDocumentMutationData {
+  eventId: string
+  documentTemplateId: string
+  documentType: 'pdf' | 'docx'
 }
 
 export default function GenerateFileForm({
@@ -30,8 +37,23 @@ export default function GenerateFileForm({
     },
   })
 
+  const generateDocumentMutation = useMutation((data: GenerateDocumentMutationData) =>
+    client.post('/documents/generate_participants_list', data, { responseType: 'blob' })
+  )
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data)
+    if (!data.documentTemplate) {
+      return
+    }
+
+    generateDocumentMutation.mutate(
+      {
+        eventId: event.id,
+        documentTemplateId: data.documentTemplate.id,
+        documentType: data.fileType,
+      },
+      { onSuccess: downloadFromResponse }
+    )
   }
 
   return (
@@ -52,7 +74,7 @@ export default function GenerateFileForm({
                 }
                 loading={availableTemplatesQuery.isLoading}
                 renderInput={(props): JSX.Element => (
-                  <TextField {...props} size='small' fullWidth label={t('common.documentTemplate')} />
+                  <TextField {...props} size='small' fullWidth label={t('common.documentTemplate')} required />
                 )}
                 isOptionEqualToValue={(option, value): boolean => option.id === value.id}
               />
@@ -61,7 +83,7 @@ export default function GenerateFileForm({
         </Grid>
 
         <Grid item xs={3}>
-          <FormControl fullWidth size='small'>
+          <FormControl fullWidth size='small' required>
             <InputLabel id='document-type-select-label'>{t('common.fileType')}</InputLabel>
             <Controller
               name='fileType'
@@ -84,7 +106,7 @@ export default function GenerateFileForm({
         </Grid>
 
         <Grid item xs={3}>
-          <LoadingButton variant='contained' type='submit'>
+          <LoadingButton variant='contained' type='submit' fullWidth>
             {t('common.generate')}
           </LoadingButton>
         </Grid>

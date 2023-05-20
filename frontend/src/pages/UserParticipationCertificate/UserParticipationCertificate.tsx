@@ -19,7 +19,7 @@ import { useMutation, useQuery } from 'react-query'
 import { useSearchParams } from 'react-router-dom'
 import { fetchUserParticipations, fetchUserParticipationsDocumentTemplates } from '../../hooks/api/queries'
 import { useApi } from '../../hooks/useApi'
-import { contentDispositionToFilename } from '../../share'
+import { downloadFromResponse } from '../../share'
 
 type DocumentType = 'docx' | 'pdf'
 
@@ -88,32 +88,7 @@ export default function UserParticipationCertificate(): JSX.Element {
       client.post('/documents/generate_participation_certificate', data, { responseType: 'blob' }),
     {
       onSuccess: (response) => {
-        // Note: This is a 'hacky' solution for downloading files using AJAX but it seems to be popular:
-        // https://stackoverflow.com/questions/41938718/how-to-download-files-using-axios
-        // https://medium.com/yellowcode/download-api-files-with-react-fetch-393e4dae0d9e
-
-        const { data } = response
-        const filename = contentDispositionToFilename(response.headers['content-disposition']) || 'file.docx'
-
-        const href = URL.createObjectURL(data)
-        const link = document.createElement('a')
-        link.href = href
-        link.setAttribute('download', filename)
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        URL.revokeObjectURL(href)
-
-        // A better solution would be to create a resource on the server, get URL to file from the response, then make
-        // user download the file using traditional link (or click the link automatically)
-
-        // Pros:
-        // - not hacky, not manipulating the dom unnecessarily
-        // - browser's JS runtime does not hold file data in memory
-        // - `generate` endpoint can return JSON object, errors or metadata
-        // Cons:
-        // - server has to create a DB record
-        // - server has to cleanup generated files after they were downloaded (or every X minutes)
+        downloadFromResponse(response)
       },
     }
   )

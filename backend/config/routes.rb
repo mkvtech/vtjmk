@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
     resources :document_templates, only: %i[create show destroy]
     post '/documents/generate_participation_certificate', to: 'documents#generate_participation_certificate'
+    post '/documents/generate_participants_list', to: 'documents#generate_participants_list'
 
     resources :events, only: %i[index show update] do
       member do

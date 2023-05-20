@@ -5,21 +5,40 @@ module Api
   class DocumentsController < ApplicationController
     before_action :require_authenticated_user
 
-    def generate_participation_certificate # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def generate_participation_certificate
       participation = Participation.where(user: current_user).find(params[:participation_id])
 
       authorize! participation, to: :generate_certificate?, with: ParticipationPolicy
 
       document_template =
         DocumentTemplate
-        .where(
-          document_type: 'participation_certificate',
-          conference_id: participation.event.conference_id
-        )
+        .where(document_type: 'participation_certificate', conference_id: participation.event.conference_id)
         .find(params[:document_template_id])
 
       docx = GenerateParticipationCertificate.call(document_template:, participation:)
 
+      send_generated_document(docx)
+    end
+
+    def generate_participants_list
+      event = Event.find(params[:event_id])
+
+      authorize! event, to: :generate_participants_list?, with: EventPolicy
+
+      document_template =
+        DocumentTemplate
+        .where(document_type: 'participants_list', conference_id: event.conference_id)
+        .find(params[:document_template_id])
+
+      # TODO: Generate file
+      docx = Docx::Document.open(document_template.docx.download)
+
+      send_generated_document(docx)
+    end
+
+    private
+
+    def send_generated_document(docx)
       # Allow client to read file name
       response.set_header('Access-Control-Expose-Headers', ['Content-Disposition'])
 
@@ -29,8 +48,6 @@ module Api
         send_docx(docx)
       end
     end
-
-    private
 
     def send_docx(docx)
       send_data(
