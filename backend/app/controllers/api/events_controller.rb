@@ -47,7 +47,7 @@ module Api
     end
 
     def update_participations
-      return unless params.key?(:participations_order) && params[:participations_order].is_a?(Array)
+      return unless params.key?(:participations_order)
 
       participations_input = params[:participations_order]
 
