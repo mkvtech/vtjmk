@@ -32,7 +32,7 @@ module Api
       authorize! @event
 
       ActiveRecord::Base.transaction do
-        @event.update!(time: params[:time])
+        @event.update!(date: params[:date])
 
         update_participations
       end

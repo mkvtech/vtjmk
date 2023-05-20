@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_20_115817) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_20_195249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,7 +91,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_115817) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.date "date", null: false
     t.integer "attendees_limit"
     t.bigint "conference_id", null: false
     t.datetime "created_at", null: false
@@ -100,7 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_115817) do
     t.date "registration_to", null: false
     t.string "status", default: "open", null: false
     t.integer "auto_assign_reviewers_count"
-    t.time "time"
+    t.datetime "date"
     t.index ["conference_id"], name: "index_events_on_conference_id"
   end
 

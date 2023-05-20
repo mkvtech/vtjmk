@@ -11,17 +11,17 @@ import { useApi } from '../../../../hooks/useApi'
 import ParticipantsMenu, { ParticipationMenuValue } from './ParticipantsMenu'
 
 interface InitialData {
-  time: Date | null
+  date: Date
   participations: readonly EventParticipation[]
 }
 
 interface FieldValues {
-  time: Dayjs | null
+  date: Dayjs
   participants: ParticipationMenuValue
 }
 
 interface UpdateEventParticipantsMutationInput {
-  time: string | null | undefined
+  date: string
   participationsOrder: Record<string, { order: number; time: number | null }>
 }
 
@@ -33,7 +33,7 @@ export default function Form({ initialData }: { initialData: InitialData }): JSX
 
   const { control, handleSubmit } = useForm<FieldValues>({
     defaultValues: {
-      time: initialData.time ? dayjs(initialData.time) : null,
+      date: dayjs(initialData.date),
       participants: {
         include: initialData.participations
           .filter((participation) => participation.order !== null)
@@ -57,7 +57,7 @@ export default function Form({ initialData }: { initialData: InitialData }): JSX
           },
           {}
         ),
-        time: data.time?.toISOString(),
+        date: data.date.toISOString(),
       },
       {
         onSettled: () => {
@@ -75,7 +75,7 @@ export default function Form({ initialData }: { initialData: InitialData }): JSX
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Controller
-          name='time'
+          name='date'
           control={control}
           render={({ field }): JSX.Element => (
             <TimeField {...field} format='HH:mm' label={t('common.conferenceStartTime')} size='small' />

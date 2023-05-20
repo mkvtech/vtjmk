@@ -25,7 +25,7 @@ export default function Participants(): JSX.Element {
         <>
           <GenerateFileMenu event={eventQuery.data} />
 
-          <Form initialData={{ time: eventQuery.data.time, participations: participationsQuery.data }} />
+          <Form initialData={{ date: eventQuery.data.date, participations: participationsQuery.data }} />
         </>
       ) : participationsQuery.isSuccess ? (
         <>

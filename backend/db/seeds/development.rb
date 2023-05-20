@@ -85,14 +85,14 @@ DocumentTemplate.import!(
 # Events
 Event.import!(
   [
-    { id: 1, conference_id: 1, date: Date.new(2022, 2,  5), registration_from: Date.new(2022, 1, 1), registration_to: Date.new(2022, 1, 31), status: 'open'   },
-    { id: 2, conference_id: 1, date: Date.new(2023, 7,  1), registration_from: Date.new(2023, 2, 1), registration_to: Date.new(2023, 6, 30), status: 'open'   },
-    { id: 3, conference_id: 1, date: Date.new(2024, 2,  1), registration_from: Date.new(2024, 1, 1), registration_to: Date.new(2024, 1, 20), status: 'open'   },
-    { id: 4, conference_id: 2, date: Date.new(2022, 10, 1), registration_from: Date.new(2022, 9, 1), registration_to: Date.new(2022, 9, 30), status: 'open'   },
-    { id: 5, conference_id: 2, date: Date.new(2023, 10, 1), registration_from: Date.new(2023, 9, 1), registration_to: Date.new(2023, 9, 30), status: 'open'   },
-    { id: 6, conference_id: 3, date: Date.new(2024, 2,  1), registration_from: Date.new(2024, 1, 1), registration_to: Date.new(2024, 1, 31), status: 'open'   },
-    { id: 7, conference_id: 4, date: Date.new(2023, 5,  1), registration_from: Date.new(2022, 4, 1), registration_to: Date.new(2022, 4, 20), status: 'open'   },
-    { id: 8, conference_id: 4, date: Date.new(2024, 5,  1), registration_from: Date.new(2022, 4, 1), registration_to: Date.new(2022, 4, 20), status: 'hidden' }
+    { id: 1, conference_id: 1, date: DateTime.new(2022, 2,  5, 10, 0, 0), registration_from: Date.new(2022, 1, 1), registration_to: Date.new(2022, 1, 31), status: 'open'   },
+    { id: 2, conference_id: 1, date: DateTime.new(2023, 7,  1, 10, 0, 0), registration_from: Date.new(2023, 2, 1), registration_to: Date.new(2023, 6, 30), status: 'open'   },
+    { id: 3, conference_id: 1, date: DateTime.new(2024, 2,  1, 10, 0, 0), registration_from: Date.new(2024, 1, 1), registration_to: Date.new(2024, 1, 20), status: 'open'   },
+    { id: 4, conference_id: 2, date: DateTime.new(2022, 10, 1, 10, 0, 0), registration_from: Date.new(2022, 9, 1), registration_to: Date.new(2022, 9, 30), status: 'open'   },
+    { id: 5, conference_id: 2, date: DateTime.new(2023, 10, 1, 10, 0, 0), registration_from: Date.new(2023, 9, 1), registration_to: Date.new(2023, 9, 30), status: 'open'   },
+    { id: 6, conference_id: 3, date: DateTime.new(2024, 2,  1, 10, 0, 0), registration_from: Date.new(2024, 1, 1), registration_to: Date.new(2024, 1, 31), status: 'open'   },
+    { id: 7, conference_id: 4, date: DateTime.new(2023, 5,  1, 10, 0, 0), registration_from: Date.new(2022, 4, 1), registration_to: Date.new(2022, 4, 20), status: 'open'   },
+    { id: 8, conference_id: 4, date: DateTime.new(2024, 5,  1, 10, 0, 0), registration_from: Date.new(2022, 4, 1), registration_to: Date.new(2022, 4, 20), status: 'hidden' }
   ]
 )
 
