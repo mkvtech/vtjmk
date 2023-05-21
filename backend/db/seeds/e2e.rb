@@ -13,13 +13,13 @@ Conference.import!(
 # Events
 Event.import!(
   [
-    { id: 1, conference_id: 1, date: Date.new(2022,  7,  1), registration_from: Date.new(2022,  1,  1), registration_to: Date.new(2022,  6,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
-    { id: 2, conference_id: 1, date: Date.new(2023,  7,  1), registration_from: Date.new(2023,  1,  1), registration_to: Date.new(2023,  6,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
-    { id: 3, conference_id: 1, date: Date.new(2024,  7,  1), registration_from: Date.new(2024,  1,  1), registration_to: Date.new(2024,  6,  30), status: 'hidden', auto_assign_reviewers_count: 1 },
+    { id: 1, conference_id: 1, date: DateTime.new(2022, 7, 1, 10, 0, 0), registration_from: Date.new(2022,  1,  1), registration_to: Date.new(2022,  6,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
+    { id: 2, conference_id: 1, date: DateTime.new(2023, 7, 1, 10, 0, 0), registration_from: Date.new(2023,  1,  1), registration_to: Date.new(2023,  6,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
+    { id: 3, conference_id: 1, date: DateTime.new(2024, 7, 1, 10, 0, 0), registration_from: Date.new(2024,  1,  1), registration_to: Date.new(2024,  6,  30), status: 'hidden', auto_assign_reviewers_count: 1 },
 
-    { id: 4, conference_id: 2, date: Date.new(2022,  9,  1), registration_from: Date.new(2022,  1,  1), registration_to: Date.new(2022,  8,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
-    { id: 5, conference_id: 2, date: Date.new(2023,  9,  1), registration_from: Date.new(2023,  1,  1), registration_to: Date.new(2023,  8,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
-    { id: 6, conference_id: 2, date: Date.new(2024,  9,  1), registration_from: Date.new(2024,  1,  1), registration_to: Date.new(2024,  8,  30), status: 'hidden', auto_assign_reviewers_count: 1 },
+    { id: 4, conference_id: 2, date: DateTime.new(2022, 9, 1, 10, 0, 0), registration_from: Date.new(2022,  1,  1), registration_to: Date.new(2022,  8,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
+    { id: 5, conference_id: 2, date: DateTime.new(2023, 9, 1, 10, 0, 0), registration_from: Date.new(2023,  1,  1), registration_to: Date.new(2023,  8,  30), status: 'open'  , auto_assign_reviewers_count: 1 },
+    { id: 6, conference_id: 2, date: DateTime.new(2024, 9, 1, 10, 0, 0), registration_from: Date.new(2024,  1,  1), registration_to: Date.new(2024,  8,  30), status: 'hidden', auto_assign_reviewers_count: 1 },
   ]
 )
 
