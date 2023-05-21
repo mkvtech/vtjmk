@@ -43,8 +43,8 @@ function Page({ conferenceId }: { conferenceId: string }): JSX.Element {
     defaultValues: {
       name: '',
       documentType: 'participationCertificate',
-      placeholderPrefix: '',
-      placeholderPostfix: '',
+      placeholderPrefix: '[',
+      placeholderPostfix: ']',
     },
   })
 
