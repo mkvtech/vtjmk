@@ -93,18 +93,21 @@ password_digest = BCrypt::Password.create('password')
 User.import!(
   [
     # Administrator
-    { id: 1, full_name: 'John Doe',          email: 'admin@example.com',             password_digest:, privilege_level: :admin   },
+    { id: 1, full_name: 'John Doe'          , email: 'admin@example.com'             , password_digest:, privilege_level: :admin   },
 
     # Conference managers
-    { id: 2, full_name: 'Jonas Jonaitis',    email: 'jonas.jonaitis@example.com',    password_digest:, privilege_level: :default },
-    { id: 3, full_name: 'Alius Jonaitis',    email: 'alius.jonaitis@example.com',    password_digest:, privilege_level: :default },
+    { id: 2, full_name: 'Jonas Jonaitis'    , email: 'jonas.jonaitis@example.com'    , password_digest:, privilege_level: :default },
+    { id: 3, full_name: 'Alius Jonaitis'    , email: 'alius.jonaitis@example.com'    , password_digest:, privilege_level: :default },
 
     # Reviewers
-    { id: 4, full_name: 'Petras Petraitis',  email: 'petras.petraitis@example.com',  password_digest:, privilege_level: :default },
-    { id: 5, full_name: 'Roberta Jonaitė',   email: 'roberta.jonaite@example.com',   password_digest:, privilege_level: :default },
+    { id: 4, full_name: 'Petras Petraitis'  , email: 'petras.petraitis@example.com'  , password_digest:, privilege_level: :default },
+    { id: 5, full_name: 'Roberta Jonaitė'   , email: 'roberta.jonaite@example.com'   , password_digest:, privilege_level: :default },
 
     # Participants
-    { id: 6, full_name: 'Robertas Jonaitis', email: 'robertas.jonaitis@example.com', password_digest:, privilege_level: :default },
+    { id: 6, full_name: 'Robertas Jonaitis' , email: 'robertas.jonaitis@example.com' , password_digest:, privilege_level: :default },
+    { id: 7, full_name: 'Rimas Jonaitis'    , email: 'rimas.jonaitis@example.com'    , password_digest:, privilege_level: :default },
+    { id: 8, full_name: 'Rimantė Jonaitė'   , email: 'rimante.jonaite@example.com'   , password_digest:, privilege_level: :default },
+    { id: 9, full_name: 'Vitalija Petraitė' , email: 'vitalija.petraite@example.com' , password_digest:, privilege_level: :default },
   ]
 )
 
@@ -126,6 +129,18 @@ EventReviewer.import!(
     { id: 4, event_id: 4, reviewer_id: 5 },
     { id: 5, event_id: 5, reviewer_id: 5 },
     { id: 6, event_id: 6, reviewer_id: 5 },
+  ]
+)
+
+# Participations
+Participation.import!(
+  [
+    { id: 1, status: :approved, user_id: 6, event_id: 2, reviewer_id: 4 },
+    { id: 2, status: :pending , user_id: 6, event_id: 5, reviewer_id: 5 },
+    { id: 3, status: :approved, user_id: 7, event_id: 2, reviewer_id: 4 },
+    { id: 4, status: :rejected, user_id: 7, event_id: 5, reviewer_id: 5 },
+    { id: 5, status: :approved, user_id: 8, event_id: 2, reviewer_id: 4 },
+    { id: 6, status: :approved, user_id: 9, event_id: 5, reviewer_id: 5 },
   ]
 )
 

@@ -46,7 +46,7 @@ test('Database reset', async ({ page, baseURL, request }) => {
   const response = await request.get(`${appHelper.appUrl}/api/debug/database`)
 
   // Make sure to update this count after changing `seeds.rb`
-  expect((await response.json()).usersCount).toBe(6)
+  expect((await response.json()).usersCount).toBe(9)
 })
 
 test('Time manipulations', async ({ page, baseURL, request }) => {
