@@ -136,6 +136,8 @@
     "generateFile": "Generate File",
     "documentTemplate": "Document Template",
     "Generate": "Generate",
+    "documentGenerationSuccessAlertTitle": "Document was generated successfuly",
+    "documentGenerationSuccessAlertText": "The download will begin shortly. Once it is done, please find generated document in Downloads folder on your computer.",
     "participantsList": "Participants List",
     "youMustLoginToAttend": "You must <1>login</1> to attend"
   },

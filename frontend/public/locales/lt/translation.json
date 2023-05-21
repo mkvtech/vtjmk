@@ -141,6 +141,8 @@
     "generateFile": "Sugeneruoti failą",
     "documentTemplate": "Dokumento šablonas",
     "generate": "Sugeneruoti",
+    "documentGenerationSuccessAlertTitle": "Dokumentas sėkmingai sugeneruotas",
+    "documentGenerationSuccessAlertText": "Atsiuntimas prasidės netrukus. Kai tai bus padaryta, sugeneruotą dokumentą galite rasti savo kompiuteryje.",
     "participantsList": "Dalyvių sąrašas",
     "youMustLoginToAttend": "<1>Prisijunkite</1>, kad dalyvauti"
   },

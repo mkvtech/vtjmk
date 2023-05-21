@@ -1,5 +1,15 @@
 import { LoadingButton } from '@mui/lab'
-import { Autocomplete, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import {
+  Alert,
+  AlertTitle,
+  Autocomplete,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { UseQueryResult, useMutation } from 'react-query'
@@ -28,7 +38,7 @@ export default function GenerateFileForm({
   const { t } = useTranslation()
   const { client } = useApi()
 
-  const { control, handleSubmit } = useForm<FieldValues>({
+  const { control, handleSubmit, watch } = useForm<FieldValues>({
     defaultValues: {
       documentTemplate: availableTemplatesQuery.isSuccess
         ? { id: availableTemplatesQuery.data[0].id, label: availableTemplatesQuery.data[0].name }
@@ -56,8 +66,17 @@ export default function GenerateFileForm({
     )
   }
 
+  const watchDocumentTemplate = watch('documentTemplate')
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {generateDocumentMutation.isSuccess ? (
+        <Alert severity='success' sx={{ mt: 2, mb: 4 }}>
+          <AlertTitle>{t('common.documentGenerationSuccessAlertTitle')}</AlertTitle>
+          <p>{t('common.documentGenerationSuccessAlertText')}</p>
+        </Alert>
+      ) : null}
+
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Controller
@@ -106,7 +125,13 @@ export default function GenerateFileForm({
         </Grid>
 
         <Grid item xs={3}>
-          <LoadingButton variant='contained' type='submit' fullWidth>
+          <LoadingButton
+            variant='contained'
+            type='submit'
+            fullWidth
+            disabled={watchDocumentTemplate === null}
+            loading={generateDocumentMutation.isLoading}
+          >
             {t('common.generate')}
           </LoadingButton>
         </Grid>
