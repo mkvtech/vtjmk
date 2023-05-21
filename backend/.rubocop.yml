@@ -34,6 +34,10 @@ Metrics/BlockLength:
 Rails/BulkChangeTable:
   Enabled: false
 
+Rails/Delegate:
+  Enabled: true
+  EnforceForPrefixed: false
+
 RSpec/MultipleExpectations:
   Max: 4
 

@@ -23,7 +23,7 @@ module DocumentGeneration
       def event_start_time = format_time(event.date)
       def event_end_time = format_time(participations_with_times.last[:end_time])
       def date = format_date(Time.zone.today)
-      def datetime = format_date(Time.zone.now)
+      def datetime = format_datetime(Time.zone.now)
 
       private
 
@@ -33,6 +33,10 @@ module DocumentGeneration
 
       def format_time(time)
         I18n.l(time, format: :only_time)
+      end
+
+      def format_datetime(datetime)
+        I18n.l(datetime, format: :long)
       end
     end
   end
