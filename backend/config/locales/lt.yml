@@ -22,3 +22,7 @@ lt:
               greater_than_or_equal_to: 'turi būti didesnė arba lygi %{count}'
             date:
               greater_than_or_equal_to: 'turi būti didesnė arba lygi %{count}'
+
+  time:
+    formats:
+      only_time: '%H:%M'

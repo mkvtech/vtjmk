@@ -31,7 +31,7 @@ module Api
         .find(params[:document_template_id])
 
       # TODO: Generate file
-      docx = Docx::Document.open(document_template.docx.download)
+      docx = DocumentGeneration::ParticipantsList::GenerateParticipantsList.call(document_template:, event:)
 
       send_generated_document(docx)
     end

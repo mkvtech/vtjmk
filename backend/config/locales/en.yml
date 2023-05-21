@@ -39,3 +39,7 @@ en:
       event:
         registration_from: 'Registration start date'
         registration_to: 'Registration end date'
+
+  time:
+    formats:
+      only_time: '%H:%M'
