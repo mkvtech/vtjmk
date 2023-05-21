@@ -1,6 +1,6 @@
 # Seeds for `test` environment
 
-# rubocop:disable Layout/LineLength, Layout/ExtraSpacing
+# rubocop:disable Layout/LineLength, Layout/ExtraSpacing, Layout/SpaceBeforeComma
 
 # Conferences
 Conference.import!(
@@ -15,70 +15,18 @@ Conference.import!(
 # DocumentTemplates
 DocumentTemplate.import!(
   [
-    {
-      id: 1,
-      name: 'Participation Certificate (LT) 1',
-      conference_id: 1,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '[',
-      placeholder_postfix: ']'
-    },
-    {
-      id: 2,
-      name: 'Participation Certificate (EN) 1',
-      conference_id: 1,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '%%',
-      placeholder_postfix: '%%'
-    },
-    {
-      id: 3,
-      name: 'Participation Certificate (LT) 1',
-      conference_id: 2,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '[',
-      placeholder_postfix: ']'
-    },
-    {
-      id: 4,
-      name: 'Participation Certificate (EN) 1',
-      conference_id: 2,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '%%',
-      placeholder_postfix: '%%'
-    },
-    {
-      id: 5,
-      name: 'Participation Certificate (LT) 1',
-      conference_id: 3,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '[',
-      placeholder_postfix: ']'
-    },
-    {
-      id: 6,
-      name: 'Participation Certificate (EN) 1',
-      conference_id: 3,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '%%',
-      placeholder_postfix: '%%'
-    },
-    {
-      id: 7,
-      name: 'Participation Certificate (LT) 1',
-      conference_id: 4,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '[',
-      placeholder_postfix: ']'
-    },
-    {
-      id: 8,
-      name: 'Participation Certificate (EN) 1',
-      conference_id: 4,
-      document_type: 'participation_certificate',
-      placeholder_prefix: '%%',
-      placeholder_postfix: '%%'
-    }
+    { id: 1 , name: 'Participation Certificate (LT) 1', conference_id: 1, document_type: 'participation_certificate', placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 2 , name: 'Participation Certificate (EN) 1', conference_id: 1, document_type: 'participation_certificate', placeholder_prefix: '%%', placeholder_postfix: '%%' },
+    { id: 3 , name: 'Participants List (LT) 1',         conference_id: 1, document_type: 'participants_list',         placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 4 , name: 'Participation Certificate (LT) 1', conference_id: 2, document_type: 'participation_certificate', placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 5 , name: 'Participation Certificate (EN) 1', conference_id: 2, document_type: 'participation_certificate', placeholder_prefix: '%%', placeholder_postfix: '%%' },
+    { id: 6 , name: 'Participants List (LT) 1',         conference_id: 2, document_type: 'participants_list',         placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 7 , name: 'Participation Certificate (LT) 1', conference_id: 3, document_type: 'participation_certificate', placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 8 , name: 'Participation Certificate (EN) 1', conference_id: 3, document_type: 'participation_certificate', placeholder_prefix: '%%', placeholder_postfix: '%%' },
+    { id: 9 , name: 'Participants List (LT) 1',         conference_id: 3, document_type: 'participants_list',         placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 10, name: 'Participation Certificate (LT) 1', conference_id: 4, document_type: 'participation_certificate', placeholder_prefix: '[', placeholder_postfix: ']'   },
+    { id: 11, name: 'Participation Certificate (EN) 1', conference_id: 4, document_type: 'participation_certificate', placeholder_prefix: '%%', placeholder_postfix: '%%' },
+    { id: 12, name: 'Participants List (LT) 1',         conference_id: 4, document_type: 'participants_list',         placeholder_prefix: '[', placeholder_postfix: ']'   }
   ]
 )
 
@@ -452,18 +400,30 @@ Participation.import!(
 )
 
 # Attach files to DocumentTemplates
-# This should be last execution, as if it will seeds.rb will not cleanup attached files in case of an error in this
-# script, and cause a leak. Note that `rails db:drop` will not remove local attached files. You should remove them
-# manually with `rm -rf ./storage/*/`. Though left-over files in ./storage will probably not cause problems for the
-# application, except for wasting disk space.
-DocumentTemplate.find(1).docx.attach(io: File.open('db/seeds/Participation_Certificate_LT_1.docx'), filename: 'Participation_Certificate_LT_1.docx')
-DocumentTemplate.find(3).docx.attach(io: File.open('db/seeds/Participation_Certificate_LT_1.docx'), filename: 'Participation_Certificate_LT_1.docx')
-DocumentTemplate.find(5).docx.attach(io: File.open('db/seeds/Participation_Certificate_LT_1.docx'), filename: 'Participation_Certificate_LT_1.docx')
-DocumentTemplate.find(7).docx.attach(io: File.open('db/seeds/Participation_Certificate_LT_1.docx'), filename: 'Participation_Certificate_LT_1.docx')
+# This should be last execution, bc seeds.rb will not cleanup attached files in case of an error in this script,
+# and cause a leak. Note that `rails db:drop` will not remove local attached files. You should remove them manually
+# with `rm -rf ./storage/*/`. Though left-over files in ./storage will probably not cause problems for the application,
+# except for wasting disk space.
 
-DocumentTemplate.find(2).docx.attach(io: File.open('db/seeds/Participation_Certificate_EN_1.docx'), filename: 'Participation_Certificate_EN_1.docx')
-DocumentTemplate.find(4).docx.attach(io: File.open('db/seeds/Participation_Certificate_EN_1.docx'), filename: 'Participation_Certificate_EN_1.docx')
-DocumentTemplate.find(6).docx.attach(io: File.open('db/seeds/Participation_Certificate_EN_1.docx'), filename: 'Participation_Certificate_EN_1.docx')
-DocumentTemplate.find(8).docx.attach(io: File.open('db/seeds/Participation_Certificate_EN_1.docx'), filename: 'Participation_Certificate_EN_1.docx')
+File.open('db/seeds/Participation_Certificate_LT_1.docx') do |io|
+  DocumentTemplate.where(id: [1, 4, 7, 10]).each do |document_template|
+    io.rewind
+    document_template.docx.attach(io:, filename: 'Participation_Certificate_LT_1.docx')
+  end
+end
 
-# rubocop:enable Layout/LineLength, Layout/ExtraSpacing
+File.open('db/seeds/Participation_Certificate_EN_1.docx') do |io|
+  DocumentTemplate.where(id: [2, 5, 8, 11]).each do |document_template|
+    io.rewind
+    document_template.docx.attach(io:, filename: 'Participation_Certificate_EN_1.docx')
+  end
+end
+
+File.open('db/seeds/Participants_List_LT_1.docx') do |io|
+  DocumentTemplate.where(id: [3, 6, 9, 12]).each do |document_template|
+    io.rewind
+    document_template.docx.attach(io:, filename: 'Participants_List_LT_1.docx')
+  end
+end
+
+# rubocop:enable Layout/LineLength, Layout/ExtraSpacing, Layout/SpaceBeforeComma
