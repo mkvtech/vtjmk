@@ -40,9 +40,7 @@ module Api
     def update_status
       authorize! @participation
 
-      unless @participation.update(params.permit(:status))
-        return render json: @participation.errors, status: :unprocessable_entity
-      end
+      @participation.update!(params.permit(:status))
 
       render :show, status: :ok, location: api_participation_url(@participation)
     end
