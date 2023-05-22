@@ -27,6 +27,10 @@ class EventPolicy < ApplicationPolicy
     manage?
   end
 
+  def generate_participants_list?
+    read_or_manage?
+  end
+
   def manage?
     require_user
     allow_admin

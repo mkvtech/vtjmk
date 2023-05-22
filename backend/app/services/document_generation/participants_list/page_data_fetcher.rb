@@ -21,7 +21,13 @@ module DocumentGeneration
       def event_title = event.title
       def event_date = format_date(event.date)
       def event_start_time = format_time(event.date)
-      def event_end_time = format_time(participations_with_times.last[:end_time])
+
+      def event_end_time
+        return event_start_time if participations_with_times.empty?
+
+        format_time(participations_with_times.last[:end_time])
+      end
+
       def date = format_date(Time.zone.today)
       def datetime = format_datetime(Time.zone.now)
 
