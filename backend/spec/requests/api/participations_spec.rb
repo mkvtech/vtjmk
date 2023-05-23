@@ -60,6 +60,20 @@ RSpec.describe '/api/participations/:participation_id' do
         expect(response).to have_http_status(:created)
       end
     end
+
+    context 'when event has auto_assign_reviewers setting enabled' do
+      let(:params) { { event_id: event.id } }
+      let(:event) { create(:event, conference:, auto_assign_reviewers_count: 1) }
+      let(:reviewer) { create(:user) }
+
+      before do
+        create(:event_reviewer, event:, reviewer:)
+      end
+
+      it 'creates pending review' do
+        expect { make_request }.to change(Review, :count).by(1)
+      end
+    end
   end
 
   describe 'PATCH /:participation_id' do
