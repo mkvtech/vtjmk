@@ -6,10 +6,6 @@ class DocumentTemplatePolicy < ApplicationPolicy
     conference_manage?
   end
 
-  def update?
-    conference_manage?
-  end
-
   def destroy?
     conference_manage?
   end

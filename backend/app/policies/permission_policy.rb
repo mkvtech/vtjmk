@@ -6,10 +6,6 @@ class PermissionPolicy < ApplicationPolicy
     false
   end
 
-  def show?
-    false
-  end
-
   def create?
     false
   end

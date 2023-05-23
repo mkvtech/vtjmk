@@ -8,11 +8,6 @@ module Api
       @permissions = Permission.includes(:user, :target).all
     end
 
-    def show
-      @permission = Permission.includes(:user, :target).find(params[:id])
-      authorize! @permission, with: PermissionPolicy
-    end
-
     def create
       authorize! with: PermissionPolicy
 
