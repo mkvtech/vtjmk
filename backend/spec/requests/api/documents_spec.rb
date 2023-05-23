@@ -134,7 +134,13 @@ RSpec.describe '/api/documents' do
 
     context 'with valid params' do
       let(:params) { { event_id: event.id, document_template_id: document_template.id } }
-      let(:event) { create(:event, conference:) }
+      let(:event) do
+        create(
+          :event,
+          conference:, date: Date.new(2023, 7, 1), registration_from: Date.new(2023, 1, 1),
+          registration_to: Date.new(2023, 6, 1)
+        )
+      end
       let(:document_template) { create(:document_template, conference:, document_type: 'participants_list') }
       let(:docx) { Rails.root.join('db/seeds/Participants_List_LT_1.docx').open }
 
@@ -159,7 +165,7 @@ RSpec.describe '/api/documents' do
           make_request
           expect(response_docx_text).not_to be_empty
           expect(response_docx_text).not_to include('[', ']')
-          expect(response_docx_text).to include('Konferencijos data: June 01, 2023')
+          expect(response_docx_text).to include('Konferencijos data: July 01, 2023')
         end
       end
 
@@ -180,7 +186,7 @@ RSpec.describe '/api/documents' do
           make_request
           expect(response_docx_text).not_to be_empty
           expect(response_docx_text).not_to include('[', ']')
-          expect(response_docx_text).to include('Konferencijos data: June 01, 2023')
+          expect(response_docx_text).to include('Konferencijos data: July 01, 2023')
         end
 
         it 'fills table' do
