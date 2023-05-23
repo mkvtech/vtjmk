@@ -205,4 +205,37 @@ RSpec.describe '/events' do
       end
     end
   end
+
+  describe 'PATCH /api/events/:id/update_participations_order' do
+    subject(:make_request) { patch("/api/events/#{event.id}/update_participations_order", params:, headers:) }
+
+    let(:headers) { auth_headers_for(user) }
+    let(:user) { create(:user) }
+
+    let(:conference) { create(:conference) }
+    let(:event) { create(:event, conference:) }
+
+    let(:params) do
+      {
+        date: Date.new(2023, 7, 1),
+        participations_order: {
+          participation.id.to_s => { order: 1, time: 15 }
+        }
+      }
+    end
+
+    let(:participant) { create(:user) }
+    let(:participation) { create(:participation, user: participant, event:) }
+
+    before do
+      create(:permission, user:, target: event, action: :manage)
+    end
+
+    it 'updates event participations order' do
+      # rubocop:disable Layout/MultilineMethodCallIndentation
+      expect { make_request }.to change { participation.reload.order }.from(nil).to(1)
+        .and change { participation.reload.time }.from(nil).to(15)
+      # rubocop:enable Layout/MultilineMethodCallIndentation
+    end
+  end
 end
