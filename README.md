@@ -1,170 +1,155 @@
-# Apie
+# About
 
-Baigiamojo darbo projektas. VTJMK sistema. VilniusTech Jaunųjų mokslininkų konferencijos.
+My Bachelor's degree project. VTJMK system. Conference management system. VilniusTech Jaunųjų mokslininkų konferencijos.
 
-Pagrindinė kodo saugykla: https://github.com/mkvtech/vtjmk.
+Baigiamojo darbo projektas. VTJMK sistema. Konferencijų administravimo sistema. VilniusTech Jaunųjų mokslininkų konferencijos.
 
-# Diegimo instrukcijos
+# DEMO 🎥
 
-Pagal šias instrukcijas yra lengviausia patikrinti sistemos veikimą.
+Video just describes better than words, please watch this short 2 minutes demonstration (I WANT U TO WATCH IT):
 
-Sistemą galima įdiegti "Windows" arba "Ubuntu" operacinėse sistemose.
+[![VIDEO DEMONSTRATION ON YOUTUBE](http://img.youtube.com/vi/k0TirDiz6_I/0.jpg)](http://www.youtube.com/watch?v=k0TirDiz6_I)
 
-Kompiuteryje turi būti įdiegta "Git" ir "Docker" programinė įranga.
+Direct link: http://www.youtube.com/watch?v=k0TirDiz6_I
 
-## Žingsniai:
+# Fast install / Preview
 
-1. Atsiųsti projektą. Paleiskite komandas:
+Tested on Windows 10 and Ubuntu 22.04. Git and Docker are required.
 
 ```sh
 git pull https://github.com/mkvtech/vtjmk.git
 cd vtjmk
-```
-
-2. Sukurti sistemos servisus Docker sistemoje. Paleiskite komandą:
-
-```sh
-docker-compose up --build --detach
-```
-
-Šis žingsnis gali užtrūkti apie 5 min.
-
-3. Sukurti sistemos duomenų bazė. Paleiskite komandą:
-
-```sh
+docker-compose up --build --detach # can take about 5 minutes to build docker image
 docker exec vtjmk_backend_dev bundle exec rails db:create db:schema:load db:seed
 ```
 
-4. Atidaryti sistemos puslapį naršyklėje: http://localhost:5173
+Open app in your browser: http://localhost:5173
 
-## Kita informacija
+Sign in data (more `backend/db/seeds/development.rb`):
 
-Sistemos testavimui yra generuojamos kelios vartotojų paskyros. Visas paskyras galima rasti `backend/db/seeds/development.rb` faile.
+| User             | Email                          | Password   |
+| ---------------- | ------------------------------ | ---------- |
+| Administratorius | `admin@example.com`            | `password` |
+| Organizatorius   | `jonas.jonaitis@example.com`   | `password` |
+| Recenzentas      | `petras.petraitis@example.com` | `password` |
 
-Čia yra pateiktos kelios paskyrų prisijungimo duomenis:
-
-| Vartotojas       | El. paštas                     | Slaptažodis |
-| ---------------- | ------------------------------ | ----------- |
-| Administratorius | `admin@example.com`            | `password`  |
-| Organizatorius   | `jonas.jonaitis@example.com`   | `password`  |
-| Recenzentas      | `petras.petraitis@example.com` | `password`  |
-
-Detalesnę informaciją apie sistemą galima rasti baigiamojo darbo apraše.
-
-Baigiant darbą, sistemą galima sustabdyti paleidžiant komandą:
-
-```sh
-docker-compose down
-```
-
-Po pakeitimų sistemoje, kartais yra naudinga perkurti duomenų bazės duomenis. Tai galima padaryti paleidžiant komandą:
+Reset & seed DB after changes:
 
 ```sh
 docker exec vtjmk_backend_dev bundle exec rails db:drop db:create db:schema:load db:seed
 ```
 
-Visos komandos buvo patikrintos "Windows 10" ir "Ubuntu 22.04" operacinėse sistemose.
+Stop servers when done:
 
-# Diegimo į pagrindinę operacinę sistemą instrukcijos
+```sh
+docker-compose down
+```
 
-Ši instrukcija yra naudinga jei reikia automatinius testus arba stebėti sistemos veikimą po programinio kodo pakeitimų. Automatinių testų veikimą taip pat galima stebėti GitHub Actions puslapyje: https://github.com/mkvtech/vtjmk/actions.
+# Technologies / Naudojamos technologijos
 
-Sistemą galima įdiegti "Ubuntu" operacinėje sistemoje. Šio skyriaus komandos buvo patikrintos "Ubuntu 22.04" operacinėje sistemoje.
+## General
 
-Sistemoje turi būti įdiegti `Git`, `Ruby`, `NodeJS`, `Yarn`, `PostgreSQL`, `LibreOffice` paketai.
+- Git
+- Docker
+- VSCode
+- PostgreSQL
+- Ruby on Rails
+- NodeJS
+- JWT
+- Playwright
+- GitHub Actions - take a look at [these 4 workflows](https://github.com/mkvtech/vtjmk/tree/main/.github/workflows).
+- I18n - EVERYTHING is translated to Lithuanian and English.
+- LibreOffice - convert DOCX to PDF.
 
-## Žingsniai:
+## Ruby Gems
 
-1. Atsiųsti projektą. Paleiskite komandas:
+See: `backend/Gemfile`
+
+- Rails
+- RSpec
+- Rubocop
+- Simplecov
+- ActionPolicy - Sending authorization info to frontend.
+- ruby-docx - Manipulating DOCX files.
+- Mobility - Users can save data in multiple languages.
+
+## JS
+
+See: `frontend/package.json`
+
+- TypeScript
+- React
+- Vite
+- Yarn
+- Prettier
+- ESLint
+- MaterialUI (with their date & time pickers)
+- Lexical - RTE.
+- i18next
+- react-query
+- Zod
+
+# Development install:
+
+Tested on Ubuntu 22.04. System requirements: `Git`, `Ruby`, `NodeJS`, `Yarn`, `PostgreSQL`, `LibreOffice`.
 
 ```sh
 git pull https://github.com/mkvtech/vtjmk.git
 cd vtjmk
-```
 
-2. Įdiegti `backend` sistemos dalies paketus:
-
-```sh
+# In `backend` project...
 cd ./backend
 bundle install
-```
+bundle exec rails db:create db:schema:load db:seed
 
-3. Įdiegti `frontend` sistemos dalies paketus:
-
-```sh
-cd ./frontend
+# In `frontend` project...
+cd ../frontend
 yarn
 ```
 
-4. Sukurti sistemos duomenų bazė. Paleiskite komandą:
+Backend:
 
 ```sh
-bundle exec rails db:create db:schema:load db:seed
-```
+cd ./backend
 
-## Backend
-
-Paleisti vienetų testus:
-
-```sh
+# Unit tests
 bundle exec rspec
-```
 
-Vienetų testų paleidimas generuoja ataskaitą apie kodo padengimumą. Ją galima rasti `./coverage/index.html` faile. Patogiausia peržiūrėti galima su komanda:
-
-```sh
+# Test coverage is saved in
 xdg-open ./coverage/index.html
-```
 
-Statinė kodo analizė:
-
-```sh
+# Lint
 bundle exec rubocop
 ```
 
-## Frontend
-
-Statinė kodo analizė:
+Frontend:
 
 ```sh
+cd ./frontend
+
+# Lint
 yarn lint
 yarn format:check
 ```
 
-## Integraciniai testai (E2E)
-
-Paketų diegimas (1 min.):
+## Integration tests (E2E)
 
 ```sh
 cd ./e2e
+
+# Install deps
 yarn install
 yarn playwright install --with-deps
-```
 
-Serverio paleidimas:
-
-```sh
+# Prepare server
 docker-compose --file ../docker-compose.e2e.yml up --build --detach
 docker exec vtjmk_e2e bundle exec rails db:create db:schema:load
-```
 
-Testų paleidimas (3 min.):
-
-```sh
+# Run tests (3 min)
 yarn playwright test
 ```
 
-# Sistemos struktūra
-
-Sistema yra padalinta į 2 pagrindinius projektus: `backend` ir `frontend`. Šių projektų programinį kodą galima rasti pagrindinio kodo saugykloje atitinkamose direktorijose.
-
-`backend` direktorijoje yra patalpintas serverio dalies programinis kodas. Yra naudojamas Rails internetinių puslapių karkasas ir Ruby programavimo kalba.
-
-`frontend` direktorijoje yra patalpintas grafinės vartotojo sąsajos (GVS) programinis kodas. Yra naudojamas Vite serveris, React karkasas ir TypeScript programavimo kalba.
-
-Detalesnę informaciją apie sistemos architektūrą galima rasti baigiamojo darbo apraše.
-
-# Kontaktinė informacija
+# Contact / Kontaktinė informacija
 
 Maksim Kulagin
 
